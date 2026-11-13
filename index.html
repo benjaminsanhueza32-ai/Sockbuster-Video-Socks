@@ -1,0 +1,2512 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sockbuster | Calcetines Temáticos & Documentación UML 4+1</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Space Grotesk & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              primary: 'var(--color-primary)',
+              primaryHover: 'var(--color-primary-hover)',
+              secondary: 'var(--color-secondary)',
+              bg: 'var(--color-bg)',
+              surface: 'var(--color-surface)',
+              surfaceAlt: 'var(--color-surface-alt)',
+              text: 'var(--color-text)',
+              muted: 'var(--color-muted)',
+              border: 'var(--color-border)',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      --color-primary: #1d4ed8;       /* Azul clásico estilo videoclub */
+      --color-primary-hover: #1e40af;
+      --color-secondary: #facc15;     /* Amarillo ticket retro */
+      --color-bg: #f8fafc;
+      --color-surface: #ffffff;
+      --color-surface-alt: #f1f5f9;
+      --color-text: #0f172a;
+      --color-muted: #475569;
+      --color-border: #cbd5e1;
+      --color-primary-contrast: #ffffff;
+      --color-secondary-contrast: #0f172a;
+    }
+
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .theme-card {
+      background-color: var(--color-surface);
+      border-color: var(--color-border);
+      transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .theme-surface-alt {
+      background-color: var(--color-surface-alt);
+      border-color: var(--color-border);
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: var(--color-primary-contrast);
+      transition: filter 0.2s ease, transform 0.15s ease;
+    }
+    .btn-primary:hover {
+      filter: brightness(1.1);
+    }
+
+    .btn-secondary {
+      background-color: var(--color-secondary);
+      color: var(--color-secondary-contrast);
+      transition: filter 0.2s ease, transform 0.15s ease;
+    }
+    .btn-secondary:hover {
+      filter: brightness(1.06);
+    }
+
+    /* Ticket perforado decorativo */
+    .ticket-badge {
+      position: relative;
+      background-color: var(--color-secondary);
+      color: var(--color-secondary-contrast);
+    }
+
+    /* Animaciones suaves de cambio de vista */
+    .page-section {
+      animation: fadeSlideIn 0.3s ease-out;
+    }
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Scrollbar limpio para diagramas UML en móviles */
+    .uml-scroll::-webkit-scrollbar {
+      height: 8px;
+    }
+    .uml-scroll::-webkit-scrollbar-track {
+      background: var(--color-surface-alt);
+      border-radius: 9999px;
+    }
+    .uml-scroll::-webkit-scrollbar-thumb {
+      background: var(--color-border);
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased selection:bg-yellow-300 selection:text-slate-900">
+
+  <!-- BARRA DE NAVEGACIÓN PRINCIPAL -->
+  <header class="sticky top-0 z-40 border-b backdrop-blur-md transition-colors duration-200" style="background-color: color-mix(in srgb, var(--color-surface) 90%, transparent); border-color: var(--color-border);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-2">
+        
+        <!-- Logo Sockbuster -->
+        <a href="#inicio" onclick="navigateTo('inicio'); return false;" class="flex items-center gap-2.5 group focus:outline-none">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shadow-md transition-transform group-hover:rotate-[-4deg]" style="background-color: var(--color-primary); color: var(--color-primary-contrast);">
+            <!-- Ícono SVG de Calcetín + Cinta VHS -->
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 3h8v7.5a5.5 5.5 0 0 1-2.2 4.4l-2.6 1.95a2.8 2.8 0 0 1-4.3-1.45A2.8 2.8 0 0 1 8 12.1V3z"/>
+              <path d="M8 6.5h8"/>
+              <path d="M8 9.5h8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-display font-extrabold text-xl sm:text-2xl tracking-tight leading-none" style="color: var(--color-text);">
+              SOCK<span style="color: var(--color-primary);">BUSTER</span>
+            </span>
+            <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest" style="color: var(--color-muted);">
+              Pop Culture Socks
+            </span>
+          </div>
+        </a>
+
+        <!-- Navegación 3 Páginas (Desktop) -->
+        <nav aria-label="Navegación Principal" class="hidden md:flex items-center gap-1.5 p-1.5 rounded-2xl border" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+          <button id="nav-inicio" onclick="navigateTo('inicio')" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer">
+            Inicio
+          </button>
+          <button id="nav-catalogo" onclick="navigateTo('catalogo')" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer">
+            Catálogo
+          </button>
+          <button id="nav-uml" onclick="navigateTo('uml')" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer">
+            Estructura UML (4+1)
+          </button>
+        </nav>
+
+        <!-- Acciones Derecha: Personalizador de Color + Carrito -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Botón Abrir Personalizador de Color -->
+          <button onclick="toggleThemePanel()" class="flex items-center gap-2 px-3 py-2 rounded-xl border text-xs sm:text-sm font-semibold shadow-sm hover:opacity-90 transition cursor-pointer" style="background-color: var(--color-surface-alt); border-color: var(--color-border); color: var(--color-text);" title="Cambiar colores de la página">
+            <span class="w-4 h-4 rounded-full border border-white shadow-inner inline-block" style="background-color: var(--color-primary);"></span>
+            <span class="hidden sm:inline">Color</span>
+            <svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+            </svg>
+          </button>
+
+          <!-- Botón Carrito -->
+          <button onclick="toggleCartDrawer()" class="relative flex items-center gap-2 px-3.5 py-2 rounded-xl btn-primary text-xs sm:text-sm font-bold shadow-sm cursor-pointer" aria-label="Abrir carrito de compras">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <span id="cart-count-badge" class="px-1.5 py-0.5 text-xs font-extrabold rounded-full" style="background-color: var(--color-secondary); color: var(--color-secondary-contrast);">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navegación Móvil (3 páginas siempre accesibles en pantallas pequeñas) -->
+      <div class="flex md:hidden items-center justify-between gap-1 pb-3 pt-1">
+        <button id="mob-nav-inicio" onclick="navigateTo('inicio')" class="flex-1 py-2 rounded-xl text-xs font-bold text-center transition">
+          Inicio
+        </button>
+        <button id="mob-nav-catalogo" onclick="navigateTo('catalogo')" class="flex-1 py-2 rounded-xl text-xs font-bold text-center transition">
+          Catálogo
+        </button>
+        <button id="mob-nav-uml" onclick="navigateTo('uml')" class="flex-1 py-2 rounded-xl text-xs font-bold text-center transition">
+          Estructura UML
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- PANEL FLOTANTE PERSONALIZADOR DE COLORES -->
+  <aside id="theme-panel" class="hidden fixed right-4 top-24 z-50 w-80 max-w-[calc(100vw-2rem)] rounded-2xl border p-5 shadow-2xl theme-card" aria-label="Personalizador de tema y colores">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full" style="background-color: var(--color-primary);"></span>
+        <h3 class="font-display font-bold text-base">Personalizar Colores</h3>
+      </div>
+      <button onclick="toggleThemePanel()" class="p-1.5 rounded-lg hover:opacity-75 cursor-pointer" style="background-color: var(--color-surface-alt);" aria-label="Cerrar panel de colores">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Selector Modo Claro / Oscuro -->
+    <div class="mb-4">
+      <label class="block text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-muted);">Esquema Base</label>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="setBaseMode('light')" id="mode-light-btn" class="py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer transition">
+          ☀️ Modo Claro
+        </button>
+        <button onclick="setBaseMode('dark')" id="mode-dark-btn" class="py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer transition">
+          🌙 Modo Oscuro
+        </button>
+      </div>
+    </div>
+
+    <!-- Paletas Predefinidas -->
+    <div class="mb-4">
+      <label class="block text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-muted);">Paletas Temáticas</label>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="applyPreset('blockbuster')" class="p-2 rounded-xl border text-left text-xs font-semibold flex items-center gap-2 hover:scale-[1.02] transition cursor-pointer" style="border-color: var(--color-border);">
+          <span class="w-4 h-4 rounded-full shrink-0 border border-black/10" style="background: linear-gradient(135deg, #1d4ed8 50%, #facc15 50%);"></span>
+          <span>Clásico VHS</span>
+        </button>
+        <button onclick="applyPreset('cyberpunk')" class="p-2 rounded-xl border text-left text-xs font-semibold flex items-center gap-2 hover:scale-[1.02] transition cursor-pointer" style="border-color: var(--color-border);">
+          <span class="w-4 h-4 rounded-full shrink-0 border border-black/10" style="background: linear-gradient(135deg, #9333ea 50%, #22d3ee 50%);"></span>
+          <span>Neón Synth</span>
+        </button>
+        <button onclick="applyPreset('cinema')" class="p-2 rounded-xl border text-left text-xs font-semibold flex items-center gap-2 hover:scale-[1.02] transition cursor-pointer" style="border-color: var(--color-border);">
+          <span class="w-4 h-4 rounded-full shrink-0 border border-black/10" style="background: linear-gradient(135deg, #dc2626 50%, #fbbf24 50%);"></span>
+          <span>Alfombra Roja</span>
+        </button>
+        <button onclick="applyPreset('arcade')" class="p-2 rounded-xl border text-left text-xs font-semibold flex items-center gap-2 hover:scale-[1.02] transition cursor-pointer" style="border-color: var(--color-border);">
+          <span class="w-4 h-4 rounded-full shrink-0 border border-black/10" style="background: linear-gradient(135deg, #059669 50%, #a3e635 50%);"></span>
+          <span>Verde Arcade</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Selectores Libres de Color -->
+    <div class="space-y-3 pt-3 border-t" style="border-color: var(--color-border);">
+      <div class="flex items-center justify-between">
+        <label for="custom-primary-picker" class="text-xs font-semibold">Color Principal:</label>
+        <div class="flex items-center gap-2">
+          <span id="primary-hex-label" class="text-xs font-mono uppercase" style="color: var(--color-muted);">#1D4ED8</span>
+          <input type="color" id="custom-primary-picker" value="#1d4ed8" oninput="updateCustomColor('primary', this.value)" class="w-8 h-8 rounded-lg cursor-pointer border-0 bg-transparent" />
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <label for="custom-secondary-picker" class="text-xs font-semibold">Color Acento / Detalles:</label>
+        <div class="flex items-center gap-2">
+          <span id="secondary-hex-label" class="text-xs font-mono uppercase" style="color: var(--color-muted);">#FACC15</span>
+          <input type="color" id="custom-secondary-picker" value="#facc15" oninput="updateCustomColor('secondary', this.value)" class="w-8 h-8 rounded-lg cursor-pointer border-0 bg-transparent" />
+        </div>
+      </div>
+    </div>
+
+    <button onclick="resetTheme()" class="mt-4 w-full py-2 rounded-xl text-xs font-semibold border hover:opacity-80 transition cursor-pointer" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+      Restaurar Colores Originales
+    </button>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL (SPA CON 3 PÁGINAS) -->
+  <main class="flex-1">
+
+    <!-- ===================================================================== -->
+    <!-- PÁGINA 1: INICIO (PRESENTACIÓN, BANNER Y AUTORÍA DE BENJAMÍN SANHUEZA) -->
+    <!-- ===================================================================== -->
+    <section id="page-inicio" class="page-section">
+      <!-- Banner Principal Hero -->
+      <div class="relative overflow-hidden border-b" style="border-color: var(--color-border);">
+        <!-- Decoración sutil de fondo -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(var(--color-primary) 1.5px, transparent 1.5px); background-size: 24px 24px;"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-24 relative">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            
+            <!-- Columna Texto Hero -->
+            <div class="lg:col-span-7 space-y-6">
+              <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold shadow-sm ticket-badge">
+                <span>🎟️ ESTRENO DE TEMPORADA</span>
+                <span>•</span>
+                <span>COLECCIÓN CULTURA POP</span>
+              </div>
+
+              <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.08]">
+                El cine y los clásicos retro <span class="underline decoration-4 underline-offset-4" style="text-decoration-color: var(--color-secondary); color: var(--color-primary);">a tus pies</span>.
+              </h1>
+
+              <p class="text-base sm:text-lg max-w-2xl leading-relaxed" style="color: var(--color-muted);">
+                Bienvenido a <strong>Sockbuster</strong>, el videoclub convertido en tienda de calcetines temáticos coleccionables. Diseños inspirados en cintas VHS, salas de arcade, ciencia ficción y películas de culto, tejidos con algodón peinado de máxima comodidad.
+              </p>
+
+              <!-- Etiqueta destacada de desarrollo -->
+              <div class="p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 theme-card shadow-sm">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center font-display font-extrabold text-sm shrink-0" style="background-color: var(--color-primary); color: var(--color-primary-contrast);">
+                    BS
+                  </div>
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider" style="color: var(--color-muted);">Actividad Desarrollada por</p>
+                    <p class="font-display font-bold text-base sm:text-lg" style="color: var(--color-text);">Benjamín Sanhueza</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold self-start sm:self-center" style="background-color: var(--color-surface-alt); color: var(--color-primary);">
+                  Arquitectura & Desarrollo Web
+                </span>
+              </div>
+
+              <!-- Botones de Acción -->
+              <div class="flex flex-wrap items-center gap-3 pt-2">
+                <button onclick="navigateTo('catalogo')" class="px-6 py-3.5 rounded-2xl btn-primary font-display font-bold text-sm sm:text-base shadow-lg hover:-translate-y-0.5 transition flex items-center gap-2 cursor-pointer">
+                  <span>Explorar Catálogo</span>
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                </button>
+                <button onclick="navigateTo('uml')" class="px-6 py-3.5 rounded-2xl border font-display font-bold text-sm sm:text-base hover:-translate-y-0.5 transition flex items-center gap-2 cursor-pointer theme-card">
+                  <svg class="w-5 h-5" style="color: var(--color-primary);" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                  <span>Ver Estructura UML (4+1)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Columna Ilustración Hero SVG -->
+            <div class="lg:col-span-5 flex justify-center">
+              <div class="relative w-full max-w-md p-6 sm:p-8 rounded-3xl border shadow-xl theme-card">
+                <!-- Ticket flotante superior -->
+                <div class="absolute -top-4 -right-3 px-4 py-1.5 rounded-xl font-display font-extrabold text-xs sm:text-sm shadow-md rotate-3 btn-secondary">
+                  ¡REBOBINA TU ESTILO! ⏪
+                </div>
+
+                <!-- Ilustración SVG de Caja VHS + Par de Calcetines Estelares -->
+                <svg viewBox="0 0 360 300" class="w-full h-auto drop-shadow-md" role="img" aria-label="Ilustración de calcetines temáticos Sockbuster estilo cinta VHS">
+                  <!-- Fondo circular suave -->
+                  <circle cx="180" cy="150" r="125" fill="var(--color-surface-alt)" />
+                  
+                  <!-- Carátula estilo VHS atrás -->
+                  <rect x="45" y="45" width="165" height="215" rx="14" fill="var(--color-primary)" />
+                  <rect x="57" y="57" width="141" height="44" rx="6" fill="var(--color-secondary)" />
+                  <text x="127" y="84" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="800" font-size="16" fill="#0f172a">SOCKBUSTER</text>
+                  <line x1="60" y1="118" x2="195" y2="118" stroke="#ffffff" stroke-width="4" stroke-opacity="0.4" stroke-linecap="round"/>
+                  <line x1="60" y1="134" x2="165" y2="134" stroke="#ffffff" stroke-width="4" stroke-opacity="0.4" stroke-linecap="round"/>
+                  <rect x="60" y="195" width="68" height="24" rx="5" fill="#ffffff" fill-opacity="0.2" />
+                  <text x="94" y="211" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="10" fill="#ffffff">EDICIÓN VHS</text>
+
+                  <!-- Calcetín Izquierdo (Inclinado) -->
+                  <g transform="translate(155, 55) rotate(-8)">
+                    <path d="M25 10 H85 V125 C85 152 68 172 45 186 L22 200 C5 210 -15 198 -18 180 C-21 162 -8 146 8 137 L25 127 Z" fill="#ffffff" stroke="#0f172a" stroke-width="4" stroke-linejoin="round"/>
+                    <!-- Puño elástico -->
+                    <rect x="25" y="10" width="60" height="28" fill="var(--color-secondary)" stroke="#0f172a" stroke-width="4"/>
+                    <line x1="25" y1="20" x2="85" y2="20" stroke="#0f172a" stroke-width="2.5"/>
+                    <!-- Talón y puntera -->
+                    <path d="M85 112 C66 112 58 128 68 144 C78 134 85 124 85 112 Z" fill="var(--color-primary)" stroke="#0f172a" stroke-width="3"/>
+                    <path d="M6 140 C-10 150 -20 165 -17 181 C-14 196 3 207 19 200 L28 194 C15 180 8 162 6 140 Z" fill="var(--color-primary)" stroke="#0f172a" stroke-width="3"/>
+                    <!-- Estrella retro -->
+                    <polygon points="55,62 60,74 73,74 63,82 67,95 55,87 43,95 47,82 37,74 50,74" fill="var(--color-secondary)" stroke="#0f172a" stroke-width="2"/>
+                  </g>
+
+                  <!-- Calcetín Derecho (Primer plano) -->
+                  <g transform="translate(215, 75) rotate(10)">
+                    <path d="M25 10 H85 V125 C85 152 68 172 45 186 L22 200 C5 210 -15 198 -18 180 C-21 162 -8 146 8 137 L25 127 Z" fill="#1e293b" stroke="#0f172a" stroke-width="4" stroke-linejoin="round"/>
+                    <rect x="25" y="10" width="60" height="28" fill="var(--color-primary)" stroke="#0f172a" stroke-width="4"/>
+                    <line x1="25" y1="20" x2="85" y2="20" stroke="#ffffff" stroke-width="2.5"/>
+                    <!-- Rayas arcade -->
+                    <rect x="27" y="55" width="56" height="10" fill="var(--color-secondary)"/>
+                    <rect x="27" y="75" width="56" height="10" fill="#38bdf8"/>
+                    <rect x="27" y="95" width="56" height="10" fill="#f43f5e"/>
+                    <!-- Puntera -->
+                    <path d="M6 140 C-10 150 -20 165 -17 181 C-14 196 3 207 19 200 L28 194 C15 180 8 162 6 140 Z" fill="var(--color-secondary)" stroke="#0f172a" stroke-width="3"/>
+                  </g>
+                </svg>
+
+                <div class="mt-4 pt-4 border-t flex items-center justify-between text-xs font-semibold" style="border-color: var(--color-border); color: var(--color-muted);">
+                  <span>Algodón Peinado 80%</span>
+                  <span>Tallas S/M y L/XL</span>
+                  <span>Envíos a todo Chile</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección Propuesta de Valor & Créditos -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl mb-3">¿Por qué elegir Sockbuster?</h2>
+          <p class="text-sm sm:text-base" style="color: var(--color-muted);">
+            Combinamos nostalgia cinematográfica, diseño textil de alta definición y una arquitectura de software moderna.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Card 1 -->
+          <div class="p-6 rounded-2xl border theme-card shadow-sm">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-xl font-bold" style="background-color: var(--color-surface-alt); color: var(--color-primary);">
+              🎬
+            </div>
+            <h3 class="font-display font-bold text-lg mb-2">Ediciones de Culto</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--color-muted);">
+              Cada par rinde homenaje a géneros icónicos: terror clásico, ciencia ficción espacial, máquinas arcade de los 80 y cine independiente.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="p-6 rounded-2xl border theme-card shadow-sm">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-xl font-bold" style="background-color: var(--color-surface-alt); color: var(--color-primary);">
+              🧦
+            </div>
+            <h3 class="font-display font-bold text-lg mb-2">Tejido Jacquard 200 Agujas</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--color-muted);">
+              No son estampados que se borran: los diseños están tejidos hilo por hilo para mantener colores vibrantes lavado tras lavado.
+            </p>
+          </div>
+
+          <!-- Card 3: Tarjeta de Autoría Benjamín Sanhueza -->
+          <div class="p-6 rounded-2xl border theme-card shadow-sm relative overflow-hidden">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-xl font-bold" style="background-color: var(--color-primary); color: var(--color-primary-contrast);">
+              💻
+            </div>
+            <h3 class="font-display font-bold text-lg mb-2">Créditos del Proyecto</h3>
+            <p class="text-sm leading-relaxed mb-3" style="color: var(--color-muted);">
+              Plataforma interactiva diseñada y desarrollada por <strong>Benjamín Sanhueza</strong>, integrando catálogo dinámico y modelado arquitectónico UML 4+1.
+            </p>
+            <button onclick="navigateTo('uml')" class="text-xs font-bold underline cursor-pointer" style="color: var(--color-primary);">
+              Explorar documentación técnica →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- PÁGINA 2: CATÁLOGO INTERACTIVO DE CALCETINES TEMÁTICOS                -->
+    <!-- ===================================================================== -->
+    <section id="page-catalogo" class="page-section hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        
+        <!-- Encabezado Catálogo -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+          <div>
+            <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2 ticket-badge">
+              Cartelera Oficial
+            </span>
+            <h1 class="font-display font-extrabold text-3xl sm:text-4xl">Catálogo de Calcetines</h1>
+            <p class="text-sm sm:text-base mt-1" style="color: var(--color-muted);">
+              Filtra por temática, busca tu modelo favorito y haz clic en cualquier par para ver sus detalles técnicos y tallas.
+            </p>
+          </div>
+          <div class="text-sm font-semibold" style="color: var(--color-muted);">
+            Mostrando <span id="catalog-count" class="font-bold" style="color: var(--color-text);">9</span> modelos disponibles
+          </div>
+        </div>
+
+        <!-- Barra de Filtros, Búsqueda y Ordenamiento -->
+        <div class="p-4 sm:p-5 rounded-2xl border theme-card shadow-sm mb-8 space-y-4">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            
+            <!-- Botones de Filtro por Categoría -->
+            <div class="flex flex-wrap items-center gap-2" id="category-filters" role="group" aria-label="Filtrar por categoría">
+              <button onclick="setCategoryFilter('Todos')" data-cat="Todos" class="cat-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer">
+                Todos
+              </button>
+              <button onclick="setCategoryFilter('Cine Clásico')" data-cat="Cine Clásico" class="cat-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer">
+                🎬 Cine Clásico
+              </button>
+              <button onclick="setCategoryFilter('Retro & Arcade')" data-cat="Retro & Arcade" class="cat-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer">
+                🕹️ Retro & Arcade
+              </button>
+              <button onclick="setCategoryFilter('Sci-Fi & Culto')" data-cat="Sci-Fi & Culto" class="cat-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer">
+                🛸 Sci-Fi & Culto
+              </button>
+              <button onclick="setCategoryFilter('Edición Limitada')" data-cat="Edición Limitada" class="cat-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer">
+                ⭐ Edición Limitada
+              </button>
+            </div>
+
+            <!-- Buscador y Ordenamiento -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <div class="relative">
+                <input type="text" id="search-input" oninput="renderCatalog()" placeholder="Buscar calcetín..." class="w-full sm:w-56 pl-9 pr-3 py-2 rounded-xl border text-sm focus:outline-none focus:ring-2" style="background-color: var(--color-surface-alt); border-color: var(--color-border); color: var(--color-text);" />
+                <svg class="w-4 h-4 absolute left-3 top-2.5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              </div>
+
+              <select id="sort-select" onchange="renderCatalog()" aria-label="Ordenar productos" class="px-3 py-2 rounded-xl border text-sm font-medium focus:outline-none cursor-pointer" style="background-color: var(--color-surface-alt); border-color: var(--color-border); color: var(--color-text);">
+                <option value="featured">Orden: Destacados</option>
+                <option value="price-asc">Precio: Menor a Mayor</option>
+                <option value="price-desc">Precio: Mayor a Menor</option>
+                <option value="name-asc">Nombre: A - Z</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grilla de Productos -->
+        <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Renderizado dinámicamente vía JS -->
+        </div>
+
+        <!-- Estado vacío cuando no hay coincidencias -->
+        <div id="catalog-empty" class="hidden text-center py-16 px-4 rounded-2xl border theme-card">
+          <p class="text-4xl mb-3">📼</p>
+          <h3 class="font-display font-bold text-xl mb-1">No encontramos esa cinta en el estante</h3>
+          <p class="text-sm mb-4" style="color: var(--color-muted);">Intenta limpiar los filtros o buscar con otra palabra clave.</p>
+          <button onclick="resetFilters()" class="px-5 py-2.5 rounded-xl btn-primary text-sm font-bold cursor-pointer">
+            Ver todos los calcetines
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- PÁGINA 3: ESTRUCTURA UML (PARADIGMA ARQUITECTÓNICO 4+1)               -->
+    <!-- ===================================================================== -->
+    <section id="page-uml" class="page-section hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        
+        <!-- Encabezado Documentación Técnica -->
+        <div class="mb-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2 ticket-badge">
+            <span>📐 DOCUMENTACIÓN TÉCNICA UML 2.5 • CASO DE ESTUDIO SOCKBUSTER</span>
+          </div>
+          <h1 class="font-display font-extrabold text-3xl sm:text-4xl">Arquitectura UML — Paradigma 4+1</h1>
+          <p class="text-sm sm:text-base mt-2 max-w-4xl" style="color: var(--color-muted);">
+            Modelado arquitectónico riguroso del sistema <strong>Sockbuster Video & Socks</strong> bajo el estándar <strong>UML 2.5</strong> y el <strong>Paradigma 4+1 de Philippe Kruchten</strong>, elaborado por <strong>Benjamín Sanhueza</strong>. Todos los diagramas trazan explícitamente los 4 Requerimientos Funcionales (RF01–RF04) y 2 Requerimientos No Funcionales (RNF01–RNF02).
+          </p>
+        </div>
+
+        <!-- Matriz Rápida de Trazabilidad de Requerimientos (RF01-RF04 y RNF01-RNF02) -->
+        <div class="rounded-3xl border p-5 sm:p-6 theme-card shadow-sm mb-8">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b" style="border-color: var(--color-border);">
+            <div>
+              <h2 class="font-display font-extrabold text-lg sm:text-xl">Especificación y Trazabilidad de Requerimientos (RF & RNF)</h2>
+              <p class="text-xs sm:text-sm" style="color: var(--color-muted);">Base normativa del modelado arquitectónico según especificación del caso de estudio.</p>
+            </div>
+            <span class="px-3 py-1 rounded-xl text-xs font-bold self-start sm:self-center" style="background-color: var(--color-surface-alt); color: var(--color-primary);">
+              4 Funcionales • 2 No Funcionales
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            <!-- RF01 -->
+            <div class="p-3.5 rounded-2xl border flex flex-col justify-between" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-1.5">
+                  <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold btn-primary">RF01</span>
+                  <span class="text-[10px] font-bold uppercase tracking-wider" style="color: var(--color-muted);">Catálogo Temático</span>
+                </div>
+                <h3 class="font-display font-bold text-sm mb-1">Catálogo por Colecciones Temáticas</h3>
+                <p class="text-xs leading-relaxed" style="color: var(--color-muted);">
+                  Explorar y filtrar calcetines por colecciones (<em>Ciencia Ficción, Terror 80s, Series de Drama, Animación</em>) mostrando foto, precio, stock y tallas disponibles.
+                </p>
+              </div>
+              <div class="mt-2.5 pt-2 border-t text-[10px] font-mono font-semibold" style="border-color: var(--color-border); color: var(--color-primary);">
+                Vistas: Lógica, Desarrollo, Procesos, Escenarios
+              </div>
+            </div>
+
+            <!-- RF02 -->
+            <div class="p-3.5 rounded-2xl border flex flex-col justify-between" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-1.5">
+                  <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold btn-primary">RF02</span>
+                  <span class="text-[10px] font-bold uppercase tracking-wider" style="color: var(--color-muted);">E-Commerce Core</span>
+                </div>
+                <h3 class="font-display font-bold text-sm mb-1">Carrito y Gestión de Pedidos (UUID)</h3>
+                <p class="text-xs leading-relaxed" style="color: var(--color-muted);">
+                  Agregar productos, modificar cantidades y ejecutar verificación de pago (checkout) generando resumen de pedido con identificador único (UUID).
+                </p>
+              </div>
+              <div class="mt-2.5 pt-2 border-t text-[10px] font-mono font-semibold" style="border-color: var(--color-border); color: var(--color-primary);">
+                Vistas: Lógica, Desarrollo, Procesos, Escenarios
+              </div>
+            </div>
+
+            <!-- RF03 -->
+            <div class="p-3.5 rounded-2xl border flex flex-col justify-between" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-1.5">
+                  <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold btn-primary">RF03</span>
+                  <span class="text-[10px] font-bold uppercase tracking-wider" style="color: var(--color-muted);">Backoffice Admin</span>
+                </div>
+                <h3 class="font-display font-bold text-sm mb-1">Administración de Inventario y Temáticas</h3>
+                <p class="text-xs leading-relaxed" style="color: var(--color-muted);">
+                  Registrar nuevos modelos de calcetines, asociarlos a una película/serie de culto, actualizar existencias (stock) y modificar precios unitarios.
+                </p>
+              </div>
+              <div class="mt-2.5 pt-2 border-t text-[10px] font-mono font-semibold" style="border-color: var(--color-border); color: var(--color-primary);">
+                Vistas: Lógica, Desarrollo, Procesos, Escenarios
+              </div>
+            </div>
+
+            <!-- RF04 -->
+            <div class="p-3.5 rounded-2xl border flex flex-col justify-between" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-1.5">
+                  <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold btn-primary">RF04</span>
+                  <span class="text-[10px] font-bold uppercase tracking-wider" style="color: var(--color-muted);">Comunidad</span>
+                </div>
+                <h3 class="font-display font-bold text-sm mb-1">Gestión de Reseñas de Fanáticos</h3>
+                <p class="text-xs leading-relaxed" style="color: var(--color-muted);">
+                  Usuarios registrados publican valoraciones (1 a 5 estrellas) y comentarios verificados en la ficha de cada producto sobre diseño y calidad textil.
+                </p>
+              </div>
+              <div class="mt-2.5 pt-2 border-t text-[10px] font-mono font-semibold" style="border-color: var(--color-border); color: var(--color-primary);">
+                Vistas: Lógica, Desarrollo, Procesos, Escenarios
+              </div>
+            </div>
+
+            <!-- RNF01 -->
+            <div class="p-3.5 rounded-2xl border flex flex-col justify-between" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-1.5">
+                  <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold ticket-badge">RNF01</span>
+                  <span class="text-[10px] font-bold uppercase tracking-wider" style="color: var(--color-muted);">Rendimiento & Cloud</span>
+                </div>
+                <h3 class="font-display font-bold text-sm mb-1">Disponibilidad y Despliegue Cloud (&lt;2s)</h3>
+                <p class="text-xs leading-relaxed" style="color: var(--color-muted);">
+                  Interfaz web pública disponible en línea mediante CDN Edge / Hosting Cloud con tiempo de respuesta inicial inferior a 2 segundos.
+                </p>
+              </div>
+              <div class="mt-2.5 pt-2 border-t text-[10px] font-mono font-semibold" style="border-color: var(--color-border); color: var(--color-primary);">
+                Vistas: Física (Despliegue), Desarrollo
+              </div>
+            </div>
+
+            <!-- RNF02 -->
+            <div class="p-3.5 rounded-2xl border flex flex-col justify-between" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-1.5">
+                  <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold ticket-badge">RNF02</span>
+                  <span class="text-[10px] font-bold uppercase tracking-wider" style="color: var(--color-muted);">Ciberseguridad</span>
+                </div>
+                <h3 class="font-display font-bold text-sm mb-1">Seguridad HTTPS y Autenticación JWT</h3>
+                <p class="text-xs leading-relaxed" style="color: var(--color-muted);">
+                  Comunicaciones cifradas sobre HTTPS (TLS 1.3) y control de acceso basado en tokens firmados JSON Web Tokens (JWT) para rutas administrativas y reseñas.
+                </p>
+              </div>
+              <div class="mt-2.5 pt-2 border-t text-[10px] font-mono font-semibold" style="border-color: var(--color-border); color: var(--color-primary);">
+                Vistas: Física, Procesos, Desarrollo, Escenarios
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selector de las 5 Vistas del Paradigma 4+1 -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 mb-8" role="tablist" aria-label="Vistas del Paradigma 4+1">
+          <button onclick="selectUmlView('logica')" id="tab-uml-logica" role="tab" class="uml-tab p-3.5 rounded-2xl border text-left transition cursor-pointer">
+            <span class="block text-[11px] font-bold uppercase opacity-75">Vista 1 • UML 2.5</span>
+            <span class="font-display font-bold text-sm sm:text-base">Vista Lógica</span>
+          </button>
+
+          <button onclick="selectUmlView('desarrollo')" id="tab-uml-desarrollo" role="tab" class="uml-tab p-3.5 rounded-2xl border text-left transition cursor-pointer">
+            <span class="block text-[11px] font-bold uppercase opacity-75">Vista 2 • UML 2.5</span>
+            <span class="font-display font-bold text-sm sm:text-base">Vista de Desarrollo</span>
+          </button>
+
+          <button onclick="selectUmlView('procesos')" id="tab-uml-procesos" role="tab" class="uml-tab p-3.5 rounded-2xl border text-left transition cursor-pointer">
+            <span class="block text-[11px] font-bold uppercase opacity-75">Vista 3 • UML 2.5</span>
+            <span class="font-display font-bold text-sm sm:text-base">Vista de Procesos</span>
+          </button>
+
+          <button onclick="selectUmlView('fisica')" id="tab-uml-fisica" role="tab" class="uml-tab p-3.5 rounded-2xl border text-left transition cursor-pointer">
+            <span class="block text-[11px] font-bold uppercase opacity-75">Vista 4 • UML 2.5</span>
+            <span class="font-display font-bold text-sm sm:text-base">Vista Física</span>
+          </button>
+
+          <button onclick="selectUmlView('escenarios')" id="tab-uml-escenarios" role="tab" class="uml-tab col-span-2 sm:col-span-1 p-3.5 rounded-2xl border text-left transition cursor-pointer">
+            <span class="block text-[11px] font-bold uppercase opacity-75">5ta Vista (+1)</span>
+            <span class="font-display font-bold text-sm sm:text-base">Escenarios (Casos de Uso)</span>
+          </button>
+        </div>
+
+        <!-- Contenedor Dinámico de la Vista UML Activa -->
+        <div id="uml-content-container" class="rounded-3xl border p-5 sm:p-8 theme-card shadow-sm">
+          <!-- Se inyecta el contenido detallado y diagrama SVG de la vista seleccionada -->
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL DE DETALLE DEL PRODUCTO -->
+  <div id="product-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs" role="dialog" aria-modal="true" aria-labelledby="modal-product-title">
+    <div class="w-full max-w-2xl rounded-3xl border p-6 sm:p-8 shadow-2xl theme-card relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeProductModal()" class="absolute top-4 right-4 p-2 rounded-xl border hover:opacity-75 cursor-pointer" style="background-color: var(--color-surface-alt); border-color: var(--color-border);" aria-label="Cerrar detalle de producto">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div id="modal-product-body">
+        <!-- Contenido inyectado dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- DRAWER / MODAL DE CARRITO DE COMPRAS -->
+  <div id="cart-drawer" class="hidden fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-xs" role="dialog" aria-modal="true" aria-label="Carrito de compras">
+    <div class="w-full max-w-md h-full flex flex-col border-l shadow-2xl theme-card">
+      <div class="p-5 border-b flex items-center justify-between" style="border-color: var(--color-border);">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🛒</span>
+          <h2 class="font-display font-extrabold text-xl">Tu Carrito Sockbuster</h2>
+        </div>
+        <button onclick="toggleCartDrawer()" class="p-2 rounded-xl hover:opacity-75 cursor-pointer" style="background-color: var(--color-surface-alt);" aria-label="Cerrar carrito">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-3">
+        <!-- Ítems del carrito -->
+      </div>
+
+      <div class="p-5 border-t space-y-4" style="border-color: var(--color-border); background-color: var(--color-surface-alt);">
+        <div class="flex items-center justify-between text-base font-bold">
+          <span>Total Estimado:</span>
+          <span id="cart-total-price" class="font-display text-xl" style="color: var(--color-primary);">$0 CLP</span>
+        </div>
+        <button onclick="checkoutSimulation()" id="checkout-btn" class="w-full py-3.5 rounded-2xl btn-primary font-display font-bold text-sm sm:text-base shadow-md cursor-pointer">
+          Finalizar Pedido
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFICACIÓN TOAST (Sin usar alert()) -->
+  <div id="toast-notification" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden px-5 py-3 rounded-2xl shadow-xl font-semibold text-sm flex items-center gap-2.5 transition-all" style="background-color: var(--color-text); color: var(--color-surface);">
+    <span id="toast-icon">✅</span>
+    <span id="toast-message">Producto agregado al carrito</span>
+  </div>
+
+  <!-- PIE DE PÁGINA (FOOTER) -->
+  <footer class="border-t mt-auto" style="background-color: var(--color-surface); border-color: var(--color-border);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <span class="font-display font-extrabold text-lg">SOCK<span style="color: var(--color-primary);">BUSTER</span></span>
+        <span class="text-xs px-2.5 py-0.5 rounded-md font-semibold" style="background-color: var(--color-surface-alt); color: var(--color-muted);">
+          Catálogo & Arquitectura 4+1
+        </span>
+      </div>
+
+      <p class="text-xs sm:text-sm text-center sm:text-right font-medium" style="color: var(--color-muted);">
+        Desarrollado por <strong style="color: var(--color-text);">Benjamín Sanhueza</strong> • Todos los derechos reservados © 2026
+      </p>
+    </div>
+  </footer>
+
+  <!-- LÓGICA JAVASCRIPT DE LA APLICACIÓN -->
+  <script>
+    // =========================================================================
+    // 1. DATOS DEL CATÁLOGO DE CALCETINES TEMÁTICOS SOCKBUSTER
+    // =========================================================================
+    const PRODUCTS = [
+      {
+        id: 'sb-01',
+        name: 'VHS Retro 80s',
+        category: 'Retro & Arcade',
+        price: 7990,
+        badge: 'Más Vendido',
+        tagline: 'Be Kind, Rewind en cada paso.',
+        description: 'Inspirados en las icónicas cintas magnéticas de videoclub de los años 80. Incluye detalles tejidos de carrete de cinta y etiqueta lateral personalizable.',
+        materials: '80% Algodón peinado, 17% Poliamida, 3% Elastano',
+        colors: ['#1d4ed8', '#facc15', '#0f172a'],
+        pattern: 'vhs'
+      },
+      {
+        id: 'sb-02',
+        name: 'Palomitas de Medianoche',
+        category: 'Cine Clásico',
+        price: 6990,
+        badge: 'Clásico',
+        tagline: 'El acompañante oficial de toda maratón.',
+        description: 'Rayas rojas y blancas estilo caja clásica de cine con textura en relieve de palomitas de maíz recién hechas en la caña del calcetín.',
+        materials: '82% Algodón orgánico, 15% Poliamida, 3% Elastano',
+        colors: ['#dc2626', '#ffffff', '#facc15'],
+        pattern: 'popcorn'
+      },
+      {
+        id: 'sb-03',
+        name: 'Invasión Arcade 8-Bit',
+        category: 'Retro & Arcade',
+        price: 8490,
+        badge: 'Nuevo',
+        tagline: 'Inserta una moneda para continuar.',
+        description: 'Naves espaciales pixeladas, corazones de vida extra y puntuación máxima sobre un fondo negro profundo de pantalla CRT.',
+        materials: '78% Algodón peinado, 19% Poliamida, 3% Elastano',
+        colors: ['#111827', '#22c55e', '#a855f7'],
+        pattern: 'arcade'
+      },
+      {
+        id: 'sb-04',
+        name: 'Odisea Galáctica',
+        category: 'Sci-Fi & Culto',
+        price: 8990,
+        badge: 'Edición Limitada',
+        tagline: 'Más allá de la órbita terrestre.',
+        description: 'Nebulosas violetas, anillos de Saturno y un transbordador espacial explorando el cosmos. Ideal para fanáticos de la ciencia ficción espacial.',
+        materials: '80% Algodón peinado, 17% Poliamida, 3% Elastano',
+        colors: ['#312e81', '#38bdf8', '#f472b6'],
+        pattern: 'space'
+      },
+      {
+        id: 'sb-05',
+        name: 'Tiburón de Culto 1975',
+        category: 'Cine Clásico',
+        price: 7490,
+        badge: 'Culto',
+        tagline: 'Vas a necesitar unos calcetines más grandes.',
+        description: 'Aleta dorsal asomando entre olas azul marino con contraste rojo intenso en talón y puntera. Homenaje al suspenso cinematográfico.',
+        materials: '80% Algodón peinado, 17% Poliamida, 3% Elastano',
+        colors: ['#0369a1', '#e0f2fe', '#ef4444'],
+        pattern: 'shark'
+      },
+      {
+        id: 'sb-06',
+        name: 'Kaiju Urbano Tokio',
+        category: 'Sci-Fi & Culto',
+        price: 8990,
+        badge: 'Edición Limitada',
+        tagline: 'Aliento atómico a nivel de tobillo.',
+        description: 'Silueta de monstruo gigante iluminado con rayos neón sobre el horizonte nocturno de Tokio. Tejido de alta densidad.',
+        materials: '79% Algodón peinado, 18% Poliamida, 3% Elastano',
+        colors: ['#0f172a', '#10b981', '#06b6d4'],
+        pattern: 'kaiju'
+      },
+      {
+        id: 'sb-07',
+        name: 'Director’s Cut Claqueta',
+        category: 'Cine Clásico',
+        price: 7290,
+        badge: 'Favorito',
+        tagline: '¡Luces, cámara, calcetines!',
+        description: 'Puño con franjas diagonales de claqueta de cine y rollo de película de 35mm recorriendo toda la pierna.',
+        materials: '80% Algodón peinado, 17% Poliamida, 3% Elastano',
+        colors: ['#18181b', '#f8fafc', '#eab308'],
+        pattern: 'cinema'
+      },
+      {
+        id: 'sb-08',
+        name: 'Synthwave Sunset 1984',
+        category: 'Edición Limitada',
+        price: 9490,
+        badge: 'Coleccionista',
+        tagline: 'Conduciendo hacia el horizonte neón.',
+        description: 'Sol retro con líneas horizontales, cuadrícula láser magenta y palmeras nocturnas inspiradas en bandas sonoras sintetizadas.',
+        materials: '80% Algodón peinado, 17% Poliamida, 3% Elastano',
+        colors: ['#4c1d95', '#ec4899', '#f59e0b'],
+        pattern: 'synth'
+      },
+      {
+        id: 'sb-09',
+        name: 'Gato Hacker & Café',
+        category: 'Edición Limitada',
+        price: 8490,
+        badge: 'Dev Choice',
+        tagline: 'Compilando código sin errores.',
+        description: 'Gatos con gafas de sol reflejando líneas de código binario y tazas de espresso humeante para largas jornadas creativas.',
+        materials: '80% Algodón peinado, 17% Poliamida, 3% Elastano',
+        colors: ['#1e293b', '#34d399', '#fbbf24'],
+        pattern: 'hacker'
+      }
+    ];
+
+    // Estado de la aplicación
+    let state = {
+      currentPage: 'inicio',
+      selectedCategory: 'Todos',
+      currentUmlView: 'logica',
+      cart: [],
+      selectedSizeModal: 'S/M',
+      theme: {
+        mode: 'light',
+        primary: '#1d4ed8',
+        secondary: '#facc15'
+      }
+    };
+
+    // =========================================================================
+    // 2. GENERADOR DE ILUSTRACIONES SVG PARA CADA CALCETÍN
+    // =========================================================================
+    function renderSockSVG(product, sizeClass = 'w-36 h-36') {
+      const [c1, c2, c3] = product.colors;
+      let motif = '';
+
+      switch (product.pattern) {
+        case 'vhs':
+          motif = `
+            <rect x="44" y="48" width="42" height="24" rx="3" fill="#0f172a"/>
+            <circle cx="55" cy="60" r="6" fill="#ffffff"/>
+            <circle cx="75" cy="60" r="6" fill="#ffffff"/>
+            <rect x="44" y="78" width="42" height="8" rx="2" fill="${c2}"/>
+          `;
+          break;
+        case 'popcorn':
+          motif = `
+            <rect x="42" y="45" width="8" height="55" fill="${c1}"/>
+            <rect x="58" y="45" width="8" height="55" fill="${c1}"/>
+            <rect x="74" y="45" width="8" height="55" fill="${c1}"/>
+            <circle cx="52" cy="44" r="7" fill="${c3}"/>
+            <circle cx="65" cy="41" r="8" fill="#fef08a"/>
+            <circle cx="77" cy="45" r="7" fill="${c3}"/>
+          `;
+          break;
+        case 'arcade':
+          motif = `
+            <rect x="52" y="50" width="26" height="14" rx="2" fill="${c2}"/>
+            <rect x="48" y="56" width="34" height="8" fill="${c2}"/>
+            <rect x="56" y="54" width="4" height="4" fill="#111827"/>
+            <rect x="70" y="54" width="4" height="4" fill="#111827"/>
+            <circle cx="65" cy="82" r="6" fill="${c3}"/>
+          `;
+          break;
+        case 'space':
+          motif = `
+            <circle cx="65" cy="64" r="14" fill="${c2}"/>
+            <ellipse cx="65" cy="64" rx="24" ry="6" fill="none" stroke="${c3}" stroke-width="3" transform="rotate(-20 65 64)"/>
+            <circle cx="48" cy="46" r="2.5" fill="#ffffff"/>
+            <circle cx="80" cy="85" r="2.5" fill="#ffffff"/>
+          `;
+          break;
+        case 'shark':
+          motif = `
+            <path d="M55 75 Q68 50 76 75 Z" fill="#475569"/>
+            <path d="M40 76 Q52 70 65 76 Q78 82 90 76" fill="none" stroke="${c2}" stroke-width="4" stroke-linecap="round"/>
+            <path d="M40 88 Q52 82 65 88 Q78 94 90 88" fill="none" stroke="${c2}" stroke-width="4" stroke-linecap="round"/>
+          `;
+          break;
+        case 'kaiju':
+          motif = `
+            <polygon points="52,85 60,48 72,62 78,52 82,85" fill="${c2}"/>
+            <line x1="45" y1="62" x2="58" y2="62" stroke="${c3}" stroke-width="3"/>
+            <line x1="45" y1="70" x2="56" y2="70" stroke="${c3}" stroke-width="3"/>
+          `;
+          break;
+        case 'cinema':
+          motif = `
+            <rect x="46" y="50" width="38" height="28" rx="3" fill="${c2}"/>
+            <line x1="46" y1="58" x2="84" y2="58" stroke="${c1}" stroke-width="4"/>
+            <polygon points="61,63 61,73 71,68" fill="${c1}"/>
+          `;
+          break;
+        case 'synth':
+          motif = `
+            <circle cx="65" cy="64" r="17" fill="${c3}"/>
+            <line x1="46" y1="66" x2="84" y2="66" stroke="${c1}" stroke-width="3"/>
+            <line x1="46" y1="73" x2="84" y2="73" stroke="${c1}" stroke-width="3"/>
+            <rect x="42" y="78" width="46" height="16" fill="${c2}" fill-opacity="0.4"/>
+          `;
+          break;
+        default:
+          motif = `
+            <circle cx="65" cy="63" r="14" fill="${c2}"/>
+            <polygon points="53,53 56,43 62,51" fill="${c2}"/>
+            <polygon points="77,53 74,43 68,51" fill="${c2}"/>
+            <rect x="55" y="60" width="8" height="5" fill="#0f172a"/>
+            <rect x="67" y="60" width="8" height="5" fill="#0f172a"/>
+          `;
+      }
+
+      return `
+        <svg viewBox="0 0 130 155" class="${sizeClass} mx-auto drop-shadow-sm transition-transform duration-300 group-hover:scale-105" aria-hidden="true">
+          <!-- Cuerpo del calcetín -->
+          <path d="M40 12 H90 V98 C90 116 77 130 60 140 L42 150 C29 157 14 148 12 135 C10 122 20 110 32 103 L40 98 Z"
+                fill="${c1}" stroke="#0f172a" stroke-width="3.5" stroke-linejoin="round"/>
+          <!-- Puño superior -->
+          <rect x="40" y="12" width="50" height="20" fill="${c2}" stroke="#0f172a" stroke-width="3.5"/>
+          <line x1="40" y1="22" x2="90" y2="22" stroke="#0f172a" stroke-width="2"/>
+          <!-- Talón -->
+          <path d="M90 86 C76 86 70 98 78 109 C85 102 90 95 90 86 Z" fill="${c3}" stroke="#0f172a" stroke-width="2.5"/>
+          <!-- Puntera -->
+          <path d="M29 105 C17 112 10 123 12 135 C14 146 27 154 39 149 L46 145 C36 134 31 121 29 105 Z"
+                fill="${c3}" stroke="#0f172a" stroke-width="2.5"/>
+          <!-- Motivo temático -->
+          ${motif}
+        </svg>
+      `;
+    }
+
+    // =========================================================================
+    // 3. NAVEGACIÓN ENTRE LAS 3 PÁGINAS (INICIO, CATÁLOGO, ESTRUCTURA UML)
+    // =========================================================================
+    function navigateTo(pageId) {
+      const validPages = ['inicio', 'catalogo', 'uml'];
+      if (!validPages.includes(pageId)) pageId = 'inicio';
+
+      state.currentPage = pageId;
+
+      // Mostrar/ocultar secciones
+      validPages.forEach(p => {
+        const el = document.getElementById(`page-${p}`);
+        if (el) {
+          if (p === pageId) {
+            el.classList.remove('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        }
+      });
+
+      // Actualizar estilos activos en botones de navegación (Desktop y Móvil)
+      validPages.forEach(p => {
+        const deskBtn = document.getElementById(`nav-${p}`);
+        const mobBtn = document.getElementById(`mob-nav-${p}`);
+        const isActive = p === pageId;
+
+        if (deskBtn) {
+          if (isActive) {
+            deskBtn.style.backgroundColor = 'var(--color-primary)';
+            deskBtn.style.color = 'var(--color-primary-contrast)';
+            deskBtn.classList.add('shadow-sm');
+          } else {
+            deskBtn.style.backgroundColor = 'transparent';
+            deskBtn.style.color = 'var(--color-text)';
+            deskBtn.classList.remove('shadow-sm');
+          }
+        }
+
+        if (mobBtn) {
+          if (isActive) {
+            mobBtn.style.backgroundColor = 'var(--color-primary)';
+            mobBtn.style.color = 'var(--color-primary-contrast)';
+          } else {
+            mobBtn.style.backgroundColor = 'var(--color-surface-alt)';
+            mobBtn.style.color = 'var(--color-text)';
+          }
+        }
+      });
+
+      // Actualizar hash de URL sin recargar
+      if (window.location.hash !== `#${pageId}`) {
+        history.replaceState(null, '', `#${pageId}`);
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =========================================================================
+    // 4. LÓGICA DE CATÁLOGO, FILTROS Y DETALLE DE PRODUCTO
+    // =========================================================================
+    function formatCLP(amount) {
+      return '$' + amount.toLocaleString('es-CL') + ' CLP';
+    }
+
+    function setCategoryFilter(category) {
+      state.selectedCategory = category;
+      updateCategoryButtonsUI();
+      renderCatalog();
+    }
+
+    function updateCategoryButtonsUI() {
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        const isSelected = btn.getAttribute('data-cat') === state.selectedCategory;
+        if (isSelected) {
+          btn.style.backgroundColor = 'var(--color-primary)';
+          btn.style.color = 'var(--color-primary-contrast)';
+        } else {
+          btn.style.backgroundColor = 'var(--color-surface-alt)';
+          btn.style.color = 'var(--color-text)';
+        }
+      });
+    }
+
+    function resetFilters() {
+      state.selectedCategory = 'Todos';
+      document.getElementById('search-input').value = '';
+      document.getElementById('sort-select').value = 'featured';
+      updateCategoryButtonsUI();
+      renderCatalog();
+    }
+
+    function renderCatalog() {
+      const grid = document.getElementById('catalog-grid');
+      const emptyState = document.getElementById('catalog-empty');
+      const countLabel = document.getElementById('catalog-count');
+
+      const searchTerm = (document.getElementById('search-input')?.value || '').toLowerCase().trim();
+      const sortValue = document.getElementById('sort-select')?.value || 'featured';
+
+      let filtered = PRODUCTS.filter(p => {
+        const matchesCategory = state.selectedCategory === 'Todos' || p.category === state.selectedCategory;
+        const matchesSearch = p.name.toLowerCase().includes(searchTerm) ||
+                              p.tagline.toLowerCase().includes(searchTerm) ||
+                              p.category.toLowerCase().includes(searchTerm);
+        return matchesCategory && matchesSearch;
+      });
+
+      if (sortValue === 'price-asc') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sortValue === 'price-desc') {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sortValue === 'name-asc') {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      countLabel.textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      grid.innerHTML = filtered.map(product => `
+        <article class="group rounded-3xl border p-5 theme-card shadow-sm hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between">
+          <div>
+            <!-- Top Badges -->
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="text-[11px] font-bold px-2.5 py-1 rounded-lg" style="background-color: var(--color-surface-alt); color: var(--color-muted);">
+                ${product.category}
+              </span>
+              <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-lg ticket-badge">
+                ${product.badge}
+              </span>
+            </div>
+
+            <!-- Ilustración SVG -->
+            <div onclick="openProductModal('${product.id}')" class="my-4 py-4 rounded-2xl cursor-pointer flex items-center justify-center" style="background-color: var(--color-surface-alt);">
+              ${renderSockSVG(product, 'w-32 h-36')}
+            </div>
+
+            <!-- Título y descripción corta -->
+            <h3 onclick="openProductModal('${product.id}')" class="font-display font-bold text-xl cursor-pointer hover:underline">
+              ${product.name}
+            </h3>
+            <p class="text-xs sm:text-sm mt-1 line-clamp-2" style="color: var(--color-muted);">
+              ${product.tagline}
+            </p>
+          </div>
+
+          <!-- Precio y Botones -->
+          <div class="mt-5 pt-4 border-t flex items-center justify-between gap-2" style="border-color: var(--color-border);">
+            <div>
+              <span class="block text-[11px] font-semibold uppercase" style="color: var(--color-muted);">Precio</span>
+              <span class="font-display font-extrabold text-lg sm:text-xl" style="color: var(--color-primary);">
+                ${formatCLP(product.price)}
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button onclick="openProductModal('${product.id}')" class="px-3 py-2 rounded-xl border text-xs font-bold hover:opacity-80 transition cursor-pointer" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+                Detalles
+              </button>
+              <button onclick="addToCart('${product.id}', 'S/M')" class="px-3.5 py-2 rounded-xl btn-primary text-xs font-bold shadow-sm cursor-pointer">
+                + Añadir
+              </button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function openProductModal(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      state.selectedSizeModal = 'S/M';
+      const modal = document.getElementById('product-modal');
+      const body = document.getElementById('modal-product-body');
+
+      body.innerHTML = `
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+          <div class="sm:col-span-5 p-6 rounded-2xl flex flex-col items-center justify-center" style="background-color: var(--color-surface-alt);">
+            ${renderSockSVG(product, 'w-40 h-44')}
+            <span class="mt-3 text-xs font-bold px-3 py-1 rounded-full ticket-badge">${product.badge}</span>
+          </div>
+
+          <div class="sm:col-span-7 space-y-4">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider" style="color: var(--color-primary);">${product.category}</span>
+              <h2 id="modal-product-title" class="font-display font-extrabold text-2xl sm:text-3xl mt-0.5">${product.name}</h2>
+              <p class="font-display font-extrabold text-2xl mt-2" style="color: var(--color-primary);">${formatCLP(product.price)}</p>
+            </div>
+
+            <p class="text-sm leading-relaxed" style="color: var(--color-muted);">
+              ${product.description}
+            </p>
+
+            <div class="p-3 rounded-xl border text-xs space-y-1" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+              <p><strong>Composición:</strong> ${product.materials}</p>
+              <p><strong>Tejido:</strong> Alta densidad 200 agujas con puntera sin costuras.</p>
+            </div>
+
+            <!-- Selector de Tallas -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider mb-2" style="color: var(--color-muted);">Selecciona tu Talla:</label>
+              <div class="flex gap-2">
+                <button type="button" onclick="selectModalSize('S/M', this)" class="size-choice-btn px-4 py-2 rounded-xl border text-xs font-bold cursor-pointer" style="background-color: var(--color-primary); color: var(--color-primary-contrast); border-color: var(--color-primary);">
+                  S/M (35 - 40)
+                </button>
+                <button type="button" onclick="selectModalSize('L/XL', this)" class="size-choice-btn px-4 py-2 rounded-xl border text-xs font-bold cursor-pointer" style="background-color: var(--color-surface-alt); color: var(--color-text); border-color: var(--color-border);">
+                  L/XL (41 - 46)
+                </button>
+              </div>
+            </div>
+
+            <button onclick="addToCart('${product.id}', state.selectedSizeModal); closeProductModal();" class="w-full py-3.5 rounded-2xl btn-primary font-display font-bold text-sm sm:text-base shadow-md cursor-pointer">
+              Añadir al Carrito — ${formatCLP(product.price)}
+            </button>
+          </div>
+        </div>
+      `;
+
+      modal.classList.remove('hidden');
+    }
+
+    function selectModalSize(size, btnEl) {
+      state.selectedSizeModal = size;
+      document.querySelectorAll('.size-choice-btn').forEach(b => {
+        b.style.backgroundColor = 'var(--color-surface-alt)';
+        b.style.color = 'var(--color-text)';
+        b.style.borderColor = 'var(--color-border)';
+      });
+      btnEl.style.backgroundColor = 'var(--color-primary)';
+      btnEl.style.color = 'var(--color-primary-contrast)';
+      btnEl.style.borderColor = 'var(--color-primary)';
+    }
+
+    function closeProductModal() {
+      document.getElementById('product-modal').classList.add('hidden');
+    }
+
+    // =========================================================================
+    // 5. CARRITO DE COMPRAS INTERACTIVO
+    // =========================================================================
+    function addToCart(productId, size = 'S/M') {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      const existing = state.cart.find(item => item.id === productId && item.size === size);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        state.cart.push({ ...product, size, qty: 1 });
+      }
+
+      updateCartUI();
+      showToast(`"${product.name}" (Talla ${size}) añadido al carrito`);
+    }
+
+    function updateCartQty(index, delta) {
+      if (!state.cart[index]) return;
+      state.cart[index].qty += delta;
+      if (state.cart[index].qty <= 0) {
+        state.cart.splice(index, 1);
+      }
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cart-count-badge');
+      const container = document.getElementById('cart-items-container');
+      const totalEl = document.getElementById('cart-total-price');
+
+      const totalItems = state.cart.reduce((sum, item) => sum + item.qty, 0);
+      const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+      badge.textContent = totalItems;
+      totalEl.textContent = formatCLP(totalPrice);
+
+      if (state.cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12">
+            <p class="text-4xl mb-2">🧦</p>
+            <p class="font-display font-bold text-base">Tu carrito está vacío</p>
+            <p class="text-xs mt-1" style="color: var(--color-muted);">Explora el catálogo y añade tus calcetines favoritos.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = state.cart.map((item, idx) => `
+        <div class="p-3.5 rounded-2xl border flex items-center justify-between gap-3" style="border-color: var(--color-border); background-color: var(--color-surface-alt);">
+          <div class="w-12 h-14 shrink-0 flex items-center justify-center">
+            ${renderSockSVG(item, 'w-11 h-13')}
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-display font-bold text-sm truncate">${item.name}</h4>
+            <p class="text-xs" style="color: var(--color-muted);">Talla: ${item.size} • ${formatCLP(item.price)}</p>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="updateCartQty(${idx}, -1)" class="w-7 h-7 rounded-lg border font-bold text-sm flex items-center justify-center cursor-pointer" style="background-color: var(--color-surface); border-color: var(--color-border);">-</button>
+            <span class="w-6 text-center text-xs font-bold">${item.qty}</span>
+            <button onclick="updateCartQty(${idx}, 1)" class="w-7 h-7 rounded-lg border font-bold text-sm flex items-center justify-center cursor-pointer" style="background-color: var(--color-surface); border-color: var(--color-border);">+</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleCartDrawer() {
+      const drawer = document.getElementById('cart-drawer');
+      drawer.classList.toggle('hidden');
+    }
+
+    function checkoutSimulation() {
+      if (state.cart.length === 0) {
+        showToast('Agrega al menos un par de calcetines antes de finalizar.', '⚠️');
+        return;
+      }
+      state.cart = [];
+      updateCartUI();
+      toggleCartDrawer();
+      showToast('¡Pedido simulado con éxito! Gracias por comprar en Sockbuster.', '🎉');
+    }
+
+    function showToast(message, icon = '✅') {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-message').textContent = message;
+      document.getElementById('toast-icon').textContent = icon;
+      toast.classList.remove('hidden');
+
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+
+    // =========================================================================
+    // 6. DOCUMENTACIÓN TÉCNICA UML - PARADIGMA 4+1 DE PHILIPPE KRUCHTEN
+    // =========================================================================
+    const UML_VIEWS = {
+      logica: {
+        title: '1. Vista Lógica — Diagrama de Clases UML 2.5',
+        subtitle: 'Modelado estructural del dominio de negocio: herencia de roles, catálogo temático, carrito transaccional, pedidos con UUID y reseñas de fanáticos.',
+        audience: 'Arquitectos de Software, Desarrolladores y Analistas Funcionales.',
+        reqsCovered: ['RF01', 'RF02', 'RF03', 'RF04', 'RNF02'],
+        description: 'Representa con rigor sintáctico UML 2.5 las entidades del dominio de Sockbuster Video & Socks. Incluye modificadores de visibilidad (- privado, # protegido, + público), tipos de datos estrictos, enumeraciones («enumeration»), herencia (generalización) desde Usuario hacia Cliente y Administrador, composición entre Pedido/Carrito e ItemCarrito, y asociaciones con multiplicidades exactas.',
+        highlights: [
+          'Herencia Usuario → Cliente / Administrador: soporta autenticación JWT (RNF02) y operaciones privilegiadas de inventario (RF03).',
+          'ColeccionTematica (1) — (0..*) ProductoCalcetin: clasifica Ciencia Ficción, Terror 80s, Series de Drama y Animación con stock y tallas (RF01).',
+          'CarritoCompras (1) ◆— (1..*) ItemCarrito y Pedido (1) ◆— (1..*) DetallePedido con identificador idUUID único (RF02).',
+          'ProductoCalcetin (1) — (0..*) ResenaFanatico: restringe puntuaciones en rango [1..5] estrellas vinculadas a clientes registrados (RF04).'
+        ],
+        svg: `
+          <svg viewBox="0 0 1180 730" class="w-full min-w-[1040px] h-auto" role="img" aria-label="Diagrama de Clases UML 2.5 Completo - Vista Lógica Sockbuster">
+            <defs>
+              <!-- Flecha asociación navegable -->
+              <marker id="uml-nav" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                <path d="M 1 1 L 10 6 L 1 11" fill="none" stroke="var(--color-text)" stroke-width="1.8"/>
+              </marker>
+              <!-- Triángulo vacío de herencia / generalización -->
+              <marker id="uml-inherit" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="11" markerHeight="11" orient="auto">
+                <polygon points="1,1 12,7 1,13" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+              </marker>
+              <!-- Rombo negro de composición -->
+              <marker id="uml-comp" viewBox="0 0 16 10" refX="1" refY="5" markerWidth="13" markerHeight="9" orient="auto">
+                <polygon points="1,5 8,1 15,5 8,9" fill="var(--color-text)" stroke="var(--color-text)" stroke-width="1.2"/>
+              </marker>
+              <!-- Rombo blanco de agregación -->
+              <marker id="uml-aggr" viewBox="0 0 16 10" refX="1" refY="5" markerWidth="13" markerHeight="9" orient="auto">
+                <polygon points="1,5 8,1 15,5 8,9" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.5"/>
+              </marker>
+            </defs>
+
+            <!-- ================= FILA SUPERIOR: JERARQUÍA USUARIOS & ROLES (RNF02, RF03) ================= -->
+            
+            <!-- Enumeración RolUsuario -->
+            <g transform="translate(20, 25)">
+              <rect width="190" height="125" rx="8" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="2"/>
+              <rect width="190" height="38" rx="6" fill="var(--color-surface-alt)"/>
+              <text x="95" y="15" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«enumeration»</text>
+              <text x="95" y="31" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="13" font-weight="700" fill="var(--color-text)">RolUsuario</text>
+              <line x1="0" y1="38" x2="190" y2="38" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="14" y="60" font-family="monospace" font-size="11" fill="var(--color-text)">VISITANTE</text>
+              <text x="14" y="80" font-family="monospace" font-size="11" fill="var(--color-text)">CLIENTE_REGISTRADO</text>
+              <text x="14" y="100" font-family="monospace" font-size="11" fill="var(--color-text)">ADMINISTRADOR</text>
+            </g>
+
+            <!-- Clase Abstracta / Base: Usuario -->
+            <g transform="translate(275, 20)">
+              <rect width="275" height="165" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2.2"/>
+              <rect width="275" height="36" rx="6" fill="var(--color-primary)"/>
+              <text x="137" y="14" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-primary-contrast)">«entity • RNF02»</text>
+              <text x="137" y="29" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="14" font-style="italic" fill="var(--color-primary-contrast)">Usuario</text>
+              <text x="12" y="54" font-family="monospace" font-size="11" fill="var(--color-text)"># idUsuario: UUID</text>
+              <text x="12" y="70" font-family="monospace" font-size="11" fill="var(--color-text)"># nombreCompleto: String</text>
+              <text x="12" y="86" font-family="monospace" font-size="11" fill="var(--color-text)"># email: String</text>
+              <text x="12" y="102" font-family="monospace" font-size="11" fill="var(--color-text)">- passwordHash: String</text>
+              <text x="12" y="118" font-family="monospace" font-size="11" fill="var(--color-text)"># rol: RolUsuario</text>
+              <line x1="0" y1="126" x2="275" y2="126" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="143" font-family="monospace" font-size="11" fill="var(--color-muted)">+ autenticar(email, pass): Boolean</text>
+              <text x="12" y="158" font-family="monospace" font-size="11" fill="var(--color-muted)">+ generarTokenJWT(): String</text>
+            </g>
+
+            <!-- Subclase: Administrador (RF03) -->
+            <g transform="translate(20, 225)">
+              <rect width="265" height="150" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <rect width="265" height="34" rx="6" fill="var(--color-secondary)"/>
+              <text x="132" y="13" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="#0f172a">«RF03 • RNF02»</text>
+              <text x="132" y="28" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13.5" fill="#0f172a">Administrador</text>
+              <text x="12" y="52" font-family="monospace" font-size="11" fill="var(--color-text)">- nivelAcceso: Integer</text>
+              <text x="12" y="68" font-family="monospace" font-size="11" fill="var(--color-text)">- ultimoAccesoJWT: DateTime</text>
+              <line x1="0" y1="78" x2="265" y2="78" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="95" font-family="monospace" font-size="11" fill="var(--color-muted)">+ registrarModelo(dto): Producto</text>
+              <text x="12" y="111" font-family="monospace" font-size="11" fill="var(--color-muted)">+ asociarObraCulto(sku, obra)</text>
+              <text x="12" y="127" font-family="monospace" font-size="11" fill="var(--color-muted)">+ actualizarStock(sku, cant)</text>
+              <text x="12" y="143" font-family="monospace" font-size="11" fill="var(--color-muted)">+ modificarPrecio(sku, precio)</text>
+            </g>
+
+            <!-- Subclase: Cliente (RF01, RF02, RF04) -->
+            <g transform="translate(320, 225)">
+              <rect width="245" height="145" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <rect width="245" height="34" rx="6" fill="var(--color-secondary)"/>
+              <text x="122" y="13" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="#0f172a">«RF01 • RF02 • RF04»</text>
+              <text x="122" y="28" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13.5" fill="#0f172a">Cliente</text>
+              <text x="12" y="52" font-family="monospace" font-size="11" fill="var(--color-text)">- direccionEnvio: String</text>
+              <text x="12" y="68" font-family="monospace" font-size="11" fill="var(--color-text)">- telefono: String</text>
+              <line x1="0" y1="78" x2="245" y2="78" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="96" font-family="monospace" font-size="11" fill="var(--color-muted)">+ filtrarColeccion(cat): List</text>
+              <text x="12" y="112" font-family="monospace" font-size="11" fill="var(--color-muted)">+ confirmarCheckout(): Pedido</text>
+              <text x="12" y="128" font-family="monospace" font-size="11" fill="var(--color-muted)">+ publicarResena(sku, pts, txt)</text>
+            </g>
+
+            <!-- ================= COLUMNA DERECHA: CARRITO Y PEDIDOS (RF02) ================= -->
+
+            <!-- Clase: CarritoCompras (RF02) -->
+            <g transform="translate(630, 20)">
+              <rect width="250" height="155" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <rect width="250" height="34" rx="6" fill="var(--color-primary)"/>
+              <text x="125" y="13" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-primary-contrast)">«aggregateRoot • RF02»</text>
+              <text x="125" y="28" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13.5" fill="var(--color-primary-contrast)">CarritoCompras</text>
+              <text x="12" y="52" font-family="monospace" font-size="11" fill="var(--color-text)">- idCarrito: UUID</text>
+              <text x="12" y="68" font-family="monospace" font-size="11" fill="var(--color-text)">- fechaActualizacion: DateTime</text>
+              <line x1="0" y1="78" x2="250" y2="78" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="96" font-family="monospace" font-size="11" fill="var(--color-muted)">+ agregarProducto(prod, talla)</text>
+              <text x="12" y="112" font-family="monospace" font-size="11" fill="var(--color-muted)">+ modificarCantidad(sku, delta)</text>
+              <text x="12" y="128" font-family="monospace" font-size="11" fill="var(--color-muted)">+ calcularTotalCLP(): Integer</text>
+              <text x="12" y="144" font-family="monospace" font-size="11" fill="var(--color-muted)">+ vaciarCarrito(): void</text>
+            </g>
+
+            <!-- Clase: ItemCarrito (RF02) -->
+            <g transform="translate(630, 225)">
+              <rect width="250" height="135" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <rect width="250" height="34" rx="6" fill="var(--color-secondary)"/>
+              <text x="125" y="13" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="#0f172a">«RF02»</text>
+              <text x="125" y="28" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13.5" fill="#0f172a">ItemCarrito</text>
+              <text x="12" y="52" font-family="monospace" font-size="11" fill="var(--color-text)">- cantidad: Integer</text>
+              <text x="12" y="68" font-family="monospace" font-size="11" fill="var(--color-text)">- tallaSeleccionada: String</text>
+              <line x1="0" y1="78" x2="250" y2="78" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="96" font-family="monospace" font-size="11" fill="var(--color-muted)">+ calcularSubtotal(): Integer</text>
+              <text x="12" y="112" font-family="monospace" font-size="11" fill="var(--color-muted)">+ validarStockDisponible(): Bool</text>
+            </g>
+
+            <!-- Clase: Pedido (RF02) -->
+            <g transform="translate(920, 20)">
+              <rect width="240" height="165" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <rect width="240" height="34" rx="6" fill="var(--color-primary)"/>
+              <text x="120" y="13" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-primary-contrast)">«transaction • RF02»</text>
+              <text x="120" y="28" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13.5" fill="var(--color-primary-contrast)">Pedido</text>
+              <text x="12" y="52" font-family="monospace" font-size="11" fill="var(--color-text)">- idUUID: UUID</text>
+              <text x="12" y="68" font-family="monospace" font-size="11" fill="var(--color-text)">- fechaEmision: DateTime</text>
+              <text x="12" y="84" font-family="monospace" font-size="11" fill="var(--color-text)">- estadoPago: String</text>
+              <text x="12" y="100" font-family="monospace" font-size="11" fill="var(--color-text)">- montoTotalCLP: Integer</text>
+              <line x1="0" y1="108" x2="240" y2="108" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="126" font-family="monospace" font-size="11" fill="var(--color-muted)">+ procesarCheckout(): Boolean</text>
+              <text x="12" y="142" font-family="monospace" font-size="11" fill="var(--color-muted)">+ generarResumenUUID(): JSON</text>
+              <text x="12" y="157" font-family="monospace" font-size="11" fill="var(--color-muted)">+ descontarInventario(): void</text>
+            </g>
+
+            <!-- ================= FILA INFERIOR: CATÁLOGO, TEMÁTICAS Y RESEÑAS (RF01, RF03, RF04) ================= -->
+
+            <!-- Clase: ColeccionTematica (RF01, RF03) -->
+            <g transform="translate(20, 465)">
+              <rect width="290" height="165" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <rect width="290" height="34" rx="6" fill="var(--color-primary)"/>
+              <text x="145" y="13" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-primary-contrast)">«catalog • RF01 • RF03»</text>
+              <text x="145" y="28" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13.5" fill="var(--color-primary-contrast)">ColeccionTematica</text>
+              <text x="12" y="52" font-family="monospace" font-size="11" fill="var(--color-text)">- idColeccion: Integer</text>
+              <text x="12" y="68" font-family="monospace" font-size="11" fill="var(--color-text)">- nombreCategoria: String</text>
+              <text x="12" y="84" font-family="monospace" font-size="10.5" fill="var(--color-muted)">  [Ciencia Ficción | Terror 80s |</text>
+              <text x="12" y="98" font-family="monospace" font-size="10.5" fill="var(--color-muted)">   Series de Drama | Animación]</text>
+              <text x="12" y="114" font-family="monospace" font-size="11" fill="var(--color-text)">- descripcion: String</text>
+              <line x1="0" y1="122" x2="290" y2="122" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="140" font-family="monospace" font-size="11" fill="var(--color-muted)">+ obtenerCalcetines(): List</text>
+              <text x="12" y="155" font-family="monospace" font-size="11" fill="var(--color-muted)">+ vincularObraCulto(obra): void</text>
+            </g>
+
+            <!-- Clase Central: ProductoCalcetin (RF01, RF02, RF03, RF04) -->
+            <g transform="translate(415, 445)">
+              <rect width="310" height="215" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2.4"/>
+              <rect width="310" height="36" rx="6" fill="var(--color-primary)"/>
+              <text x="155" y="14" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-primary-contrast)">«coreEntity • RF01 • RF03»</text>
+              <text x="155" y="29" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="14" fill="var(--color-primary-contrast)">ProductoCalcetin</text>
+              <text x="12" y="54" font-family="monospace" font-size="11" fill="var(--color-text)">- idProducto: UUID</text>
+              <text x="12" y="70" font-family="monospace" font-size="11" fill="var(--color-text)">- sku: String</text>
+              <text x="12" y="86" font-family="monospace" font-size="11" fill="var(--color-text)">- nombre: String</text>
+              <text x="12" y="102" font-family="monospace" font-size="11" fill="var(--color-text)">- obraReferencia: String</text>
+              <text x="12" y="118" font-family="monospace" font-size="11" fill="var(--color-text)">- precioCLP: Integer</text>
+              <text x="12" y="134" font-family="monospace" font-size="11" fill="var(--color-text)">- stockDisponible: Integer</text>
+              <text x="12" y="150" font-family="monospace" font-size="11" fill="var(--color-text)">- tallasDisponibles: String[]</text>
+              <text x="12" y="166" font-family="monospace" font-size="11" fill="var(--color-text)">- imagenUrl: String</text>
+              <line x1="0" y1="174" x2="310" y2="174" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="191" font-family="monospace" font-size="11" fill="var(--color-muted)">+ verificarDisponibilidad(talla, n)</text>
+              <text x="12" y="206" font-family="monospace" font-size="11" fill="var(--color-muted)">+ calcularPromedioEstrellas(): Float</text>
+            </g>
+
+            <!-- Clase: ResenaFanatico (RF04) -->
+            <g transform="translate(835, 465)">
+              <rect width="325" height="175" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <rect width="325" height="34" rx="6" fill="var(--color-secondary)"/>
+              <text x="162" y="13" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="#0f172a">«community • RF04»</text>
+              <text x="162" y="28" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13.5" fill="#0f172a">ResenaFanatico</text>
+              <text x="12" y="52" font-family="monospace" font-size="11" fill="var(--color-text)">- idResena: UUID</text>
+              <text x="12" y="68" font-family="monospace" font-size="11" fill="var(--color-text)">- puntuacion: Integer {1..5}</text>
+              <text x="12" y="84" font-family="monospace" font-size="11" fill="var(--color-text)">- comentario: String</text>
+              <text x="12" y="100" font-family="monospace" font-size="11" fill="var(--color-text)">- fechaPublicacion: DateTime</text>
+              <line x1="0" y1="108" x2="325" y2="108" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="126" font-family="monospace" font-size="11" fill="var(--color-muted)">+ validarRangoEstrellas(): Boolean</text>
+              <text x="12" y="142" font-family="monospace" font-size="11" fill="var(--color-muted)">+ validarUsuarioAutenticado(): Bool</text>
+              <text x="12" y="158" font-family="monospace" font-size="11" fill="var(--color-muted)">+ publicarEnFicha(): void</text>
+            </g>
+
+            <!-- ================= RELACIONES UML CON MULTIPLICIDADES ================= -->
+
+            <!-- Dependencia Usuario -> RolUsuario -->
+            <line x1="275" y1="85" x2="210" y2="85" stroke="var(--color-text)" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#uml-nav)"/>
+            <text x="242" y="77" text-anchor="middle" font-family="monospace" font-size="10" fill="var(--color-muted)">«use»</text>
+
+            <!-- Herencia Administrador -> Usuario -->
+            <polyline points="152,225 152,202 412,202 412,185" fill="none" stroke="var(--color-text)" stroke-width="1.8" marker-end="url(#uml-inherit)"/>
+
+            <!-- Herencia Cliente -> Usuario -->
+            <polyline points="442,225 442,202 412,202 412,185" fill="none" stroke="var(--color-text)" stroke-width="1.8" marker-end="url(#uml-inherit)"/>
+
+            <!-- Asociación Cliente (1) -> CarritoCompras (1) -->
+            <polyline points="565,250 598,250 598,95 630,95" fill="none" stroke="var(--color-text)" stroke-width="1.8" marker-end="url(#uml-nav)"/>
+            <text x="572" y="242" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">1</text>
+            <text x="615" y="88" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">1</text>
+
+            <!-- Composición CarritoCompras (1) ◆— (1..*) ItemCarrito -->
+            <line x1="755" y1="175" x2="755" y2="225" stroke="var(--color-text)" stroke-width="2" marker-start="url(#uml-comp)"/>
+            <text x="765" y="192" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">1</text>
+            <text x="765" y="218" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">1..*</text>
+
+            <!-- Asociación CarritoCompras (1) -> Pedido (0..*) -->
+            <line x1="880" y1="95" x2="920" y2="95" stroke="var(--color-text)" stroke-width="1.8" marker-end="url(#uml-nav)"/>
+            <text x="885" y="87" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">1</text>
+            <text x="898" y="110" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">0..*</text>
+
+            <!-- Asociación Administrador (1) -> ProductoCalcetin (0..*) gestiona -->
+            <polyline points="152,375 152,415 510,415 510,445" fill="none" stroke="var(--color-text)" stroke-width="1.7" marker-end="url(#uml-nav)"/>
+            <text x="160" y="392" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">1</text>
+            <text x="330" y="408" text-anchor="middle" font-family="Inter, sans-serif" font-size="10.5" font-weight="600" fill="var(--color-muted)">administra inventario (RF03) →</text>
+            <text x="518" y="438" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">0..*</text>
+
+            <!-- Agregación ColeccionTematica (1) ◇— (0..*) ProductoCalcetin -->
+            <line x1="310" y1="548" x2="415" y2="548" stroke="var(--color-text)" stroke-width="2" marker-start="url(#uml-aggr)"/>
+            <text x="328" y="540" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">1</text>
+            <text x="362" y="564" text-anchor="middle" font-family="Inter, sans-serif" font-size="10.5" fill="var(--color-muted)">agrupa</text>
+            <text x="388" y="540" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">0..*</text>
+
+            <!-- Asociación ItemCarrito (0..*) -> ProductoCalcetin (1) -->
+            <polyline points="695,360 695,405 630,405 630,445" fill="none" stroke="var(--color-text)" stroke-width="1.8" marker-end="url(#uml-nav)"/>
+            <text x="703" y="376" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">0..*</text>
+            <text x="638" y="438" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">1</text>
+
+            <!-- Composición ProductoCalcetin (1) ◆— (0..*) ResenaFanatico -->
+            <line x1="725" y1="548" x2="835" y2="548" stroke="var(--color-text)" stroke-width="2" marker-start="url(#uml-comp)"/>
+            <text x="743" y="540" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">1</text>
+            <text x="780" y="564" text-anchor="middle" font-family="Inter, sans-serif" font-size="10.5" fill="var(--color-muted)">recibe</text>
+            <text x="805" y="540" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">0..*</text>
+
+            <!-- Asociación Cliente (1) -> ResenaFanatico (0..*) escribe -->
+            <polyline points="565,335 595,335 595,392 995,392 995,465" fill="none" stroke="var(--color-text)" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#uml-nav)"/>
+            <text x="572" y="328" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">1</text>
+            <text x="890" y="385" text-anchor="middle" font-family="Inter, sans-serif" font-size="10.5" font-weight="600" fill="var(--color-muted)">publica reseña autenticada (RF04) →</text>
+            <text x="1003" y="458" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">0..*</text>
+
+            <!-- Nota UML inferior de integridad -->
+            <g transform="translate(20, 665)">
+              <rect width="1140" height="45" rx="8" fill="var(--color-surface-alt)" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="18" y="27" font-family="monospace" font-size="11.5" font-weight="700" fill="var(--color-primary)">NOTA UML 2.5:</text>
+              <text x="130" y="27" font-family="Inter, sans-serif" font-size="11.5" fill="var(--color-text)">
+                Invariant {ResenaFanatico.puntuacion &gt;= 1 and ResenaFanatico.puntuacion &lt;= 5} • {Pedido.idUUID es único RFC-4122} • {Acceso Administrador exige Bearer JWT válido (RNF02)}.
+              </text>
+            </g>
+          </svg>
+        `
+      },
+      desarrollo: {
+        title: '2. Vista de Desarrollo — Diagrama de Componentes y Paquetes UML 2.5',
+        subtitle: 'Organización modular del código fuente en subsistemas desacoplados con interfaces provistas (piruletas) y requeridas (enchufes) alineadas a RF01–RF04 y RNF01–RNF02.',
+        audience: 'Desarrolladores Frontend/Backend, Arquitectos de Software y Líderes Técnicos.',
+        reqsCovered: ['RF01', 'RF02', 'RF03', 'RF04', 'RNF01', 'RNF02'],
+        description: 'Muestra la arquitectura de implementación dividida en tres capas lógicas de software: (1) Capa de Presentación SPA optimizada para carga rápida (<2s, RNF01), (2) Capa de Controladores e Interceptores de Seguridad JWT (RNF02) que orquestan cada requerimiento funcional, y (3) Capa de Servicios RESTful y Persistencia de Datos.',
+        highlights: [
+          'Subsistemas front-end claramente mapeados a las páginas entregables: index.html, catalogo.html y diagramas.html.',
+          'InterceptorAuthJWT aplica validación de firma Bearer Token antes de invocar endpoints de RF03 (Inventario) y RF04 (Reseñas).',
+          'Interfaces UML explícitas (ICatalogo, ICheckoutUUID, IInventarioAdmin, IResenas, IAuthJWT) que garantizan bajo acoplamiento.'
+        ],
+        svg: `
+          <svg viewBox="0 0 1160 640" class="w-full min-w-[1000px] h-auto" role="img" aria-label="Diagrama de Componentes y Paquetes UML 2.5 - Vista de Desarrollo">
+            <defs>
+              <marker id="comp-dep" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto">
+                <path d="M 1 1 L 10 6 L 1 11" fill="none" stroke="var(--color-text)" stroke-width="1.8"/>
+              </marker>
+            </defs>
+
+            <!-- ==================== PAQUETE 1: CAPA PRESENTACIÓN SPA ==================== -->
+            <g transform="translate(20, 20)">
+              <rect width="335" height="595" rx="14" fill="var(--color-surface-alt)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="6 4"/>
+              <rect width="275" height="32" rx="6" fill="var(--color-primary)"/>
+              <text x="137" y="21" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12.5" fill="var(--color-primary-contrast)">«subsystem» Capa Presentación SPA</text>
+
+              <!-- Componente Vistas HTML -->
+              <g transform="translate(20, 52)">
+                <rect width="295" height="115" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+                <rect x="260" y="10" width="22" height="16" rx="2" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.2"/>
+                <text x="16" y="26" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«component • RNF01»</text>
+                <text x="16" y="45" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Vistas Web Integradas</text>
+                <text x="16" y="65" font-family="monospace" font-size="11" fill="var(--color-muted)">• index.html (Portada & Marca)</text>
+                <text x="16" y="82" font-family="monospace" font-size="11" fill="var(--color-muted)">• catalogo.html (Vitrina & Modal)</text>
+                <text x="16" y="99" font-family="monospace" font-size="11" fill="var(--color-muted)">• diagramas.html (Vistas UML 4+1)</text>
+              </g>
+
+              <!-- Componente UI Carrito & Checkout -->
+              <g transform="translate(20, 190)">
+                <rect width="295" height="105" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+                <rect x="260" y="10" width="22" height="16" rx="2" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.2"/>
+                <text x="16" y="26" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«component • RF02»</text>
+                <text x="16" y="45" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">DrawerCarrito & Comprobante</text>
+                <text x="16" y="65" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">Gestión reactiva de cantidades, tallas</text>
+                <text x="16" y="82" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">y visualización de ticket UUID.</text>
+              </g>
+
+              <!-- Componente Panel Admin & Reseñas UI -->
+              <g transform="translate(20, 318)">
+                <rect width="295" height="110" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+                <rect x="260" y="10" width="22" height="16" rx="2" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.2"/>
+                <text x="16" y="26" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«component • RF03 • RF04»</text>
+                <text x="16" y="45" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Formularios Admin & Reseñas</text>
+                <text x="16" y="65" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">ABM de modelos/stock y widget de</text>
+                <text x="16" y="82" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">valoración 1-5 estrellas en ficha.</text>
+              </g>
+
+              <!-- Componente Theme & Vector Engine -->
+              <g transform="translate(20, 452)">
+                <rect width="295" height="115" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+                <rect x="260" y="10" width="22" height="16" rx="2" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.2"/>
+                <text x="16" y="26" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«component • UI Core»</text>
+                <text x="16" y="45" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">MotorTemasCSS & SVG Engine</text>
+                <text x="16" y="65" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">CSS Variables dinámicas, LocalStorage</text>
+                <text x="16" y="82" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">y renderizado vectorial ligero (&lt;50KB).</text>
+              </g>
+            </g>
+
+            <!-- ==================== PAQUETE 2: CAPA LÓGICA DE APLICACIÓN & SEGURIDAD ==================== -->
+            <g transform="translate(425, 20)">
+              <rect width="340" height="595" rx="14" fill="var(--color-surface-alt)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="6 4"/>
+              <rect width="295" height="32" rx="6" fill="var(--color-primary)"/>
+              <text x="147" y="21" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12.5" fill="var(--color-primary-contrast)">«subsystem» Lógica & Seguridad API</text>
+
+              <!-- Controlador Catálogo -->
+              <g transform="translate(22, 52)">
+                <rect width="296" height="95" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+                <rect x="261" y="10" width="22" height="16" rx="2" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.2"/>
+                <text x="16" y="26" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«controller • RF01»</text>
+                <text x="16" y="45" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">ControladorCatalogo</text>
+                <text x="16" y="64" font-family="monospace" font-size="10.5" fill="var(--color-muted)">+ filtrarPorColeccion(cat, talla)</text>
+                <text x="16" y="80" font-family="monospace" font-size="10.5" fill="var(--color-muted)">+ consultarStockTiempoReal(sku)</text>
+              </g>
+
+              <!-- Gestor Checkout & UUID -->
+              <g transform="translate(22, 168)">
+                <rect width="296" height="95" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+                <rect x="261" y="10" width="22" height="16" rx="2" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.2"/>
+                <text x="16" y="26" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«service • RF02»</text>
+                <text x="16" y="45" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">GestorPedidosCheckout</text>
+                <text x="16" y="64" font-family="monospace" font-size="10.5" fill="var(--color-muted)">+ validarReservaStock(items[])</text>
+                <text x="16" y="80" font-family="monospace" font-size="10.5" fill="var(--color-muted)">+ emitirOrdenUUID(): Comprobante</text>
+              </g>
+
+              <!-- Servicio Inventario & Reseñas -->
+              <g transform="translate(22, 284)">
+                <rect width="296" height="105" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+                <rect x="261" y="10" width="22" height="16" rx="2" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.2"/>
+                <text x="16" y="26" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«service • RF03 • RF04»</text>
+                <text x="16" y="45" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">ServiciosInventarioYResenas</text>
+                <text x="16" y="64" font-family="monospace" font-size="10.5" fill="var(--color-muted)">+ upsertProductoTematico(dto)</text>
+                <text x="16" y="80" font-family="monospace" font-size="10.5" fill="var(--color-muted)">+ registrarResenaFan(sku, 1..5)</text>
+              </g>
+
+              <!-- Interceptor Seguridad JWT -->
+              <g transform="translate(22, 415)">
+                <rect width="296" height="150" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2.2"/>
+                <rect x="261" y="10" width="22" height="16" rx="2" fill="var(--color-primary)"/>
+                <text x="16" y="26" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«securityGuard • RNF02»</text>
+                <text x="16" y="45" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">InterceptorAuthJWT & HTTPS</text>
+                <text x="16" y="66" font-family="monospace" font-size="10.5" fill="var(--color-text)">+ verificarFirmaBearerJWT(token)</text>
+                <text x="16" y="83" font-family="monospace" font-size="10.5" fill="var(--color-text)">+ validarRolRBAC(ADMIN | CLIENTE)</text>
+                <text x="16" y="100" font-family="monospace" font-size="10.5" fill="var(--color-text)">+ forzarCanalTLS_HTTPS()</text>
+                <rect x="16" y="114" width="264" height="24" rx="5" fill="var(--color-surface-alt)"/>
+                <text x="148" y="130" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="var(--color-primary)">Protege RF03 (Admin) y RF04 (Reseñas)</text>
+              </g>
+            </g>
+
+            <!-- ==================== PAQUETE 3: CAPA PERSISTENCIA & BACKEND ==================== -->
+            <g transform="translate(835, 20)">
+              <rect width="305" height="595" rx="14" fill="var(--color-surface-alt)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="6 4"/>
+              <rect width="265" height="32" rx="6" fill="var(--color-primary)"/>
+              <text x="132" y="21" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12.5" fill="var(--color-primary-contrast)">«subsystem» Datos & Persistencia</text>
+
+              <!-- API REST Gateway -->
+              <g transform="translate(20, 65)">
+                <rect width="265" height="110" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+                <text x="16" y="26" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«interfaceAPI • RNF02»</text>
+                <text x="16" y="46" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">RESTful JSON Gateway</text>
+                <text x="16" y="66" font-family="monospace" font-size="10.5" fill="var(--color-muted)">GET  /api/v1/calcetines</text>
+                <text x="16" y="82" font-family="monospace" font-size="10.5" fill="var(--color-muted)">POST /api/v1/pedidos/checkout</text>
+                <text x="16" y="98" font-family="monospace" font-size="10.5" fill="var(--color-muted)">POST /api/v1/admin/inventario</text>
+              </g>
+
+              <!-- Repositorio Transaccional -->
+              <g transform="translate(20, 225)">
+                <rect width="265" height="135" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+                <text x="16" y="26" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«repository • ACID»</text>
+                <text x="16" y="46" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Repositorios de Dominio</text>
+                <text x="16" y="68" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">• RepoProductosYTematicas</text>
+                <text x="16" y="86" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">• RepoPedidosUUID</text>
+                <text x="16" y="104" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">• RepoResenasYUsuarios</text>
+              </g>
+
+              <!-- Base de Datos -->
+              <g transform="translate(20, 415)">
+                <rect width="265" height="145" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+                <text x="16" y="26" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«database • RNF01»</text>
+                <text x="16" y="46" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Motor BD Cloud (PostgreSQL)</text>
+                <text x="16" y="68" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">Tablas normalizadas: colecciones,</text>
+                <text x="16" y="85" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">calcetines, pedidos_uuid, resenas,</text>
+                <text x="16" y="102" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">usuarios_jwt con índices de lectura.</text>
+              </g>
+            </g>
+
+            <!-- ==================== CONEXIONES E INTERFACES UML (PIRULETAS / ENCHUFES) ==================== -->
+            
+            <!-- Presentación -> Controlador Catálogo (Interface ICatalogo) -->
+            <line x1="335" y1="105" x2="382" y2="105" stroke="var(--color-text)" stroke-width="1.8"/>
+            <circle cx="390" cy="105" r="7" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.8"/>
+            <line x1="397" y1="105" x2="447" y2="105" stroke="var(--color-text)" stroke-width="1.8" marker-end="url(#comp-dep)"/>
+            <text x="390" y="92" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-text)">ICatalogo</text>
+
+            <!-- Presentación -> Gestor Checkout (Interface ICheckout) -->
+            <line x1="335" y1="225" x2="382" y2="225" stroke="var(--color-text)" stroke-width="1.8"/>
+            <circle cx="390" cy="225" r="7" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.8"/>
+            <line x1="397" y1="225" x2="447" y2="225" stroke="var(--color-text)" stroke-width="1.8" marker-end="url(#comp-dep)"/>
+            <text x="390" y="212" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-text)">ICheckout</text>
+
+            <!-- Presentación -> Admin & Reseñas (Interface ISeguridadJWT) -->
+            <line x1="335" y1="355" x2="382" y2="355" stroke="var(--color-text)" stroke-width="1.8"/>
+            <circle cx="390" cy="355" r="7" fill="var(--color-primary)" stroke="var(--color-text)" stroke-width="1.8"/>
+            <line x1="397" y1="355" x2="447" y2="355" stroke="var(--color-text)" stroke-width="1.8" marker-end="url(#comp-dep)"/>
+            <text x="390" y="342" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-primary)">IAuthJWT</text>
+
+            <!-- Lógica -> REST Gateway -->
+            <line x1="743" y1="120" x2="855" y2="120" stroke="var(--color-text)" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#comp-dep)"/>
+            <text x="800" y="110" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-primary)">HTTPS/JSON</text>
+
+            <line x1="743" y1="220" x2="855" y2="145" stroke="var(--color-text)" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#comp-dep)"/>
+            <line x1="743" y1="480" x2="855" y2="165" stroke="var(--color-primary)" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#comp-dep)"/>
+
+            <!-- Gateway -> Repositorios -> BD -->
+            <line x1="987" y1="175" x2="987" y2="225" stroke="var(--color-text)" stroke-width="1.8" marker-end="url(#comp-dep)"/>
+            <line x1="987" y1="360" x2="987" y2="415" stroke="var(--color-text)" stroke-width="1.8" marker-end="url(#comp-dep)"/>
+          </svg>
+        `
+      },
+      procesos: {
+        title: '3. Vista de Procesos — Diagrama de Secuencia UML 2.5 (Concurrencia y Flujos Críticos)',
+        subtitle: 'Comportamiento dinámico en tiempo de ejecución mediante fragmentos combinados UML (loop, alt, opt), control de concurrencia de stock y validación de tokens JWT.',
+        audience: 'Ingenieros Backend/Frontend, Arquitectos de Integración y Analistas QA.',
+        reqsCovered: ['RF01', 'RF02', 'RF03', 'RF04', 'RNF02'],
+        description: 'Ilustra la sincronización temporal entre actores y componentes del sistema en los tres procesos críticos de Sockbuster: (A) Consulta y filtrado temático del catálogo (RF01), (B) Proceso transaccional de Checkout con verificación atómica de stock y emisión de UUID (RF02), y (C) Flujos autenticados mediante Bearer JWT (RNF02) para publicación de reseñas (RF04) y actualización administrativa de inventario/precios (RF03).',
+        highlights: [
+          'Fragmento [alt] en Checkout (RF02): valida stock disponible antes de confirmar pago y emitir comprobante UUID; revierte si hay conflicto concurrente.',
+          'Fragmento [alt] de Seguridad JWT (RNF02): intercepta peticiones de RF03 (Admin) y RF04 (Reseñas), retornando HTTP 401/403 si el token expira o el rol no corresponde.',
+          'Barras de activación explícitas y mensajes síncronos (flecha rellena) vs respuestas asíncronas (flecha punteada).'
+        ],
+        svg: `
+          <svg viewBox="0 0 1160 760" class="w-full min-w-[1000px] h-auto" role="img" aria-label="Diagrama de Secuencia UML 2.5 - Vista de Procesos Sockbuster">
+            <defs>
+              <marker id="seq-sync" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto">
+                <polygon points="1,1 11,6 1,11" fill="var(--color-primary)"/>
+              </marker>
+              <marker id="seq-async" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto">
+                <path d="M 1 1 L 10 6 L 1 11" fill="none" stroke="var(--color-muted)" stroke-width="1.8"/>
+              </marker>
+            </defs>
+
+            <!-- ==================== CABECERAS DE LIFELINES (5 PARTICIPANTES) ==================== -->
+            
+            <!-- Lifeline 1: Usuario -->
+            <g transform="translate(25, 18)">
+              <rect width="150" height="44" rx="8" fill="var(--color-secondary)" stroke="#0f172a" stroke-width="1.6"/>
+              <text x="75" y="18" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="#0f172a">«actor»</text>
+              <text x="75" y="34" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="#0f172a">Cliente / Admin</text>
+              <line x1="75" y1="44" x2="75" y2="730" stroke="var(--color-border)" stroke-width="2" stroke-dasharray="6 5"/>
+            </g>
+
+            <!-- Lifeline 2: SPA Frontend -->
+            <g transform="translate(230, 18)">
+              <rect width="165" height="44" rx="8" fill="var(--color-primary)"/>
+              <text x="82" y="18" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-primary-contrast)">«boundary»</text>
+              <text x="82" y="34" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-primary-contrast)">:InterfazWebSPA</text>
+              <line x1="82" y1="44" x2="82" y2="730" stroke="var(--color-border)" stroke-width="2" stroke-dasharray="6 5"/>
+            </g>
+
+            <!-- Lifeline 3: Security Middleware JWT -->
+            <g transform="translate(455, 18)">
+              <rect width="175" height="44" rx="8" fill="var(--color-primary)"/>
+              <text x="87" y="18" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-primary-contrast)">«guard • RNF02»</text>
+              <text x="87" y="34" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-primary-contrast)">:InterceptorJWT</text>
+              <line x1="87" y1="44" x2="87" y2="730" stroke="var(--color-border)" stroke-width="2" stroke-dasharray="6 5"/>
+            </g>
+
+            <!-- Lifeline 4: Controlador Dominio -->
+            <g transform="translate(690, 18)">
+              <rect width="185" height="44" rx="8" fill="var(--color-primary)"/>
+              <text x="92" y="18" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-primary-contrast)">«control»</text>
+              <text x="92" y="34" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-primary-contrast)">:GestorNegocioAPI</text>
+              <line x1="92" y1="44" x2="92" y2="730" stroke="var(--color-border)" stroke-width="2" stroke-dasharray="6 5"/>
+            </g>
+
+            <!-- Lifeline 5: Base de Datos -->
+            <g transform="translate(935, 18)">
+              <rect width="190" height="44" rx="8" fill="var(--color-primary)"/>
+              <text x="95" y="18" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-primary-contrast)">«entity • ACID»</text>
+              <text x="95" y="34" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-primary-contrast)">:RepositorioBD</text>
+              <line x1="95" y1="44" x2="95" y2="730" stroke="var(--color-border)" stroke-width="2" stroke-dasharray="6 5"/>
+            </g>
+
+            <!-- ==================== BLOQUE 1: RF01 EXPLORACIÓN Y FILTRADO ==================== -->
+            <rect x="15" y="75" width="1125" height="125" rx="10" fill="var(--color-surface-alt)" fill-opacity="0.45" stroke="var(--color-border)" stroke-width="1.5"/>
+            <rect x="15" y="75" width="215" height="22" rx="5" fill="var(--color-primary)"/>
+            <text x="122" y="90" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-primary-contrast)">opt [RF01: Catálogo Temático]</text>
+
+            <rect x="306" y="102" width="12" height="86" rx="2" fill="var(--color-primary)" fill-opacity="0.3" stroke="var(--color-primary)"/>
+            <rect x="776" y="114" width="12" height="62" rx="2" fill="var(--color-primary)" fill-opacity="0.3" stroke="var(--color-primary)"/>
+            <rect x="1024" y="126" width="12" height="36" rx="2" fill="var(--color-secondary)" stroke="#0f172a"/>
+
+            <line x1="100" y1="108" x2="306" y2="108" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-sync)"/>
+            <text x="115" y="102" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-text)">1: filtrarColeccion("Terror 80s")</text>
+
+            <line x1="318" y1="120" x2="776" y2="120" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-sync)"/>
+            <text x="410" y="114" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-text)">2: GET /api/v1/calcetines?coleccion=terror80s (HTTPS)</text>
+
+            <line x1="788" y1="134" x2="1024" y2="134" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-sync)"/>
+            <text x="805" y="128" font-family="monospace" font-size="10.5" fill="var(--color-text)">3: queryProductosConStock()</text>
+
+            <line x1="1024" y1="158" x2="788" y2="158" stroke="var(--color-muted)" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#seq-async)"/>
+            <text x="815" y="152" font-family="monospace" font-size="10.5" fill="var(--color-muted)">4: ProductoCalcetin[]</text>
+
+            <line x1="776" y1="176" x2="100" y2="176" stroke="var(--color-muted)" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#seq-async)"/>
+            <text x="200" y="191" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-primary)">5: renderizarTarjetas(foto, precio, stock, tallas)</text>
+
+            <!-- ==================== BLOQUE 2: RF02 CHECKOUT TRANSACCIONAL & UUID ==================== -->
+            <rect x="15" y="215" width="1125" height="245" rx="10" fill="var(--color-surface-alt)" fill-opacity="0.45" stroke="var(--color-primary)" stroke-width="1.8"/>
+            <rect x="15" y="215" width="275" height="22" rx="5" fill="var(--color-secondary)"/>
+            <text x="152" y="230" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="700" fill="#0f172a">alt [RF02: Checkout & Concurrencia Stock]</text>
+
+            <rect x="306" y="245" width="12" height="200" rx="2" fill="var(--color-primary)" fill-opacity="0.3" stroke="var(--color-primary)"/>
+            <rect x="776" y="260" width="12" height="175" rx="2" fill="var(--color-primary)" fill-opacity="0.3" stroke="var(--color-primary)"/>
+            <rect x="1024" y="275" width="12" height="145" rx="2" fill="var(--color-secondary)" stroke="#0f172a"/>
+
+            <line x1="100" y1="252" x2="306" y2="252" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-sync)"/>
+            <text x="115" y="246" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-text)">6: iniciarCheckout(carritoItems[])</text>
+
+            <line x1="318" y1="268" x2="776" y2="268" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-sync)"/>
+            <text x="415" y="262" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-text)">7: POST /api/v1/pedidos/checkout (HTTPS)</text>
+
+            <line x1="788" y1="286" x2="1024" y2="286" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-sync)"/>
+            <text x="800" y="280" font-family="monospace" font-size="10.5" fill="var(--color-text)">8: BEGIN TX • lockStock(items)</text>
+
+            <!-- Rama positiva [stockDisponible == true] -->
+            <text x="35" y="314" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-primary)">[stockDisponible == true]</text>
+            <line x1="788" y1="326" x2="1024" y2="326" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-sync)"/>
+            <text x="798" y="320" font-family="monospace" font-size="10.5" fill="var(--color-text)">9: descontarStock() + insertPedido(UUID)</text>
+
+            <line x1="1024" y1="350" x2="788" y2="350" stroke="var(--color-muted)" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#seq-async)"/>
+            <text x="815" y="344" font-family="monospace" font-size="10.5" fill="var(--color-muted)">10: COMMIT • idUUID generado</text>
+
+            <line x1="776" y1="372" x2="100" y2="372" stroke="var(--color-muted)" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#seq-async)"/>
+            <text x="230" y="366" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-primary)">11: 201 Created • ResumenPedido(idUUID)</text>
+
+            <!-- Separador Else UML -->
+            <line x1="15" y1="392" x2="1140" y2="392" stroke="var(--color-border)" stroke-width="1.5" stroke-dasharray="6 4"/>
+            <text x="35" y="410" font-family="monospace" font-size="10.5" font-weight="700" fill="#dc2626">[else: stockInsuficiente por concurrencia]</text>
+            <line x1="776" y1="432" x2="100" y2="432" stroke="#dc2626" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#seq-async)"/>
+            <text x="240" y="446" font-family="monospace" font-size="10.5" font-weight="700" fill="#dc2626">12: ROLLBACK • 409 Conflict ("Stock agotado")</text>
+
+            <!-- ==================== BLOQUE 3: RNF02 JWT + RF03 ADMIN + RF04 RESEÑAS ==================== -->
+            <rect x="15" y="475" width="1125" height="235" rx="10" fill="var(--color-surface-alt)" fill-opacity="0.45" stroke="var(--color-primary)" stroke-width="1.8"/>
+            <rect x="15" y="475" width="355" height="22" rx="5" fill="var(--color-primary)"/>
+            <text x="192" y="490" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-primary-contrast)">alt [RNF02 Auth JWT → RF03 Admin / RF04 Reseñas]</text>
+
+            <rect x="306" y="505" width="12" height="190" rx="2" fill="var(--color-primary)" fill-opacity="0.3" stroke="var(--color-primary)"/>
+            <rect x="536" y="520" width="12" height="165" rx="2" fill="var(--color-secondary)" stroke="#0f172a"/>
+            <rect x="776" y="565" width="12" height="110" rx="2" fill="var(--color-primary)" fill-opacity="0.3" stroke="var(--color-primary)"/>
+            <rect x="1024" y="585" width="12" height="75" rx="2" fill="var(--color-secondary)" stroke="#0f172a"/>
+
+            <line x1="100" y1="512" x2="306" y2="512" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-sync)"/>
+            <text x="112" y="506" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-text)">13: actualizarStockPrecio() / publicarResena(1..5)</text>
+
+            <line x1="318" y1="528" x2="536" y2="528" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-sync)"/>
+            <text x="330" y="522" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-text)">14: Request + Header Authorization: Bearer &lt;JWT&gt;</text>
+
+            <text x="35" y="555" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-primary)">[JWT Válido &amp;&amp; Rol Autorizado (RNF02)]</text>
+            <line x1="548" y1="572" x2="776" y2="572" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-sync)"/>
+            <text x="562" y="566" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-text)">15: ejecutarOperacion(RF03 | RF04)</text>
+
+            <line x1="788" y1="595" x2="1024" y2="595" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-sync)"/>
+            <text x="805" y="589" font-family="monospace" font-size="10.5" fill="var(--color-text)">16: persistirInventarioOResena()</text>
+
+            <line x1="1024" y1="628" x2="100" y2="628" stroke="var(--color-muted)" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#seq-async)"/>
+            <text x="275" y="622" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-primary)">17: 200 OK • Catálogo / Ficha Actualizada</text>
+
+            <line x1="15" y1="648" x2="1140" y2="648" stroke="var(--color-border)" stroke-width="1.5" stroke-dasharray="6 4"/>
+            <text x="35" y="666" font-family="monospace" font-size="10.5" font-weight="700" fill="#dc2626">[else: Token Expirado o Rol No Autorizado]</text>
+            <line x1="536" y1="686" x2="100" y2="686" stroke="#dc2626" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#seq-async)"/>
+            <text x="195" y="700" font-family="monospace" font-size="10.5" font-weight="700" fill="#dc2626">18: 401/403 Forbidden (Acceso Denegado RNF02)</text>
+          </svg>
+        `
+      },
+      fisica: {
+        title: '4. Vista Física / Despliegue — Diagrama de Despliegue UML 2.5',
+        subtitle: 'Topología física distribuida en la nube, nodos de ejecución («device», «executionEnvironment»), artefactos desplegados y cumplimiento directo de RNF01 (<2s) y RNF02 (HTTPS/JWT).',
+        audience: 'Ingenieros DevOps, Administradores Cloud y Arquitectos de Infraestructura.',
+        reqsCovered: ['RNF01', 'RNF02', 'RF01', 'RF02', 'RF03', 'RF04'],
+        description: 'Muestra la infraestructura física donde opera Sockbuster Video & Socks: el repositorio público GitHub alimenta un pipeline de despliegue continuo hacia una red CDN Edge global (GitHub Pages / Vercel) que garantiza tiempos de respuesta inferiores a 2 segundos (RNF01). Todas las comunicaciones con el clúster backend en la nube viajan cifradas sobre TLS 1.3 / HTTPS (puerto 443) y pasan por validación JWT (RNF02).',
+        highlights: [
+          'Cumplimiento RNF01 (<2 segundos): entrega estática distribuida mediante Edge CDN con caché HTTP/3 y compresión Brotli.',
+          'Cumplimiento RNF02 (Seguridad): certificados SSL/TLS 1.3 en frontera y aislamiento de red privada (VPC) para el servidor de Base de Datos.',
+          'Trazabilidad DevOps: integración directa con repositorio público GitHub (entregable académico) y despliegue automático.'
+        ],
+        svg: `
+          <svg viewBox="0 0 1160 540" class="w-full min-w-[980px] h-auto" role="img" aria-label="Diagrama de Despliegue UML 2.5 - Vista Física Sockbuster">
+            
+            <!-- ==================== NODO 1: DISPOSITIVO CLIENTE ==================== -->
+            <g transform="translate(20, 95)">
+              <polygon points="0,14 16,0 266,0 250,14" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.6"/>
+              <polygon points="250,14 266,0 266,310 250,324" fill="var(--color-border)" stroke="var(--color-text)" stroke-width="1.6"/>
+              <rect x="0" y="14" width="250" height="310" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="2"/>
+              <text x="125" y="38" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-primary)">«device»</text>
+              <text x="125" y="56" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Cliente Desktop / Mobile</text>
+              <line x1="0" y1="68" x2="250" y2="68" stroke="var(--color-border)" stroke-width="1.5"/>
+
+              <!-- Execution Environment: Navegador -->
+              <rect x="16" y="82" width="218" height="224" rx="8" fill="var(--color-surface-alt)" stroke="var(--color-primary)" stroke-width="1.6"/>
+              <text x="125" y="102" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«executionEnvironment»</text>
+              <text x="125" y="118" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="12.5" font-weight="700" fill="var(--color-text)">Navegador Web Moderno</text>
+
+              <!-- Artefacto SPA -->
+              <rect x="28" y="132" width="194" height="82" rx="6" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.4"/>
+              <text x="125" y="150" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-text)">«artifact» SockbusterSPA</text>
+              <text x="125" y="167" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-muted)">index.html | catalogo | uml</text>
+              <text x="125" y="183" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-muted)">TailwindCSS + SVG + JS ES6</text>
+              <text x="125" y="199" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-primary)">Bearer JWT en Memoria/Session</text>
+
+              <!-- Artefacto LocalStorage -->
+              <rect x="28" y="226" width="194" height="66" rx="6" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.4"/>
+              <text x="125" y="245" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-text)">«artifact» WebStorage</text>
+              <text x="125" y="262" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">Preferencias de Tema UI</text>
+              <text x="125" y="278" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">Estado Temporal Carrito</text>
+            </g>
+
+            <!-- ==================== NODO 2: CDN EDGE & HOSTING ESTÁTICO (RNF01) ==================== -->
+            <g transform="translate(355, 45)">
+              <polygon points="0,14 16,0 266,0 250,14" fill="var(--color-primary)" stroke="var(--color-text)" stroke-width="1.6"/>
+              <polygon points="250,14 266,0 266,200 250,214" fill="var(--color-border)" stroke="var(--color-text)" stroke-width="1.6"/>
+              <rect x="0" y="14" width="250" height="200" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="2"/>
+              <text x="125" y="38" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-primary)">«cloudCDN • RNF01»</text>
+              <text x="125" y="56" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">GitHub Pages / Vercel CDN</text>
+              <line x1="0" y1="68" x2="250" y2="68" stroke="var(--color-border)" stroke-width="1.5"/>
+
+              <rect x="18" y="82" width="214" height="114" rx="8" fill="var(--color-surface-alt)" stroke="var(--color-primary)" stroke-width="1.6"/>
+              <text x="125" y="102" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-text)">«artifact» Bundle Optimizado</text>
+              <text x="125" y="121" text-anchor="middle" font-family="Inter, sans-serif" font-size="10.5" fill="var(--color-muted)">• Caché Edge Global HTTP/3</text>
+              <text x="125" y="139" text-anchor="middle" font-family="Inter, sans-serif" font-size="10.5" fill="var(--color-muted)">• Certificado SSL/TLS Automático</text>
+              <rect x="30" y="154" width="190" height="28" rx="6" fill="var(--color-secondary)"/>
+              <text x="125" y="172" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="700" fill="#0f172a">SLA Carga Inicial &lt; 2.0s</text>
+            </g>
+
+            <!-- ==================== NODO 3: SERVIDOR APLICACIONES CLOUD (RF01-RF04, RNF02) ==================== -->
+            <g transform="translate(355, 290)">
+              <polygon points="0,14 16,0 266,0 250,14" fill="var(--color-primary)" stroke="var(--color-text)" stroke-width="1.6"/>
+              <polygon points="250,14 266,0 266,215 250,229" fill="var(--color-border)" stroke="var(--color-text)" stroke-width="1.6"/>
+              <rect x="0" y="14" width="250" height="215" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="2"/>
+              <text x="125" y="38" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-primary)">«cloudServer • RNF02»</text>
+              <text x="125" y="56" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">API Backend Cloud (Docker)</text>
+              <line x1="0" y1="68" x2="250" y2="68" stroke="var(--color-border)" stroke-width="1.5"/>
+
+              <rect x="18" y="82" width="214" height="128" rx="8" fill="var(--color-surface-alt)" stroke="var(--color-primary)" stroke-width="1.6"/>
+              <text x="125" y="102" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-text)">«artifact» sockbuster-api.jar/.js</text>
+              <text x="125" y="121" text-anchor="middle" font-family="Inter, sans-serif" font-size="10.5" fill="var(--color-muted)">• Middleware Auth JWT (RNF02)</text>
+              <text x="125" y="139" text-anchor="middle" font-family="Inter, sans-serif" font-size="10.5" fill="var(--color-muted)">• Motor Checkout UUID (RF02)</text>
+              <text x="125" y="157" text-anchor="middle" font-family="Inter, sans-serif" font-size="10.5" fill="var(--color-muted)">• Endpoints Inventario (RF03)</text>
+              <text x="125" y="175" text-anchor="middle" font-family="Inter, sans-serif" font-size="10.5" fill="var(--color-muted)">• Servicio Reseñas 1-5★ (RF04)</text>
+            </g>
+
+            <!-- ==================== NODO 4: SERVIDOR BASE DE DATOS (VPC PRIVADA) ==================== -->
+            <g transform="translate(880, 175)">
+              <polygon points="0,14 16,0 256,0 240,14" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.6"/>
+              <polygon points="240,14 256,0 256,245 240,259" fill="var(--color-border)" stroke="var(--color-text)" stroke-width="1.6"/>
+              <rect x="0" y="14" width="240" height="245" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="2"/>
+              <text x="120" y="38" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="700" fill="var(--color-primary)">«databaseServer • VPC»</text>
+              <text x="120" y="56" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Cloud DB Cluster (RDS)</text>
+              <line x1="0" y1="68" x2="240" y2="68" stroke="var(--color-border)" stroke-width="1.5"/>
+
+              <rect x="16" y="84" width="208" height="156" rx="8" fill="var(--color-surface-alt)" stroke="var(--color-primary)" stroke-width="1.6"/>
+              <text x="120" y="105" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-text)">«schema» sockbuster_prod</text>
+              <text x="120" y="126" font-family="monospace" font-size="10" fill="var(--color-muted)">• tbl_colecciones_tematicas</text>
+              <text x="120" y="144" font-family="monospace" font-size="10" fill="var(--color-muted)">• tbl_productos_calcetines</text>
+              <text x="120" y="162" font-family="monospace" font-size="10" fill="var(--color-muted)">• tbl_pedidos_uuid</text>
+              <text x="120" y="180" font-family="monospace" font-size="10" fill="var(--color-muted)">• tbl_resenas_fanaticos</text>
+              <text x="120" y="198" font-family="monospace" font-size="10" fill="var(--color-muted)">• tbl_usuarios_roles</text>
+              <text x="120" y="222" text-anchor="middle" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" fill="var(--color-primary)">Backups Automáticos + Cifrado AES</text>
+            </g>
+
+            <!-- ==================== CONEXIONES DE RED Y PROTOCOLOS ==================== -->
+            
+            <!-- Cliente <-> CDN Edge -->
+            <polyline points="286,210 320,210 320,145 355,145" fill="none" stroke="var(--color-primary)" stroke-width="2.4"/>
+            <rect x="276" y="114" width="96" height="24" rx="5" fill="var(--color-surface)" stroke="var(--color-primary)"/>
+            <text x="324" y="130" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-primary)">HTTPS / HTTP3</text>
+
+            <!-- Cliente <-> API Backend (TLS 1.3 + JWT) -->
+            <polyline points="286,320 320,320 320,400 355,400" fill="none" stroke="var(--color-primary)" stroke-width="2.4"/>
+            <rect x="255" y="408" width="128" height="36" rx="6" fill="var(--color-surface)" stroke="var(--color-primary)"/>
+            <text x="319" y="423" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-primary)">HTTPS :443 (TLS 1.3)</text>
+            <text x="319" y="437" text-anchor="middle" font-family="monospace" font-size="9" fill="var(--color-text)">REST JSON + Bearer JWT</text>
+
+            <!-- API Backend <-> Cloud DB Cluster -->
+            <polyline points="621,400 750,400 750,305 880,305" fill="none" stroke="var(--color-text)" stroke-width="2.4"/>
+            <rect x="665" y="335" width="175" height="36" rx="6" fill="var(--color-surface)" stroke="var(--color-text)"/>
+            <text x="752" y="350" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-text)">TCP/SSL :5432 (VPC Privada)</text>
+            <text x="752" y="364" text-anchor="middle" font-family="monospace" font-size="9" fill="var(--color-muted)">Pool Conexiones Transaccional</text>
+
+            <!-- Nota superior de CI/CD GitHub -->
+            <g transform="translate(650, 45)">
+              <rect width="205" height="90" rx="10" fill="var(--color-surface-alt)" stroke="var(--color-border)" stroke-width="1.6"/>
+              <text x="102" y="22" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«CI/CD Pipeline»</text>
+              <text x="102" y="40" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="12.5" font-weight="700" fill="var(--color-text)">GitHub Repo Público</text>
+              <text x="102" y="58" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">Push a rama main dispara</text>
+              <text x="102" y="73" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">despliegue automático en CDN</text>
+            </g>
+            <line x1="650" y1="90" x2="621" y2="90" stroke="var(--color-text)" stroke-width="1.8" stroke-dasharray="5 3"/>
+          </svg>
+        `
+      },
+      escenarios: {
+        title: '5. Escenarios — Casos de Uso UML 2.5 (+1 Vista Unificadora)',
+        subtitle: 'La quinta vista (+1) articula y valida el funcionamiento conjunto de las vistas Lógica, Desarrollo, Procesos y Física mediante escenarios reales de negocio.',
+        audience: 'Todos los Stakeholders (Clientes, Administradores, Evaluadores, Arquitectos).',
+        reqsCovered: ['RF01', 'RF02', 'RF03', 'RF04', 'RNF01', 'RNF02'],
+        description: 'Define los límites del sistema «Plataforma E-Commerce Sockbuster Video & Socks», los actores externos (Visitante, Cliente Registrado, Administrador y Servicio de Pago Simulado), las relaciones de generalización entre actores, y los casos de uso vinculados mediante dependencias estereotipadas «include» y «extend». Incluye además la tabla de validación cruzada entre los casos de uso y las 4 vistas anteriores.',
+        highlights: [
+          'Generalización de Actores: Cliente Registrado hereda de Visitante, permitiendo explorar catálogo (RF01) y sumar reseñas autenticadas (RF04).',
+          'Relación «include» de Seguridad (RNF02): tanto Publicar Reseña (RF04) como Administrar Inventario/Temáticas (RF03) incluyen obligatoriamente Validar Token JWT.',
+          'Relación «include» Transaccional (RF02): Procesar Checkout y Emitir UUID incluye Verificar Disponibilidad de Stock en tiempo real.'
+        ],
+        svg: `
+          <svg viewBox="0 0 1160 660" class="w-full min-w-[980px] h-auto" role="img" aria-label="Diagrama de Casos de Uso UML 2.5 - Quinta Vista Escenarios Sockbuster">
+            <defs>
+              <marker id="uc-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto">
+                <path d="M 1 1 L 10 6 L 1 11" fill="none" stroke="var(--color-primary)" stroke-width="1.8"/>
+              </marker>
+              <marker id="uc-inherit" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="11" markerHeight="11" orient="auto">
+                <polygon points="1,1 12,7 1,13" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+              </marker>
+            </defs>
+
+            <!-- ==================== CONTENEDOR LÍMITE DEL SISTEMA (SYSTEM BOUNDARY) ==================== -->
+            <rect x="220" y="20" width="720" height="620" rx="18" fill="var(--color-surface-alt)" stroke="var(--color-primary)" stroke-width="2.5"/>
+            <text x="580" y="48" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-primary)">«systemBoundary»</text>
+            <text x="580" y="68" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="800" font-size="16" fill="var(--color-text)">Plataforma E-Commerce Sockbuster Video &amp; Socks</text>
+
+            <!-- ==================== ACTORES IZQUIERDA (VISITANTE Y CLIENTE REGISTRADO) ==================== -->
+            
+            <!-- Actor 1: Visitante -->
+            <g transform="translate(65, 95)">
+              <circle cx="30" cy="18" r="14" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="2.2"/>
+              <line x1="30" y1="32" x2="30" y2="74" stroke="var(--color-text)" stroke-width="2.4"/>
+              <line x1="5" y1="48" x2="55" y2="48" stroke="var(--color-text)" stroke-width="2.4"/>
+              <line x1="30" y1="74" x2="8" y2="106" stroke="var(--color-text)" stroke-width="2.4"/>
+              <line x1="30" y1="74" x2="52" y2="106" stroke="var(--color-text)" stroke-width="2.4"/>
+              <text x="30" y="126" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-text)">Visitante</text>
+              <text x="30" y="141" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-muted)">(Anónimo)</text>
+            </g>
+
+            <!-- Actor 2: Cliente Registrado (hereda de Visitante) -->
+            <g transform="translate(65, 345)">
+              <circle cx="30" cy="18" r="14" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="2.2"/>
+              <line x1="30" y1="32" x2="30" y2="74" stroke="var(--color-text)" stroke-width="2.4"/>
+              <line x1="5" y1="48" x2="55" y2="48" stroke="var(--color-text)" stroke-width="2.4"/>
+              <line x1="30" y1="74" x2="8" y2="106" stroke="var(--color-text)" stroke-width="2.4"/>
+              <line x1="30" y1="74" x2="52" y2="106" stroke="var(--color-text)" stroke-width="2.4"/>
+              <text x="30" y="126" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-text)">Cliente Registrado</text>
+              <text x="30" y="141" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-primary)">«JWT Auth»</text>
+            </g>
+
+            <!-- Generalización Cliente Registrado -> Visitante -->
+            <line x1="95" y1="340" x2="95" y2="245" stroke="var(--color-text)" stroke-width="2" marker-end="url(#uc-inherit)"/>
+
+            <!-- ==================== ACTORES DERECHA (ADMINISTRADOR Y PASARELA PAGO) ==================== -->
+
+            <!-- Actor 3: Administrador -->
+            <g transform="translate(1025, 165)">
+              <circle cx="30" cy="18" r="14" fill="var(--color-primary)" stroke="var(--color-text)" stroke-width="2.2"/>
+              <line x1="30" y1="32" x2="30" y2="74" stroke="var(--color-text)" stroke-width="2.4"/>
+              <line x1="5" y1="48" x2="55" y2="48" stroke="var(--color-text)" stroke-width="2.4"/>
+              <line x1="30" y1="74" x2="8" y2="106" stroke="var(--color-text)" stroke-width="2.4"/>
+              <line x1="30" y1="74" x2="52" y2="106" stroke="var(--color-text)" stroke-width="2.4"/>
+              <text x="30" y="126" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-text)">Administrador</text>
+              <text x="30" y="141" text-anchor="middle" font-family="monospace" font-size="9.5" fill="var(--color-primary)">«Rol Admin JWT»</text>
+            </g>
+
+            <!-- Actor 4: Pasarela de Pago Simulada -->
+            <g transform="translate(1025, 420)">
+              <rect x="0" y="15" width="76" height="54" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="2"/>
+              <text x="38" y="38" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-primary)">«system»</text>
+              <text x="38" y="54" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="11.5" fill="var(--color-text)">Checkout</text>
+              <text x="38" y="86" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12" fill="var(--color-text)">Pasarela Pago</text>
+            </g>
+
+            <!-- ==================== ÓVALOS DE CASOS DE USO ==================== -->
+
+            <!-- CU-01 (RF01) -->
+            <g transform="translate(385, 118)">
+              <ellipse cx="0" cy="0" rx="140" ry="27" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-primary)">CU-01 • [RF01]</text>
+              <text x="0" y="11" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="11.5" fill="var(--color-text)">Explorar Catálogo por Colección</text>
+            </g>
+
+            <!-- CU-02 (RF01 - extend) -->
+            <g transform="translate(745, 118)">
+              <ellipse cx="0" cy="0" rx="145" ry="27" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.8"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-muted)">CU-02 • [RF01]</text>
+              <text x="0" y="11" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="11.5" fill="var(--color-text)">Filtrar Categoría, Talla y Precio</text>
+            </g>
+
+            <!-- CU-03 (RF03 - Admin) -->
+            <g transform="translate(745, 225)">
+              <ellipse cx="0" cy="0" rx="150" ry="29" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="0" y="-5" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-primary)">CU-03 • [RF03]</text>
+              <text x="0" y="10" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="11.5" fill="var(--color-text)">Administrar Inventario y Temáticas</text>
+            </g>
+
+            <!-- CU-04 (RF04 - Reseñas) -->
+            <g transform="translate(385, 295)">
+              <ellipse cx="0" cy="0" rx="142" ry="27" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-primary)">CU-04 • [RF04]</text>
+              <text x="0" y="11" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="11.5" fill="var(--color-text)">Publicar Reseña (1 a 5 Estrellas)</text>
+            </g>
+
+            <!-- CU-07 (RNF02 - Include Auth JWT) -->
+            <g transform="translate(745, 345)">
+              <ellipse cx="0" cy="0" rx="140" ry="26" fill="var(--color-secondary)" stroke="#0f172a" stroke-width="1.8"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="#0f172a">CU-07 • [RNF02]</text>
+              <text x="0" y="11" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="11.5" fill="#0f172a">Autenticar y Validar Token JWT</text>
+            </g>
+
+            <!-- CU-05 (RF02 - Carrito) -->
+            <g transform="translate(385, 420)">
+              <ellipse cx="0" cy="0" rx="140" ry="27" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-primary)">CU-05 • [RF02]</text>
+              <text x="0" y="11" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="11.5" fill="var(--color-text)">Gestionar Carrito de Compras</text>
+            </g>
+
+            <!-- CU-06 (RF02 - Checkout UUID) -->
+            <g transform="translate(385, 535)">
+              <ellipse cx="0" cy="0" rx="145" ry="28" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--color-primary)">CU-06 • [RF02]</text>
+              <text x="0" y="11" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="11.5" fill="var(--color-text)">Procesar Checkout y Emitir UUID</text>
+            </g>
+
+            <!-- CU-08 (RF01/RF02 - Include Verificar Stock) -->
+            <g transform="translate(745, 535)">
+              <ellipse cx="0" cy="0" rx="140" ry="26" fill="var(--color-secondary)" stroke="#0f172a" stroke-width="1.8"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="700" fill="#0f172a">CU-08 • [RF01 • RF02]</text>
+              <text x="0" y="11" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="11.5" fill="#0f172a">Verificar Stock y Talla Disponible</text>
+            </g>
+
+            <!-- ==================== ASOCIACIONES ACTORES <-> CASOS DE USO ==================== -->
+            
+            <!-- Visitante -> CU-01 -->
+            <line x1="125" y1="145" x2="245" y2="118" stroke="var(--color-text)" stroke-width="1.8"/>
+
+            <!-- Cliente Registrado -> CU-04, CU-05, CU-06 -->
+            <line x1="125" y1="395" x2="245" y2="298" stroke="var(--color-text)" stroke-width="1.8"/>
+            <line x1="125" y1="408" x2="245" y2="420" stroke="var(--color-text)" stroke-width="1.8"/>
+            <line x1="125" y1="422" x2="245" y2="532" stroke="var(--color-text)" stroke-width="1.8"/>
+
+            <!-- Administrador -> CU-03 -->
+            <line x1="1020" y1="220" x2="895" y2="225" stroke="var(--color-text)" stroke-width="1.8"/>
+
+            <!-- CU-06 -> Pasarela Pago -->
+            <line x1="530" y1="535" x2="600" y2="465" stroke="var(--color-text)" stroke-width="1.4" stroke-opacity="0"/>
+            <polyline points="505,555 505,595 975,595 975,465 1020,465" fill="none" stroke="var(--color-text)" stroke-width="1.8"/>
+
+            <!-- ==================== RELACIONES <<include>> Y <<extend>> ==================== -->
+            
+            <!-- CU-02 <<extend>> CU-01 -->
+            <line x1="600" y1="118" x2="525" y2="118" stroke="var(--color-primary)" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#uc-arrow)"/>
+            <text x="562" y="109" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«extend»</text>
+
+            <!-- CU-03 <<include>> CU-07 (JWT) -->
+            <line x1="745" y1="254" x2="745" y2="319" stroke="var(--color-primary)" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#uc-arrow)"/>
+            <text x="790" y="290" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«include»</text>
+
+            <!-- CU-04 <<include>> CU-07 (JWT) -->
+            <line x1="524" y1="305" x2="608" y2="336" stroke="var(--color-primary)" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#uc-arrow)"/>
+            <text x="572" y="310" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«include»</text>
+
+            <!-- CU-06 <<include>> CU-08 (Stock) -->
+            <line x1="530" y1="535" x2="605" y2="535" stroke="var(--color-primary)" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#uc-arrow)"/>
+            <text x="568" y="525" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">«include»</text>
+          </svg>
+        `,
+        extraHtml: `
+          <!-- Tabla de Validación Cruzada: Cómo la 5ta Vista (+1) une las 4 Vistas Arquitectónicas -->
+          <div class="mt-6 pt-6 border-t" style="border-color: var(--color-border);">
+            <h3 class="font-display font-bold text-lg mb-3">Matriz de Articulación de la 5ta Vista (+1) con el Paradigma 4+1</h3>
+            <div class="overflow-x-auto rounded-2xl border" style="border-color: var(--color-border);">
+              <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                <thead>
+                  <tr style="background-color: var(--color-surface-alt); border-bottom: 1px solid var(--color-border);">
+                    <th class="p-3 font-display font-bold">Escenario / Caso de Uso</th>
+                    <th class="p-3 font-display font-bold">Req.</th>
+                    <th class="p-3 font-display font-bold">Vista Lógica</th>
+                    <th class="p-3 font-display font-bold">Vista Desarrollo</th>
+                    <th class="p-3 font-display font-bold">Vista Procesos</th>
+                    <th class="p-3 font-display font-bold">Vista Física</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y" style="border-color: var(--color-border);">
+                  <tr>
+                    <td class="p-3 font-semibold">CU-01/02: Filtrar Catálogo Temático</td>
+                    <td class="p-3 font-mono font-bold" style="color: var(--color-primary);">RF01<br/>RNF01</td>
+                    <td class="p-3">ColeccionTematica + ProductoCalcetin</td>
+                    <td class="p-3">catalogo.html + ControladorCatalogo</td>
+                    <td class="p-3">GET /calcetines + Render tarjetas &lt;2s</td>
+                    <td class="p-3">Edge CDN + Cloud DB Read</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold">CU-05/06: Checkout y Emisión UUID</td>
+                    <td class="p-3 font-mono font-bold" style="color: var(--color-primary);">RF02</td>
+                    <td class="p-3">CarritoCompras + ItemCarrito + Pedido(UUID)</td>
+                    <td class="p-3">DrawerCarrito + GestorPedidosCheckout</td>
+                    <td class="p-3">Transacción ACID lockStock() + COMMIT</td>
+                    <td class="p-3">API Docker + RDS PostgreSQL</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold">CU-03: Administrar Inventario/Precios</td>
+                    <td class="p-3 font-mono font-bold" style="color: var(--color-primary);">RF03<br/>RNF02</td>
+                    <td class="p-3">Administrador + ProductoCalcetin</td>
+                    <td class="p-3">InterceptorAuthJWT + ServiciosInventario</td>
+                    <td class="p-3">Validación Bearer JWT + Rol ADMIN</td>
+                    <td class="p-3">Canal HTTPS TLS 1.3 :443</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold">CU-04: Publicar Reseña (1–5 ★)</td>
+                    <td class="p-3 font-mono font-bold" style="color: var(--color-primary);">RF04<br/>RNF02</td>
+                    <td class="p-3">Cliente + ResenaFanatico {1..5}</td>
+                    <td class="p-3">FormulariosReseñas + InterceptorAuthJWT</td>
+                    <td class="p-3">Auth JWT + Validación rango estrellas</td>
+                    <td class="p-3">API Cloud + tbl_resenas_fanaticos</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    function selectUmlView(viewKey) {
+      if (!UML_VIEWS[viewKey]) viewKey = 'logica';
+      state.currentUmlView = viewKey;
+
+      // Actualizar estilo de pestañas
+      Object.keys(UML_VIEWS).forEach(key => {
+        const tab = document.getElementById(`tab-uml-${key}`);
+        if (!tab) return;
+        if (key === viewKey) {
+          tab.style.backgroundColor = 'var(--color-primary)';
+          tab.style.color = 'var(--color-primary-contrast)';
+          tab.style.borderColor = 'var(--color-primary)';
+          tab.classList.add('shadow-md');
+        } else {
+          tab.style.backgroundColor = 'var(--color-surface)';
+          tab.style.color = 'var(--color-text)';
+          tab.style.borderColor = 'var(--color-border)';
+          tab.classList.remove('shadow-md');
+        }
+      });
+
+      const view = UML_VIEWS[viewKey];
+      const container = document.getElementById('uml-content-container');
+
+      container.innerHTML = `
+        <div class="space-y-6">
+          <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-4 pb-5 border-b" style="border-color: var(--color-border);">
+            <div class="space-y-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                ${(view.reqsCovered || []).map(req => `
+                  <span class="px-2.5 py-0.5 rounded-md text-[11px] font-mono font-extrabold ${req.startsWith('RNF') ? 'ticket-badge' : 'btn-primary'}">
+                    ${req}
+                  </span>
+                `).join('')}
+              </div>
+              <h2 class="font-display font-extrabold text-2xl sm:text-3xl">${view.title}</h2>
+              <p class="text-sm sm:text-base" style="color: var(--color-muted);">${view.subtitle}</p>
+            </div>
+            <div class="px-4 py-2.5 rounded-xl border text-xs font-semibold shrink-0" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+              <span class="block uppercase text-[10px]" style="color: var(--color-muted);">Interesados (Stakeholders)</span>
+              <span>${view.audience}</span>
+            </div>
+          </div>
+
+          <!-- Lienzo del Diagrama UML 2.5 en SVG -->
+          <div class="p-4 sm:p-6 rounded-2xl border overflow-x-auto uml-scroll" style="background-color: var(--color-bg); border-color: var(--color-border);">
+            ${view.svg}
+          </div>
+
+          <!-- Explicación Técnica y Puntos Clave -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
+            <div class="lg:col-span-7 space-y-2">
+              <h3 class="font-display font-bold text-lg">Análisis Arquitectónico (UML 2.5)</h3>
+              <p class="text-sm sm:text-base leading-relaxed" style="color: var(--color-muted);">
+                ${view.description}
+              </p>
+            </div>
+            <div class="lg:col-span-5 p-5 rounded-2xl border" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+              <h4 class="font-display font-bold text-sm uppercase tracking-wider mb-3" style="color: var(--color-primary);">
+                Trazabilidad y Decisiones Clave
+              </h4>
+              <ul class="space-y-2 text-xs sm:text-sm">
+                ${view.highlights.map(item => `
+                  <li class="flex items-start gap-2">
+                    <span class="font-bold" style="color: var(--color-primary);">✓</span>
+                    <span>${item}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          </div>
+
+          ${view.extraHtml || ''}
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 7. PERSONALIZADOR DE COLORES DE LA PÁGINA (THEME ENGINE)
+    // =========================================================================
+    const PRESETS = {
+      blockbuster: { mode: 'light', primary: '#1d4ed8', secondary: '#facc15' },
+      cyberpunk:   { mode: 'dark',  primary: '#9333ea', secondary: '#22d3ee' },
+      cinema:      { mode: 'light', primary: '#dc2626', secondary: '#fbbf24' },
+      arcade:      { mode: 'dark',  primary: '#059669', secondary: '#a3e635' }
+    };
+
+    function getContrastColor(hexColor) {
+      const hex = hexColor.replace('#', '');
+      const r = parseInt(hex.substr(0, 2), 16);
+      const g = parseInt(hex.substr(2, 2), 16);
+      const b = parseInt(hex.substr(4, 2), 16);
+      const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+      return yiq >= 150 ? '#0f172a' : '#ffffff';
+    }
+
+    function applyThemeToDOM() {
+      const root = document.documentElement;
+      const { mode, primary, secondary } = state.theme;
+
+      root.style.setProperty('--color-primary', primary);
+      root.style.setProperty('--color-secondary', secondary);
+      root.style.setProperty('--color-primary-contrast', getContrastColor(primary));
+      root.style.setProperty('--color-secondary-contrast', getContrastColor(secondary));
+
+      if (mode === 'dark') {
+        root.style.setProperty('--color-bg', '#090d16');
+        root.style.setProperty('--color-surface', '#111827');
+        root.style.setProperty('--color-surface-alt', '#1e293b');
+        root.style.setProperty('--color-text', '#f8fafc');
+        root.style.setProperty('--color-muted', '#94a3b8');
+        root.style.setProperty('--color-border', '#334155');
+      } else {
+        root.style.setProperty('--color-bg', '#f8fafc');
+        root.style.setProperty('--color-surface', '#ffffff');
+        root.style.setProperty('--color-surface-alt', '#f1f5f9');
+        root.style.setProperty('--color-text', '#0f172a');
+        root.style.setProperty('--color-muted', '#475569');
+        root.style.setProperty('--color-border', '#cbd5e1');
+      }
+
+      // Sincronizar inputs y etiquetas del panel
+      const pPicker = document.getElementById('custom-primary-picker');
+      const sPicker = document.getElementById('custom-secondary-picker');
+      if (pPicker) pPicker.value = primary;
+      if (sPicker) sPicker.value = secondary;
+
+      const pLabel = document.getElementById('primary-hex-label');
+      const sLabel = document.getElementById('secondary-hex-label');
+      if (pLabel) pLabel.textContent = primary.toUpperCase();
+      if (sLabel) sLabel.textContent = secondary.toUpperCase();
+
+      // Estilos botones Modo Claro / Oscuro
+      const lightBtn = document.getElementById('mode-light-btn');
+      const darkBtn = document.getElementById('mode-dark-btn');
+      if (lightBtn && darkBtn) {
+        if (mode === 'light') {
+          lightBtn.style.backgroundColor = primary;
+          lightBtn.style.color = getContrastColor(primary);
+          darkBtn.style.backgroundColor = 'var(--color-surface-alt)';
+          darkBtn.style.color = 'var(--color-text)';
+        } else {
+          darkBtn.style.backgroundColor = primary;
+          darkBtn.style.color = getContrastColor(primary);
+          lightBtn.style.backgroundColor = 'var(--color-surface-alt)';
+          lightBtn.style.color = 'var(--color-text)';
+        }
+      }
+
+      try {
+        localStorage.setItem('sockbuster_theme', JSON.stringify(state.theme));
+      } catch (e) {
+        // Ignorar si localStorage está restringido
+      }
+    }
+
+    function setBaseMode(mode) {
+      state.theme.mode = mode;
+      applyThemeToDOM();
+    }
+
+    function applyPreset(presetName) {
+      if (!PRESETS[presetName]) return;
+      state.theme = { ...PRESETS[presetName] };
+      applyThemeToDOM();
+    }
+
+    function updateCustomColor(type, hexValue) {
+      if (type === 'primary') state.theme.primary = hexValue;
+      if (type === 'secondary') state.theme.secondary = hexValue;
+      applyThemeToDOM();
+    }
+
+    function resetTheme() {
+      applyPreset('blockbuster');
+      showToast('Colores originales restaurados', '🎨');
+    }
+
+    function toggleThemePanel() {
+      const panel = document.getElementById('theme-panel');
+      panel.classList.toggle('hidden');
+    }
+
+    // =========================================================================
+    // 8. INICIALIZACIÓN DE LA APLICACIÓN
+    // =========================================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      // Cargar tema guardado si existe
+      try {
+        const savedTheme = localStorage.getItem('sockbuster_theme');
+        if (savedTheme) {
+          state.theme = { ...state.theme, ...JSON.parse(savedTheme) };
+        }
+      } catch (e) {}
+
+      applyThemeToDOM();
+      updateCategoryButtonsUI();
+      renderCatalog();
+      selectUmlView('logica');
+      updateCartUI();
+
+      // Leer ruta inicial del hash (#inicio, #catalogo, #uml)
+      const initialHash = window.location.hash.replace('#', '');
+      navigateTo(initialHash || 'inicio');
+    });
+
+    // Cerrar modales al hacer clic fuera o presionar Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeProductModal();
+        document.getElementById('cart-drawer').classList.add('hidden');
+        document.getElementById('theme-panel').classList.add('hidden');
+      }
+    });
+
+    document.getElementById('product-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'product-modal') closeProductModal();
+    });
+
+    document.getElementById('cart-drawer').addEventListener('click', (e) => {
+      if (e.target.id === 'cart-drawer') toggleCartDrawer();
+    });
+  </script>
+</body>
+</html>
