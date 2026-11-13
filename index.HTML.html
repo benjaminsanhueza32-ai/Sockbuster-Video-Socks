@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sockbuster | Calcetines Temáticos & Documentación UML 4+1</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Space Grotesk & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              primary: 'var(--color-primary)',
+              primaryHover: 'var(--color-primary-hover)',
+              secondary: 'var(--color-secondary)',
+              bg: 'var(--color-bg)',
+              surface: 'var(--color-surface)',
+              surfaceAlt: 'var(--color-surface-alt)',
+              text: 'var(--color-text)',
+              muted: 'var(--color-muted)',
+              border: 'var(--color-border)',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      --color-primary: #1d4ed8;       /* Azul clásico estilo videoclub */
+      --color-primary-hover: #1e40af;
+      --color-secondary: #facc15;     /* Amarillo ticket retro */
+      --color-bg: #f8fafc;
+      --color-surface: #ffffff;
+      --color-surface-alt: #f1f5f9;
+      --color-text: #0f172a;
+      --color-muted: #475569;
+      --color-border: #cbd5e1;
+      --color-primary-contrast: #ffffff;
+      --color-secondary-contrast: #0f172a;
+    }
+
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .theme-card {
+      background-color: var(--color-surface);
+      border-color: var(--color-border);
+      transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .theme-surface-alt {
+      background-color: var(--color-surface-alt);
+      border-color: var(--color-border);
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: var(--color-primary-contrast);
+      transition: filter 0.2s ease, transform 0.15s ease;
+    }
+    .btn-primary:hover {
+      filter: brightness(1.1);
+    }
+
+    .btn-secondary {
+      background-color: var(--color-secondary);
+      color: var(--color-secondary-contrast);
+      transition: filter 0.2s ease, transform 0.15s ease;
+    }
+    .btn-secondary:hover {
+      filter: brightness(1.06);
+    }
+
+    /* Ticket perforado decorativo */
+    .ticket-badge {
+      position: relative;
+      background-color: var(--color-secondary);
+      color: var(--color-secondary-contrast);
+    }
+
+    /* Animaciones suaves de cambio de vista */
+    .page-section {
+      animation: fadeSlideIn 0.3s ease-out;
+    }
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Scrollbar limpio para diagramas UML en móviles */
+    .uml-scroll::-webkit-scrollbar {
+      height: 8px;
+    }
+    .uml-scroll::-webkit-scrollbar-track {
+      background: var(--color-surface-alt);
+      border-radius: 9999px;
+    }
+    .uml-scroll::-webkit-scrollbar-thumb {
+      background: var(--color-border);
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased selection:bg-yellow-300 selection:text-slate-900">
+
+  <!-- BARRA DE NAVEGACIÓN PRINCIPAL -->
+  <header class="sticky top-0 z-40 border-b backdrop-blur-md transition-colors duration-200" style="background-color: color-mix(in srgb, var(--color-surface) 90%, transparent); border-color: var(--color-border);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-2">
+        
+        <!-- Logo Sockbuster -->
+        <a href="#inicio" onclick="navigateTo('inicio'); return false;" class="flex items-center gap-2.5 group focus:outline-none">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shadow-md transition-transform group-hover:rotate-[-4deg]" style="background-color: var(--color-primary); color: var(--color-primary-contrast);">
+            <!-- Ícono SVG de Calcetín + Cinta VHS -->
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 3h8v7.5a5.5 5.5 0 0 1-2.2 4.4l-2.6 1.95a2.8 2.8 0 0 1-4.3-1.45A2.8 2.8 0 0 1 8 12.1V3z"/>
+              <path d="M8 6.5h8"/>
+              <path d="M8 9.5h8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-display font-extrabold text-xl sm:text-2xl tracking-tight leading-none" style="color: var(--color-text);">
+              SOCK<span style="color: var(--color-primary);">BUSTER</span>
+            </span>
+            <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest" style="color: var(--color-muted);">
+              Pop Culture Socks
+            </span>
+          </div>
+        </a>
+
+        <!-- Navegación 3 Páginas (Desktop) -->
+        <nav aria-label="Navegación Principal" class="hidden md:flex items-center gap-1.5 p-1.5 rounded-2xl border" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+          <button id="nav-inicio" onclick="navigateTo('inicio')" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer">
+            Inicio
+          </button>
+          <button id="nav-catalogo" onclick="navigateTo('catalogo')" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer">
+            Catálogo
+          </button>
+          <button id="nav-uml" onclick="navigateTo('uml')" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer">
+            Estructura UML (4+1)
+          </button>
+        </nav>
+
+        <!-- Acciones Derecha: Personalizador de Color + Carrito -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Botón Abrir Personalizador de Color -->
+          <button onclick="toggleThemePanel()" class="flex items-center gap-2 px-3 py-2 rounded-xl border text-xs sm:text-sm font-semibold shadow-sm hover:opacity-90 transition cursor-pointer" style="background-color: var(--color-surface-alt); border-color: var(--color-border); color: var(--color-text);" title="Cambiar colores de la página">
+            <span class="w-4 h-4 rounded-full border border-white shadow-inner inline-block" style="background-color: var(--color-primary);"></span>
+            <span class="hidden sm:inline">Color</span>
+            <svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+            </svg>
+          </button>
+
+          <!-- Botón Carrito -->
+          <button onclick="toggleCartDrawer()" class="relative flex items-center gap-2 px-3.5 py-2 rounded-xl btn-primary text-xs sm:text-sm font-bold shadow-sm cursor-pointer" aria-label="Abrir carrito de compras">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <span id="cart-count-badge" class="px-1.5 py-0.5 text-xs font-extrabold rounded-full" style="background-color: var(--color-secondary); color: var(--color-secondary-contrast);">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navegación Móvil (3 páginas siempre accesibles en pantallas pequeñas) -->
+      <div class="flex md:hidden items-center justify-between gap-1 pb-3 pt-1">
+        <button id="mob-nav-inicio" onclick="navigateTo('inicio')" class="flex-1 py-2 rounded-xl text-xs font-bold text-center transition">
+          Inicio
+        </button>
+        <button id="mob-nav-catalogo" onclick="navigateTo('catalogo')" class="flex-1 py-2 rounded-xl text-xs font-bold text-center transition">
+          Catálogo
+        </button>
+        <button id="mob-nav-uml" onclick="navigateTo('uml')" class="flex-1 py-2 rounded-xl text-xs font-bold text-center transition">
+          Estructura UML
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- PANEL FLOTANTE PERSONALIZADOR DE COLORES -->
+  <aside id="theme-panel" class="hidden fixed right-4 top-24 z-50 w-80 max-w-[calc(100vw-2rem)] rounded-2xl border p-5 shadow-2xl theme-card" aria-label="Personalizador de tema y colores">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full" style="background-color: var(--color-primary);"></span>
+        <h3 class="font-display font-bold text-base">Personalizar Colores</h3>
+      </div>
+      <button onclick="toggleThemePanel()" class="p-1.5 rounded-lg hover:opacity-75 cursor-pointer" style="background-color: var(--color-surface-alt);" aria-label="Cerrar panel de colores">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Selector Modo Claro / Oscuro -->
+    <div class="mb-4">
+      <label class="block text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-muted);">Esquema Base</label>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="setBaseMode('light')" id="mode-light-btn" class="py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer transition">
+          ☀️ Modo Claro
+        </button>
+        <button onclick="setBaseMode('dark')" id="mode-dark-btn" class="py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer transition">
+          🌙 Modo Oscuro
+        </button>
+      </div>
+    </div>
+
+    <!-- Paletas Predefinidas -->
+    <div class="mb-4">
+      <label class="block text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-muted);">Paletas Temáticas</label>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="applyPreset('blockbuster')" class="p-2 rounded-xl border text-left text-xs font-semibold flex items-center gap-2 hover:scale-[1.02] transition cursor-pointer" style="border-color: var(--color-border);">
+          <span class="w-4 h-4 rounded-full shrink-0 border border-black/10" style="background: linear-gradient(135deg, #1d4ed8 50%, #facc15 50%);"></span>
+          <span>Clásico VHS</span>
+        </button>
+        <button onclick="applyPreset('cyberpunk')" class="p-2 rounded-xl border text-left text-xs font-semibold flex items-center gap-2 hover:scale-[1.02] transition cursor-pointer" style="border-color: var(--color-border);">
+          <span class="w-4 h-4 rounded-full shrink-0 border border-black/10" style="background: linear-gradient(135deg, #9333ea 50%, #22d3ee 50%);"></span>
+          <span>Neón Synth</span>
+        </button>
+        <button onclick="applyPreset('cinema')" class="p-2 rounded-xl border text-left text-xs font-semibold flex items-center gap-2 hover:scale-[1.02] transition cursor-pointer" style="border-color: var(--color-border);">
+          <span class="w-4 h-4 rounded-full shrink-0 border border-black/10" style="background: linear-gradient(135deg, #dc2626 50%, #fbbf24 50%);"></span>
+          <span>Alfombra Roja</span>
+        </button>
+        <button onclick="applyPreset('arcade')" class="p-2 rounded-xl border text-left text-xs font-semibold flex items-center gap-2 hover:scale-[1.02] transition cursor-pointer" style="border-color: var(--color-border);">
+          <span class="w-4 h-4 rounded-full shrink-0 border border-black/10" style="background: linear-gradient(135deg, #059669 50%, #a3e635 50%);"></span>
+          <span>Verde Arcade</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Selectores Libres de Color -->
+    <div class="space-y-3 pt-3 border-t" style="border-color: var(--color-border);">
+      <div class="flex items-center justify-between">
+        <label for="custom-primary-picker" class="text-xs font-semibold">Color Principal:</label>
+        <div class="flex items-center gap-2">
+          <span id="primary-hex-label" class="text-xs font-mono uppercase" style="color: var(--color-muted);">#1D4ED8</span>
+          <input type="color" id="custom-primary-picker" value="#1d4ed8" oninput="updateCustomColor('primary', this.value)" class="w-8 h-8 rounded-lg cursor-pointer border-0 bg-transparent" />
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <label for="custom-secondary-picker" class="text-xs font-semibold">Color Acento / Detalles:</label>
+        <div class="flex items-center gap-2">
+          <span id="secondary-hex-label" class="text-xs font-mono uppercase" style="color: var(--color-muted);">#FACC15</span>
+          <input type="color" id="custom-secondary-picker" value="#facc15" oninput="updateCustomColor('secondary', this.value)" class="w-8 h-8 rounded-lg cursor-pointer border-0 bg-transparent" />
+        </div>
+      </div>
+    </div>
+
+    <button onclick="resetTheme()" class="mt-4 w-full py-2 rounded-xl text-xs font-semibold border hover:opacity-80 transition cursor-pointer" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+      Restaurar Colores Originales
+    </button>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL (SPA CON 3 PÁGINAS) -->
+  <main class="flex-1">
+
+    <!-- ===================================================================== -->
+    <!-- PÁGINA 1: INICIO (PRESENTACIÓN, BANNER Y AUTORÍA DE BENJAMÍN SANHUEZA) -->
+    <!-- ===================================================================== -->
+    <section id="page-inicio" class="page-section">
+      <!-- Banner Principal Hero -->
+      <div class="relative overflow-hidden border-b" style="border-color: var(--color-border);">
+        <!-- Decoración sutil de fondo -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(var(--color-primary) 1.5px, transparent 1.5px); background-size: 24px 24px;"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-24 relative">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            
+            <!-- Columna Texto Hero -->
+            <div class="lg:col-span-7 space-y-6">
+              <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold shadow-sm ticket-badge">
+                <span>🎟️ ESTRENO DE TEMPORADA</span>
+                <span>•</span>
+                <span>COLECCIÓN CULTURA POP</span>
+              </div>
+
+              <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.08]">
+                El cine y los clásicos retro <span class="underline decoration-4 underline-offset-4" style="text-decoration-color: var(--color-secondary); color: var(--color-primary);">a tus pies</span>.
+              </h1>
+
+              <p class="text-base sm:text-lg max-w-2xl leading-relaxed" style="color: var(--color-muted);">
+                Bienvenido a <strong>Sockbuster</strong>, el videoclub convertido en tienda de calcetines temáticos coleccionables. Diseños inspirados en cintas VHS, salas de arcade, ciencia ficción y películas de culto, tejidos con algodón peinado de máxima comodidad.
+              </p>
+
+              <!-- Etiqueta destacada de desarrollo -->
+              <div class="p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 theme-card shadow-sm">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center font-display font-extrabold text-sm shrink-0" style="background-color: var(--color-primary); color: var(--color-primary-contrast);">
+                    BS
+                  </div>
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider" style="color: var(--color-muted);">Actividad Desarrollada por</p>
+                    <p class="font-display font-bold text-base sm:text-lg" style="color: var(--color-text);">Benjamín Sanhueza</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold self-start sm:self-center" style="background-color: var(--color-surface-alt); color: var(--color-primary);">
+                  Arquitectura & Desarrollo Web
+                </span>
+              </div>
+
+              <!-- Botones de Acción -->
+              <div class="flex flex-wrap items-center gap-3 pt-2">
+                <button onclick="navigateTo('catalogo')" class="px-6 py-3.5 rounded-2xl btn-primary font-display font-bold text-sm sm:text-base shadow-lg hover:-translate-y-0.5 transition flex items-center gap-2 cursor-pointer">
+                  <span>Explorar Catálogo</span>
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                </button>
+                <button onclick="navigateTo('uml')" class="px-6 py-3.5 rounded-2xl border font-display font-bold text-sm sm:text-base hover:-translate-y-0.5 transition flex items-center gap-2 cursor-pointer theme-card">
+                  <svg class="w-5 h-5" style="color: var(--color-primary);" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                  <span>Ver Estructura UML (4+1)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Columna Ilustración Hero SVG -->
+            <div class="lg:col-span-5 flex justify-center">
+              <div class="relative w-full max-w-md p-6 sm:p-8 rounded-3xl border shadow-xl theme-card">
+                <!-- Ticket flotante superior -->
+                <div class="absolute -top-4 -right-3 px-4 py-1.5 rounded-xl font-display font-extrabold text-xs sm:text-sm shadow-md rotate-3 btn-secondary">
+                  ¡REBOBINA TU ESTILO! ⏪
+                </div>
+
+                <!-- Ilustración SVG de Caja VHS + Par de Calcetines Estelares -->
+                <svg viewBox="0 0 360 300" class="w-full h-auto drop-shadow-md" role="img" aria-label="Ilustración de calcetines temáticos Sockbuster estilo cinta VHS">
+                  <!-- Fondo circular suave -->
+                  <circle cx="180" cy="150" r="125" fill="var(--color-surface-alt)" />
+                  
+                  <!-- Carátula estilo VHS atrás -->
+                  <rect x="45" y="45" width="165" height="215" rx="14" fill="var(--color-primary)" />
+                  <rect x="57" y="57" width="141" height="44" rx="6" fill="var(--color-secondary)" />
+                  <text x="127" y="84" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="800" font-size="16" fill="#0f172a">SOCKBUSTER</text>
+                  <line x1="60" y1="118" x2="195" y2="118" stroke="#ffffff" stroke-width="4" stroke-opacity="0.4" stroke-linecap="round"/>
+                  <line x1="60" y1="134" x2="165" y2="134" stroke="#ffffff" stroke-width="4" stroke-opacity="0.4" stroke-linecap="round"/>
+                  <rect x="60" y="195" width="68" height="24" rx="5" fill="#ffffff" fill-opacity="0.2" />
+                  <text x="94" y="211" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="10" fill="#ffffff">EDICIÓN VHS</text>
+
+                  <!-- Calcetín Izquierdo (Inclinado) -->
+                  <g transform="translate(155, 55) rotate(-8)">
+                    <path d="M25 10 H85 V125 C85 152 68 172 45 186 L22 200 C5 210 -15 198 -18 180 C-21 162 -8 146 8 137 L25 127 Z" fill="#ffffff" stroke="#0f172a" stroke-width="4" stroke-linejoin="round"/>
+                    <!-- Puño elástico -->
+                    <rect x="25" y="10" width="60" height="28" fill="var(--color-secondary)" stroke="#0f172a" stroke-width="4"/>
+                    <line x1="25" y1="20" x2="85" y2="20" stroke="#0f172a" stroke-width="2.5"/>
+                    <!-- Talón y puntera -->
+                    <path d="M85 112 C66 112 58 128 68 144 C78 134 85 124 85 112 Z" fill="var(--color-primary)" stroke="#0f172a" stroke-width="3"/>
+                    <path d="M6 140 C-10 150 -20 165 -17 181 C-14 196 3 207 19 200 L28 194 C15 180 8 162 6 140 Z" fill="var(--color-primary)" stroke="#0f172a" stroke-width="3"/>
+                    <!-- Estrella retro -->
+                    <polygon points="55,62 60,74 73,74 63,82 67,95 55,87 43,95 47,82 37,74 50,74" fill="var(--color-secondary)" stroke="#0f172a" stroke-width="2"/>
+                  </g>
+
+                  <!-- Calcetín Derecho (Primer plano) -->
+                  <g transform="translate(215, 75) rotate(10)">
+                    <path d="M25 10 H85 V125 C85 152 68 172 45 186 L22 200 C5 210 -15 198 -18 180 C-21 162 -8 146 8 137 L25 127 Z" fill="#1e293b" stroke="#0f172a" stroke-width="4" stroke-linejoin="round"/>
+                    <rect x="25" y="10" width="60" height="28" fill="var(--color-primary)" stroke="#0f172a" stroke-width="4"/>
+                    <line x1="25" y1="20" x2="85" y2="20" stroke="#ffffff" stroke-width="2.5"/>
+                    <!-- Rayas arcade -->
+                    <rect x="27" y="55" width="56" height="10" fill="var(--color-secondary)"/>
+                    <rect x="27" y="75" width="56" height="10" fill="#38bdf8"/>
+                    <rect x="27" y="95" width="56" height="10" fill="#f43f5e"/>
+                    <!-- Puntera -->
+                    <path d="M6 140 C-10 150 -20 165 -17 181 C-14 196 3 207 19 200 L28 194 C15 180 8 162 6 140 Z" fill="var(--color-secondary)" stroke="#0f172a" stroke-width="3"/>
+                  </g>
+                </svg>
+
+                <div class="mt-4 pt-4 border-t flex items-center justify-between text-xs font-semibold" style="border-color: var(--color-border); color: var(--color-muted);">
+                  <span>Algodón Peinado 80%</span>
+                  <span>Tallas S/M y L/XL</span>
+                  <span>Envíos a todo Chile</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección Propuesta de Valor & Créditos -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl mb-3">¿Por qué elegir Sockbuster?</h2>
+          <p class="text-sm sm:text-base" style="color: var(--color-muted);">
+            Combinamos nostalgia cinematográfica, diseño textil de alta definición y una arquitectura de software moderna.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Card 1 -->
+          <div class="p-6 rounded-2xl border theme-card shadow-sm">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-xl font-bold" style="background-color: var(--color-surface-alt); color: var(--color-primary);">
+              🎬
+            </div>
+            <h3 class="font-display font-bold text-lg mb-2">Ediciones de Culto</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--color-muted);">
+              Cada par rinde homenaje a géneros icónicos: terror clásico, ciencia ficción espacial, máquinas arcade de los 80 y cine independiente.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="p-6 rounded-2xl border theme-card shadow-sm">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-xl font-bold" style="background-color: var(--color-surface-alt); color: var(--color-primary);">
+              🧦
+            </div>
+            <h3 class="font-display font-bold text-lg mb-2">Tejido Jacquard 200 Agujas</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--color-muted);">
+              No son estampados que se borran: los diseños están tejidos hilo por hilo para mantener colores vibrantes lavado tras lavado.
+            </p>
+          </div>
+
+          <!-- Card 3: Tarjeta de Autoría Benjamín Sanhueza -->
+          <div class="p-6 rounded-2xl border theme-card shadow-sm relative overflow-hidden">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-xl font-bold" style="background-color: var(--color-primary); color: var(--color-primary-contrast);">
+              💻
+            </div>
+            <h3 class="font-display font-bold text-lg mb-2">Créditos del Proyecto</h3>
+            <p class="text-sm leading-relaxed mb-3" style="color: var(--color-muted);">
+              Plataforma interactiva diseñada y desarrollada por <strong>Benjamín Sanhueza</strong>, integrando catálogo dinámico y modelado arquitectónico UML 4+1.
+            </p>
+            <button onclick="navigateTo('uml')" class="text-xs font-bold underline cursor-pointer" style="color: var(--color-primary);">
+              Explorar documentación técnica →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- PÁGINA 2: CATÁLOGO INTERACTIVO DE CALCETINES TEMÁTICOS                -->
+    <!-- ===================================================================== -->
+    <section id="page-catalogo" class="page-section hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        
+        <!-- Encabezado Catálogo -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+          <div>
+            <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2 ticket-badge">
+              Cartelera Oficial
+            </span>
+            <h1 class="font-display font-extrabold text-3xl sm:text-4xl">Catálogo de Calcetines</h1>
+            <p class="text-sm sm:text-base mt-1" style="color: var(--color-muted);">
+              Filtra por temática, busca tu modelo favorito y haz clic en cualquier par para ver sus detalles técnicos y tallas.
+            </p>
+          </div>
+          <div class="text-sm font-semibold" style="color: var(--color-muted);">
+            Mostrando <span id="catalog-count" class="font-bold" style="color: var(--color-text);">9</span> modelos disponibles
+          </div>
+        </div>
+
+        <!-- Barra de Filtros, Búsqueda y Ordenamiento -->
+        <div class="p-4 sm:p-5 rounded-2xl border theme-card shadow-sm mb-8 space-y-4">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            
+            <!-- Botones de Filtro por Categoría -->
+            <div class="flex flex-wrap items-center gap-2" id="category-filters" role="group" aria-label="Filtrar por categoría">
+              <button onclick="setCategoryFilter('Todos')" data-cat="Todos" class="cat-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer">
+                Todos
+              </button>
+              <button onclick="setCategoryFilter('Cine Clásico')" data-cat="Cine Clásico" class="cat-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer">
+                🎬 Cine Clásico
+              </button>
+              <button onclick="setCategoryFilter('Retro & Arcade')" data-cat="Retro & Arcade" class="cat-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer">
+                🕹️ Retro & Arcade
+              </button>
+              <button onclick="setCategoryFilter('Sci-Fi & Culto')" data-cat="Sci-Fi & Culto" class="cat-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer">
+                🛸 Sci-Fi & Culto
+              </button>
+              <button onclick="setCategoryFilter('Edición Limitada')" data-cat="Edición Limitada" class="cat-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer">
+                ⭐ Edición Limitada
+              </button>
+            </div>
+
+            <!-- Buscador y Ordenamiento -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <div class="relative">
+                <input type="text" id="search-input" oninput="renderCatalog()" placeholder="Buscar calcetín..." class="w-full sm:w-56 pl-9 pr-3 py-2 rounded-xl border text-sm focus:outline-none focus:ring-2" style="background-color: var(--color-surface-alt); border-color: var(--color-border); color: var(--color-text);" />
+                <svg class="w-4 h-4 absolute left-3 top-2.5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              </div>
+
+              <select id="sort-select" onchange="renderCatalog()" aria-label="Ordenar productos" class="px-3 py-2 rounded-xl border text-sm font-medium focus:outline-none cursor-pointer" style="background-color: var(--color-surface-alt); border-color: var(--color-border); color: var(--color-text);">
+                <option value="featured">Orden: Destacados</option>
+                <option value="price-asc">Precio: Menor a Mayor</option>
+                <option value="price-desc">Precio: Mayor a Menor</option>
+                <option value="name-asc">Nombre: A - Z</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grilla de Productos -->
+        <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Renderizado dinámicamente vía JS -->
+        </div>
+
+        <!-- Estado vacío cuando no hay coincidencias -->
+        <div id="catalog-empty" class="hidden text-center py-16 px-4 rounded-2xl border theme-card">
+          <p class="text-4xl mb-3">📼</p>
+          <h3 class="font-display font-bold text-xl mb-1">No encontramos esa cinta en el estante</h3>
+          <p class="text-sm mb-4" style="color: var(--color-muted);">Intenta limpiar los filtros o buscar con otra palabra clave.</p>
+          <button onclick="resetFilters()" class="px-5 py-2.5 rounded-xl btn-primary text-sm font-bold cursor-pointer">
+            Ver todos los calcetines
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- PÁGINA 3: ESTRUCTURA UML (PARADIGMA ARQUITECTÓNICO 4+1)               -->
+    <!-- ===================================================================== -->
+    <section id="page-uml" class="page-section hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        
+        <!-- Encabezado Documentación Técnica -->
+        <div class="mb-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2 ticket-badge">
+            <span>📐 DOCUMENTACIÓN TÉCNICA DE SOFTWARE</span>
+          </div>
+          <h1 class="font-display font-extrabold text-3xl sm:text-4xl">Arquitectura UML — Paradigma 4+1</h1>
+          <p class="text-sm sm:text-base mt-2 max-w-3xl" style="color: var(--color-muted);">
+            Modelado arquitectónico del sistema web <strong>Sockbuster</strong> basado en el modelo de vistas <strong>4+1 de Philippe Kruchten</strong>, documentado por <strong>Benjamín Sanhueza</strong>. Selecciona cada vista para inspeccionar su diagrama UML y análisis técnico.
+          </p>
+        </div>
+
+        <!-- Selector de las 5 Vistas del Paradigma 4+1 -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 mb-8" role="tablist" aria-label="Vistas del Paradigma 4+1">
+          <button onclick="selectUmlView('logica')" id="tab-uml-logica" role="tab" class="uml-tab p-3.5 rounded-2xl border text-left transition cursor-pointer">
+            <span class="block text-[11px] font-bold uppercase opacity-75">Vista 1</span>
+            <span class="font-display font-bold text-sm sm:text-base">Vista Lógica</span>
+          </button>
+
+          <button onclick="selectUmlView('desarrollo')" id="tab-uml-desarrollo" role="tab" class="uml-tab p-3.5 rounded-2xl border text-left transition cursor-pointer">
+            <span class="block text-[11px] font-bold uppercase opacity-75">Vista 2</span>
+            <span class="font-display font-bold text-sm sm:text-base">Vista de Desarrollo</span>
+          </button>
+
+          <button onclick="selectUmlView('procesos')" id="tab-uml-procesos" role="tab" class="uml-tab p-3.5 rounded-2xl border text-left transition cursor-pointer">
+            <span class="block text-[11px] font-bold uppercase opacity-75">Vista 3</span>
+            <span class="font-display font-bold text-sm sm:text-base">Vista de Procesos</span>
+          </button>
+
+          <button onclick="selectUmlView('fisica')" id="tab-uml-fisica" role="tab" class="uml-tab p-3.5 rounded-2xl border text-left transition cursor-pointer">
+            <span class="block text-[11px] font-bold uppercase opacity-75">Vista 4</span>
+            <span class="font-display font-bold text-sm sm:text-base">Vista Física</span>
+          </button>
+
+          <button onclick="selectUmlView('escenarios')" id="tab-uml-escenarios" role="tab" class="uml-tab col-span-2 sm:col-span-1 p-3.5 rounded-2xl border text-left transition cursor-pointer">
+            <span class="block text-[11px] font-bold uppercase opacity-75">5ta Vista (+1)</span>
+            <span class="font-display font-bold text-sm sm:text-base">Escenarios (Casos de Uso)</span>
+          </button>
+        </div>
+
+        <!-- Contenedor Dinámico de la Vista UML Activa -->
+        <div id="uml-content-container" class="rounded-3xl border p-5 sm:p-8 theme-card shadow-sm">
+          <!-- Se inyecta el contenido detallado y diagrama SVG de la vista seleccionada -->
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL DE DETALLE DEL PRODUCTO -->
+  <div id="product-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs" role="dialog" aria-modal="true" aria-labelledby="modal-product-title">
+    <div class="w-full max-w-2xl rounded-3xl border p-6 sm:p-8 shadow-2xl theme-card relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeProductModal()" class="absolute top-4 right-4 p-2 rounded-xl border hover:opacity-75 cursor-pointer" style="background-color: var(--color-surface-alt); border-color: var(--color-border);" aria-label="Cerrar detalle de producto">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div id="modal-product-body">
+        <!-- Contenido inyectado dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- DRAWER / MODAL DE CARRITO DE COMPRAS -->
+  <div id="cart-drawer" class="hidden fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-xs" role="dialog" aria-modal="true" aria-label="Carrito de compras">
+    <div class="w-full max-w-md h-full flex flex-col border-l shadow-2xl theme-card">
+      <div class="p-5 border-b flex items-center justify-between" style="border-color: var(--color-border);">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🛒</span>
+          <h2 class="font-display font-extrabold text-xl">Tu Carrito Sockbuster</h2>
+        </div>
+        <button onclick="toggleCartDrawer()" class="p-2 rounded-xl hover:opacity-75 cursor-pointer" style="background-color: var(--color-surface-alt);" aria-label="Cerrar carrito">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-3">
+        <!-- Ítems del carrito -->
+      </div>
+
+      <div class="p-5 border-t space-y-4" style="border-color: var(--color-border); background-color: var(--color-surface-alt);">
+        <div class="flex items-center justify-between text-base font-bold">
+          <span>Total Estimado:</span>
+          <span id="cart-total-price" class="font-display text-xl" style="color: var(--color-primary);">$0 CLP</span>
+        </div>
+        <button onclick="checkoutSimulation()" id="checkout-btn" class="w-full py-3.5 rounded-2xl btn-primary font-display font-bold text-sm sm:text-base shadow-md cursor-pointer">
+          Finalizar Pedido
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFICACIÓN TOAST (Sin usar alert()) -->
+  <div id="toast-notification" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden px-5 py-3 rounded-2xl shadow-xl font-semibold text-sm flex items-center gap-2.5 transition-all" style="background-color: var(--color-text); color: var(--color-surface);">
+    <span id="toast-icon">✅</span>
+    <span id="toast-message">Producto agregado al carrito</span>
+  </div>
+
+  <!-- PIE DE PÁGINA (FOOTER) -->
+  <footer class="border-t mt-auto" style="background-color: var(--color-surface); border-color: var(--color-border);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <span class="font-display font-extrabold text-lg">SOCK<span style="color: var(--color-primary);">BUSTER</span></span>
+        <span class="text-xs px-2.5 py-0.5 rounded-md font-semibold" style="background-color: var(--color-surface-alt); color: var(--color-muted);">
+          Catálogo & Arquitectura 4+1
+        </span>
+      </div>
+
+      <p class="text-xs sm:text-sm text-center sm:text-right font-medium" style="color: var(--color-muted);">
+        Desarrollado por <strong style="color: var(--color-text);">Benjamín Sanhueza</strong> • Todos los derechos reservados © 2026
+      </p>
+    </div>
+  </footer>
+
+  <!-- LÓGICA JAVASCRIPT DE LA APLICACIÓN -->
+  <script>
+    // =========================================================================
+    // 1. DATOS DEL CATÁLOGO DE CALCETINES TEMÁTICOS SOCKBUSTER
+    // =========================================================================
+    const PRODUCTS = [
+      {
+        id: 'sb-01',
+        name: 'VHS Retro 80s',
+        category: 'Retro & Arcade',
+        price: 7990,
+        badge: 'Más Vendido',
+        tagline: 'Be Kind, Rewind en cada paso.',
+        description: 'Inspirados en las icónicas cintas magnéticas de videoclub de los años 80. Incluye detalles tejidos de carrete de cinta y etiqueta lateral personalizable.',
+        materials: '80% Algodón peinado, 17% Poliamida, 3% Elastano',
+        colors: ['#1d4ed8', '#facc15', '#0f172a'],
+        pattern: 'vhs'
+      },
+      {
+        id: 'sb-02',
+        name: 'Palomitas de Medianoche',
+        category: 'Cine Clásico',
+        price: 6990,
+        badge: 'Clásico',
+        tagline: 'El acompañante oficial de toda maratón.',
+        description: 'Rayas rojas y blancas estilo caja clásica de cine con textura en relieve de palomitas de maíz recién hechas en la caña del calcetín.',
+        materials: '82% Algodón orgánico, 15% Poliamida, 3% Elastano',
+        colors: ['#dc2626', '#ffffff', '#facc15'],
+        pattern: 'popcorn'
+      },
+      {
+        id: 'sb-03',
+        name: 'Invasión Arcade 8-Bit',
+        category: 'Retro & Arcade',
+        price: 8490,
+        badge: 'Nuevo',
+        tagline: 'Inserta una moneda para continuar.',
+        description: 'Naves espaciales pixeladas, corazones de vida extra y puntuación máxima sobre un fondo negro profundo de pantalla CRT.',
+        materials: '78% Algodón peinado, 19% Poliamida, 3% Elastano',
+        colors: ['#111827', '#22c55e', '#a855f7'],
+        pattern: 'arcade'
+      },
+      {
+        id: 'sb-04',
+        name: 'Odisea Galáctica',
+        category: 'Sci-Fi & Culto',
+        price: 8990,
+        badge: 'Edición Limitada',
+        tagline: 'Más allá de la órbita terrestre.',
+        description: 'Nebulosas violetas, anillos de Saturno y un transbordador espacial explorando el cosmos. Ideal para fanáticos de la ciencia ficción espacial.',
+        materials: '80% Algodón peinado, 17% Poliamida, 3% Elastano',
+        colors: ['#312e81', '#38bdf8', '#f472b6'],
+        pattern: 'space'
+      },
+      {
+        id: 'sb-05',
+        name: 'Tiburón de Culto 1975',
+        category: 'Cine Clásico',
+        price: 7490,
+        badge: 'Culto',
+        tagline: 'Vas a necesitar unos calcetines más grandes.',
+        description: 'Aleta dorsal asomando entre olas azul marino con contraste rojo intenso en talón y puntera. Homenaje al suspenso cinematográfico.',
+        materials: '80% Algodón peinado, 17% Poliamida, 3% Elastano',
+        colors: ['#0369a1', '#e0f2fe', '#ef4444'],
+        pattern: 'shark'
+      },
+      {
+        id: 'sb-06',
+        name: 'Kaiju Urbano Tokio',
+        category: 'Sci-Fi & Culto',
+        price: 8990,
+        badge: 'Edición Limitada',
+        tagline: 'Aliento atómico a nivel de tobillo.',
+        description: 'Silueta de monstruo gigante iluminado con rayos neón sobre el horizonte nocturno de Tokio. Tejido de alta densidad.',
+        materials: '79% Algodón peinado, 18% Poliamida, 3% Elastano',
+        colors: ['#0f172a', '#10b981', '#06b6d4'],
+        pattern: 'kaiju'
+      },
+      {
+        id: 'sb-07',
+        name: 'Director’s Cut Claqueta',
+        category: 'Cine Clásico',
+        price: 7290,
+        badge: 'Favorito',
+        tagline: '¡Luces, cámara, calcetines!',
+        description: 'Puño con franjas diagonales de claqueta de cine y rollo de película de 35mm recorriendo toda la pierna.',
+        materials: '80% Algodón peinado, 17% Poliamida, 3% Elastano',
+        colors: ['#18181b', '#f8fafc', '#eab308'],
+        pattern: 'cinema'
+      },
+      {
+        id: 'sb-08',
+        name: 'Synthwave Sunset 1984',
+        category: 'Edición Limitada',
+        price: 9490,
+        badge: 'Coleccionista',
+        tagline: 'Conduciendo hacia el horizonte neón.',
+        description: 'Sol retro con líneas horizontales, cuadrícula láser magenta y palmeras nocturnas inspiradas en bandas sonoras sintetizadas.',
+        materials: '80% Algodón peinado, 17% Poliamida, 3% Elastano',
+        colors: ['#4c1d95', '#ec4899', '#f59e0b'],
+        pattern: 'synth'
+      },
+      {
+        id: 'sb-09',
+        name: 'Gato Hacker & Café',
+        category: 'Edición Limitada',
+        price: 8490,
+        badge: 'Dev Choice',
+        tagline: 'Compilando código sin errores.',
+        description: 'Gatos con gafas de sol reflejando líneas de código binario y tazas de espresso humeante para largas jornadas creativas.',
+        materials: '80% Algodón peinado, 17% Poliamida, 3% Elastano',
+        colors: ['#1e293b', '#34d399', '#fbbf24'],
+        pattern: 'hacker'
+      }
+    ];
+
+    // Estado de la aplicación
+    let state = {
+      currentPage: 'inicio',
+      selectedCategory: 'Todos',
+      currentUmlView: 'logica',
+      cart: [],
+      selectedSizeModal: 'S/M',
+      theme: {
+        mode: 'light',
+        primary: '#1d4ed8',
+        secondary: '#facc15'
+      }
+    };
+
+    // =========================================================================
+    // 2. GENERADOR DE ILUSTRACIONES SVG PARA CADA CALCETÍN
+    // =========================================================================
+    function renderSockSVG(product, sizeClass = 'w-36 h-36') {
+      const [c1, c2, c3] = product.colors;
+      let motif = '';
+
+      switch (product.pattern) {
+        case 'vhs':
+          motif = `
+            <rect x="44" y="48" width="42" height="24" rx="3" fill="#0f172a"/>
+            <circle cx="55" cy="60" r="6" fill="#ffffff"/>
+            <circle cx="75" cy="60" r="6" fill="#ffffff"/>
+            <rect x="44" y="78" width="42" height="8" rx="2" fill="${c2}"/>
+          `;
+          break;
+        case 'popcorn':
+          motif = `
+            <rect x="42" y="45" width="8" height="55" fill="${c1}"/>
+            <rect x="58" y="45" width="8" height="55" fill="${c1}"/>
+            <rect x="74" y="45" width="8" height="55" fill="${c1}"/>
+            <circle cx="52" cy="44" r="7" fill="${c3}"/>
+            <circle cx="65" cy="41" r="8" fill="#fef08a"/>
+            <circle cx="77" cy="45" r="7" fill="${c3}"/>
+          `;
+          break;
+        case 'arcade':
+          motif = `
+            <rect x="52" y="50" width="26" height="14" rx="2" fill="${c2}"/>
+            <rect x="48" y="56" width="34" height="8" fill="${c2}"/>
+            <rect x="56" y="54" width="4" height="4" fill="#111827"/>
+            <rect x="70" y="54" width="4" height="4" fill="#111827"/>
+            <circle cx="65" cy="82" r="6" fill="${c3}"/>
+          `;
+          break;
+        case 'space':
+          motif = `
+            <circle cx="65" cy="64" r="14" fill="${c2}"/>
+            <ellipse cx="65" cy="64" rx="24" ry="6" fill="none" stroke="${c3}" stroke-width="3" transform="rotate(-20 65 64)"/>
+            <circle cx="48" cy="46" r="2.5" fill="#ffffff"/>
+            <circle cx="80" cy="85" r="2.5" fill="#ffffff"/>
+          `;
+          break;
+        case 'shark':
+          motif = `
+            <path d="M55 75 Q68 50 76 75 Z" fill="#475569"/>
+            <path d="M40 76 Q52 70 65 76 Q78 82 90 76" fill="none" stroke="${c2}" stroke-width="4" stroke-linecap="round"/>
+            <path d="M40 88 Q52 82 65 88 Q78 94 90 88" fill="none" stroke="${c2}" stroke-width="4" stroke-linecap="round"/>
+          `;
+          break;
+        case 'kaiju':
+          motif = `
+            <polygon points="52,85 60,48 72,62 78,52 82,85" fill="${c2}"/>
+            <line x1="45" y1="62" x2="58" y2="62" stroke="${c3}" stroke-width="3"/>
+            <line x1="45" y1="70" x2="56" y2="70" stroke="${c3}" stroke-width="3"/>
+          `;
+          break;
+        case 'cinema':
+          motif = `
+            <rect x="46" y="50" width="38" height="28" rx="3" fill="${c2}"/>
+            <line x1="46" y1="58" x2="84" y2="58" stroke="${c1}" stroke-width="4"/>
+            <polygon points="61,63 61,73 71,68" fill="${c1}"/>
+          `;
+          break;
+        case 'synth':
+          motif = `
+            <circle cx="65" cy="64" r="17" fill="${c3}"/>
+            <line x1="46" y1="66" x2="84" y2="66" stroke="${c1}" stroke-width="3"/>
+            <line x1="46" y1="73" x2="84" y2="73" stroke="${c1}" stroke-width="3"/>
+            <rect x="42" y="78" width="46" height="16" fill="${c2}" fill-opacity="0.4"/>
+          `;
+          break;
+        default:
+          motif = `
+            <circle cx="65" cy="63" r="14" fill="${c2}"/>
+            <polygon points="53,53 56,43 62,51" fill="${c2}"/>
+            <polygon points="77,53 74,43 68,51" fill="${c2}"/>
+            <rect x="55" y="60" width="8" height="5" fill="#0f172a"/>
+            <rect x="67" y="60" width="8" height="5" fill="#0f172a"/>
+          `;
+      }
+
+      return `
+        <svg viewBox="0 0 130 155" class="${sizeClass} mx-auto drop-shadow-sm transition-transform duration-300 group-hover:scale-105" aria-hidden="true">
+          <!-- Cuerpo del calcetín -->
+          <path d="M40 12 H90 V98 C90 116 77 130 60 140 L42 150 C29 157 14 148 12 135 C10 122 20 110 32 103 L40 98 Z"
+                fill="${c1}" stroke="#0f172a" stroke-width="3.5" stroke-linejoin="round"/>
+          <!-- Puño superior -->
+          <rect x="40" y="12" width="50" height="20" fill="${c2}" stroke="#0f172a" stroke-width="3.5"/>
+          <line x1="40" y1="22" x2="90" y2="22" stroke="#0f172a" stroke-width="2"/>
+          <!-- Talón -->
+          <path d="M90 86 C76 86 70 98 78 109 C85 102 90 95 90 86 Z" fill="${c3}" stroke="#0f172a" stroke-width="2.5"/>
+          <!-- Puntera -->
+          <path d="M29 105 C17 112 10 123 12 135 C14 146 27 154 39 149 L46 145 C36 134 31 121 29 105 Z"
+                fill="${c3}" stroke="#0f172a" stroke-width="2.5"/>
+          <!-- Motivo temático -->
+          ${motif}
+        </svg>
+      `;
+    }
+
+    // =========================================================================
+    // 3. NAVEGACIÓN ENTRE LAS 3 PÁGINAS (INICIO, CATÁLOGO, ESTRUCTURA UML)
+    // =========================================================================
+    function navigateTo(pageId) {
+      const validPages = ['inicio', 'catalogo', 'uml'];
+      if (!validPages.includes(pageId)) pageId = 'inicio';
+
+      state.currentPage = pageId;
+
+      // Mostrar/ocultar secciones
+      validPages.forEach(p => {
+        const el = document.getElementById(`page-${p}`);
+        if (el) {
+          if (p === pageId) {
+            el.classList.remove('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        }
+      });
+
+      // Actualizar estilos activos en botones de navegación (Desktop y Móvil)
+      validPages.forEach(p => {
+        const deskBtn = document.getElementById(`nav-${p}`);
+        const mobBtn = document.getElementById(`mob-nav-${p}`);
+        const isActive = p === pageId;
+
+        if (deskBtn) {
+          if (isActive) {
+            deskBtn.style.backgroundColor = 'var(--color-primary)';
+            deskBtn.style.color = 'var(--color-primary-contrast)';
+            deskBtn.classList.add('shadow-sm');
+          } else {
+            deskBtn.style.backgroundColor = 'transparent';
+            deskBtn.style.color = 'var(--color-text)';
+            deskBtn.classList.remove('shadow-sm');
+          }
+        }
+
+        if (mobBtn) {
+          if (isActive) {
+            mobBtn.style.backgroundColor = 'var(--color-primary)';
+            mobBtn.style.color = 'var(--color-primary-contrast)';
+          } else {
+            mobBtn.style.backgroundColor = 'var(--color-surface-alt)';
+            mobBtn.style.color = 'var(--color-text)';
+          }
+        }
+      });
+
+      // Actualizar hash de URL sin recargar
+      if (window.location.hash !== `#${pageId}`) {
+        history.replaceState(null, '', `#${pageId}`);
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =========================================================================
+    // 4. LÓGICA DE CATÁLOGO, FILTROS Y DETALLE DE PRODUCTO
+    // =========================================================================
+    function formatCLP(amount) {
+      return '$' + amount.toLocaleString('es-CL') + ' CLP';
+    }
+
+    function setCategoryFilter(category) {
+      state.selectedCategory = category;
+      updateCategoryButtonsUI();
+      renderCatalog();
+    }
+
+    function updateCategoryButtonsUI() {
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        const isSelected = btn.getAttribute('data-cat') === state.selectedCategory;
+        if (isSelected) {
+          btn.style.backgroundColor = 'var(--color-primary)';
+          btn.style.color = 'var(--color-primary-contrast)';
+        } else {
+          btn.style.backgroundColor = 'var(--color-surface-alt)';
+          btn.style.color = 'var(--color-text)';
+        }
+      });
+    }
+
+    function resetFilters() {
+      state.selectedCategory = 'Todos';
+      document.getElementById('search-input').value = '';
+      document.getElementById('sort-select').value = 'featured';
+      updateCategoryButtonsUI();
+      renderCatalog();
+    }
+
+    function renderCatalog() {
+      const grid = document.getElementById('catalog-grid');
+      const emptyState = document.getElementById('catalog-empty');
+      const countLabel = document.getElementById('catalog-count');
+
+      const searchTerm = (document.getElementById('search-input')?.value || '').toLowerCase().trim();
+      const sortValue = document.getElementById('sort-select')?.value || 'featured';
+
+      let filtered = PRODUCTS.filter(p => {
+        const matchesCategory = state.selectedCategory === 'Todos' || p.category === state.selectedCategory;
+        const matchesSearch = p.name.toLowerCase().includes(searchTerm) ||
+                              p.tagline.toLowerCase().includes(searchTerm) ||
+                              p.category.toLowerCase().includes(searchTerm);
+        return matchesCategory && matchesSearch;
+      });
+
+      if (sortValue === 'price-asc') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sortValue === 'price-desc') {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sortValue === 'name-asc') {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      countLabel.textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      grid.innerHTML = filtered.map(product => `
+        <article class="group rounded-3xl border p-5 theme-card shadow-sm hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between">
+          <div>
+            <!-- Top Badges -->
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="text-[11px] font-bold px-2.5 py-1 rounded-lg" style="background-color: var(--color-surface-alt); color: var(--color-muted);">
+                ${product.category}
+              </span>
+              <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-lg ticket-badge">
+                ${product.badge}
+              </span>
+            </div>
+
+            <!-- Ilustración SVG -->
+            <div onclick="openProductModal('${product.id}')" class="my-4 py-4 rounded-2xl cursor-pointer flex items-center justify-center" style="background-color: var(--color-surface-alt);">
+              ${renderSockSVG(product, 'w-32 h-36')}
+            </div>
+
+            <!-- Título y descripción corta -->
+            <h3 onclick="openProductModal('${product.id}')" class="font-display font-bold text-xl cursor-pointer hover:underline">
+              ${product.name}
+            </h3>
+            <p class="text-xs sm:text-sm mt-1 line-clamp-2" style="color: var(--color-muted);">
+              ${product.tagline}
+            </p>
+          </div>
+
+          <!-- Precio y Botones -->
+          <div class="mt-5 pt-4 border-t flex items-center justify-between gap-2" style="border-color: var(--color-border);">
+            <div>
+              <span class="block text-[11px] font-semibold uppercase" style="color: var(--color-muted);">Precio</span>
+              <span class="font-display font-extrabold text-lg sm:text-xl" style="color: var(--color-primary);">
+                ${formatCLP(product.price)}
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button onclick="openProductModal('${product.id}')" class="px-3 py-2 rounded-xl border text-xs font-bold hover:opacity-80 transition cursor-pointer" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+                Detalles
+              </button>
+              <button onclick="addToCart('${product.id}', 'S/M')" class="px-3.5 py-2 rounded-xl btn-primary text-xs font-bold shadow-sm cursor-pointer">
+                + Añadir
+              </button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function openProductModal(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      state.selectedSizeModal = 'S/M';
+      const modal = document.getElementById('product-modal');
+      const body = document.getElementById('modal-product-body');
+
+      body.innerHTML = `
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+          <div class="sm:col-span-5 p-6 rounded-2xl flex flex-col items-center justify-center" style="background-color: var(--color-surface-alt);">
+            ${renderSockSVG(product, 'w-40 h-44')}
+            <span class="mt-3 text-xs font-bold px-3 py-1 rounded-full ticket-badge">${product.badge}</span>
+          </div>
+
+          <div class="sm:col-span-7 space-y-4">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider" style="color: var(--color-primary);">${product.category}</span>
+              <h2 id="modal-product-title" class="font-display font-extrabold text-2xl sm:text-3xl mt-0.5">${product.name}</h2>
+              <p class="font-display font-extrabold text-2xl mt-2" style="color: var(--color-primary);">${formatCLP(product.price)}</p>
+            </div>
+
+            <p class="text-sm leading-relaxed" style="color: var(--color-muted);">
+              ${product.description}
+            </p>
+
+            <div class="p-3 rounded-xl border text-xs space-y-1" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+              <p><strong>Composición:</strong> ${product.materials}</p>
+              <p><strong>Tejido:</strong> Alta densidad 200 agujas con puntera sin costuras.</p>
+            </div>
+
+            <!-- Selector de Tallas -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider mb-2" style="color: var(--color-muted);">Selecciona tu Talla:</label>
+              <div class="flex gap-2">
+                <button type="button" onclick="selectModalSize('S/M', this)" class="size-choice-btn px-4 py-2 rounded-xl border text-xs font-bold cursor-pointer" style="background-color: var(--color-primary); color: var(--color-primary-contrast); border-color: var(--color-primary);">
+                  S/M (35 - 40)
+                </button>
+                <button type="button" onclick="selectModalSize('L/XL', this)" class="size-choice-btn px-4 py-2 rounded-xl border text-xs font-bold cursor-pointer" style="background-color: var(--color-surface-alt); color: var(--color-text); border-color: var(--color-border);">
+                  L/XL (41 - 46)
+                </button>
+              </div>
+            </div>
+
+            <button onclick="addToCart('${product.id}', state.selectedSizeModal); closeProductModal();" class="w-full py-3.5 rounded-2xl btn-primary font-display font-bold text-sm sm:text-base shadow-md cursor-pointer">
+              Añadir al Carrito — ${formatCLP(product.price)}
+            </button>
+          </div>
+        </div>
+      `;
+
+      modal.classList.remove('hidden');
+    }
+
+    function selectModalSize(size, btnEl) {
+      state.selectedSizeModal = size;
+      document.querySelectorAll('.size-choice-btn').forEach(b => {
+        b.style.backgroundColor = 'var(--color-surface-alt)';
+        b.style.color = 'var(--color-text)';
+        b.style.borderColor = 'var(--color-border)';
+      });
+      btnEl.style.backgroundColor = 'var(--color-primary)';
+      btnEl.style.color = 'var(--color-primary-contrast)';
+      btnEl.style.borderColor = 'var(--color-primary)';
+    }
+
+    function closeProductModal() {
+      document.getElementById('product-modal').classList.add('hidden');
+    }
+
+    // =========================================================================
+    // 5. CARRITO DE COMPRAS INTERACTIVO
+    // =========================================================================
+    function addToCart(productId, size = 'S/M') {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      const existing = state.cart.find(item => item.id === productId && item.size === size);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        state.cart.push({ ...product, size, qty: 1 });
+      }
+
+      updateCartUI();
+      showToast(`"${product.name}" (Talla ${size}) añadido al carrito`);
+    }
+
+    function updateCartQty(index, delta) {
+      if (!state.cart[index]) return;
+      state.cart[index].qty += delta;
+      if (state.cart[index].qty <= 0) {
+        state.cart.splice(index, 1);
+      }
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cart-count-badge');
+      const container = document.getElementById('cart-items-container');
+      const totalEl = document.getElementById('cart-total-price');
+
+      const totalItems = state.cart.reduce((sum, item) => sum + item.qty, 0);
+      const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+      badge.textContent = totalItems;
+      totalEl.textContent = formatCLP(totalPrice);
+
+      if (state.cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12">
+            <p class="text-4xl mb-2">🧦</p>
+            <p class="font-display font-bold text-base">Tu carrito está vacío</p>
+            <p class="text-xs mt-1" style="color: var(--color-muted);">Explora el catálogo y añade tus calcetines favoritos.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = state.cart.map((item, idx) => `
+        <div class="p-3.5 rounded-2xl border flex items-center justify-between gap-3" style="border-color: var(--color-border); background-color: var(--color-surface-alt);">
+          <div class="w-12 h-14 shrink-0 flex items-center justify-center">
+            ${renderSockSVG(item, 'w-11 h-13')}
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-display font-bold text-sm truncate">${item.name}</h4>
+            <p class="text-xs" style="color: var(--color-muted);">Talla: ${item.size} • ${formatCLP(item.price)}</p>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="updateCartQty(${idx}, -1)" class="w-7 h-7 rounded-lg border font-bold text-sm flex items-center justify-center cursor-pointer" style="background-color: var(--color-surface); border-color: var(--color-border);">-</button>
+            <span class="w-6 text-center text-xs font-bold">${item.qty}</span>
+            <button onclick="updateCartQty(${idx}, 1)" class="w-7 h-7 rounded-lg border font-bold text-sm flex items-center justify-center cursor-pointer" style="background-color: var(--color-surface); border-color: var(--color-border);">+</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleCartDrawer() {
+      const drawer = document.getElementById('cart-drawer');
+      drawer.classList.toggle('hidden');
+    }
+
+    function checkoutSimulation() {
+      if (state.cart.length === 0) {
+        showToast('Agrega al menos un par de calcetines antes de finalizar.', '⚠️');
+        return;
+      }
+      state.cart = [];
+      updateCartUI();
+      toggleCartDrawer();
+      showToast('¡Pedido simulado con éxito! Gracias por comprar en Sockbuster.', '🎉');
+    }
+
+    function showToast(message, icon = '✅') {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-message').textContent = message;
+      document.getElementById('toast-icon').textContent = icon;
+      toast.classList.remove('hidden');
+
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+
+    // =========================================================================
+    // 6. DOCUMENTACIÓN TÉCNICA UML - PARADIGMA 4+1 DE PHILIPPE KRUCHTEN
+    // =========================================================================
+    const UML_VIEWS = {
+      logica: {
+        title: '1. Vista Lógica (Diagrama de Clases UML)',
+        subtitle: 'Enfocada en la funcionalidad que el sistema brinda a los usuarios finales y el modelo del dominio del negocio.',
+        audience: 'Usuarios finales, Analistas de Negocio y Desarrolladores.',
+        description: 'Representa las entidades principales del dominio de Sockbuster, sus atributos, métodos y relaciones de asociación, agregación y composición. Define cómo se estructuran los calcetines temáticos, las categorías cinematográficas, el carrito de compras de sesión y el procesamiento de pedidos.',
+        highlights: [
+          'ProductoCalcetin encapsula precio en CLP, talla, materiales y categoría temática.',
+          'CarritoCompras mantiene una relación de agregación con ItemCarrito (1 a muchos).',
+          'Pedido consolida los ítems confirmados y se asocia con un Pago y un Cliente.'
+        ],
+        svg: `
+          <svg viewBox="0 0 860 390" class="w-full min-w-[720px] h-auto" role="img" aria-label="Diagrama de Clases UML de la Vista Lógica">
+            <defs>
+              <marker id="arrow-open" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="var(--color-text)" stroke-width="1.8"/>
+              </marker>
+              <marker id="diamond-white" viewBox="0 0 14 10" refX="1" refY="5" markerWidth="11" markerHeight="8" orient="auto">
+                <polygon points="1,5 7,1 13,5 7,9" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.5"/>
+              </marker>
+            </defs>
+
+            <!-- Clase: Cliente -->
+            <g transform="translate(20, 30)">
+              <rect width="195" height="135" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <rect width="195" height="32" rx="6" fill="var(--color-primary)"/>
+              <text x="97" y="21" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-primary-contrast)">Cliente</text>
+              <text x="12" y="50" font-family="monospace" font-size="11" fill="var(--color-text)">- idCliente: String</text>
+              <text x="12" y="66" font-family="monospace" font-size="11" fill="var(--color-text)">- nombre: String</text>
+              <text x="12" y="82" font-family="monospace" font-size="11" fill="var(--color-text)">- temaPreferido: String</text>
+              <line x1="0" y1="92" x2="195" y2="92" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="110" font-family="monospace" font-size="11" fill="var(--color-muted)">+ explorarCatalogo()</text>
+              <text x="12" y="125" font-family="monospace" font-size="11" fill="var(--color-muted)">+ personalizarTema()</text>
+            </g>
+
+            <!-- Clase: CarritoCompras -->
+            <g transform="translate(310, 30)">
+              <rect width="215" height="135" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <rect width="215" height="32" rx="6" fill="var(--color-primary)"/>
+              <text x="107" y="21" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-primary-contrast)">CarritoCompras</text>
+              <text x="12" y="50" font-family="monospace" font-size="11" fill="var(--color-text)">- idSesion: String</text>
+              <text x="12" y="66" font-family="monospace" font-size="11" fill="var(--color-text)">- totalCLP: Number</text>
+              <line x1="0" y1="80" x2="215" y2="80" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="98" font-family="monospace" font-size="11" fill="var(--color-muted)">+ agregarItem(prod, talla)</text>
+              <text x="12" y="114" font-family="monospace" font-size="11" fill="var(--color-muted)">+ calcularTotal(): Number</text>
+              <text x="12" y="128" font-family="monospace" font-size="11" fill="var(--color-muted)">+ generarPedido(): Pedido</text>
+            </g>
+
+            <!-- Clase: Pedido -->
+            <g transform="translate(625, 30)">
+              <rect width="210" height="135" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <rect width="210" height="32" rx="6" fill="var(--color-primary)"/>
+              <text x="105" y="21" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-primary-contrast)">Pedido</text>
+              <text x="12" y="50" font-family="monospace" font-size="11" fill="var(--color-text)">- codigoOrden: String</text>
+              <text x="12" y="66" font-family="monospace" font-size="11" fill="var(--color-text)">- fecha: DateTime</text>
+              <text x="12" y="82" font-family="monospace" font-size="11" fill="var(--color-text)">- estado: EstadoPedido</text>
+              <line x1="0" y1="92" x2="210" y2="92" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="110" font-family="monospace" font-size="11" fill="var(--color-muted)">+ confirmarPago()</text>
+              <text x="12" y="125" font-family="monospace" font-size="11" fill="var(--color-muted)">+ emitirBoleta()</text>
+            </g>
+
+            <!-- Clase: ItemCarrito -->
+            <g transform="translate(310, 225)">
+              <rect width="215" height="130" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <rect width="215" height="32" rx="6" fill="var(--color-secondary)"/>
+              <text x="107" y="21" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="#0f172a">ItemCarrito</text>
+              <text x="12" y="50" font-family="monospace" font-size="11" fill="var(--color-text)">- cantidad: Integer</text>
+              <text x="12" y="66" font-family="monospace" font-size="11" fill="var(--color-text)">- tallaSeleccionada: String</text>
+              <line x1="0" y1="78" x2="215" y2="78" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="98" font-family="monospace" font-size="11" fill="var(--color-muted)">+ obtenerSubtotal(): Number</text>
+              <text x="12" y="114" font-family="monospace" font-size="11" fill="var(--color-muted)">+ actualizarCantidad(n)</text>
+            </g>
+
+            <!-- Clase: ProductoCalcetin -->
+            <g transform="translate(20, 220)">
+              <rect width="215" height="145" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <rect width="215" height="32" rx="6" fill="var(--color-secondary)"/>
+              <text x="107" y="21" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="#0f172a">ProductoCalcetin</text>
+              <text x="12" y="50" font-family="monospace" font-size="11" fill="var(--color-text)">- sku: String</text>
+              <text x="12" y="66" font-family="monospace" font-size="11" fill="var(--color-text)">- nombre: String</text>
+              <text x="12" y="82" font-family="monospace" font-size="11" fill="var(--color-text)">- categoria: String</text>
+              <text x="12" y="98" font-family="monospace" font-size="11" fill="var(--color-text)">- precioCLP: Number</text>
+              <line x1="0" y1="108" x2="215" y2="108" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="128" font-family="monospace" font-size="11" fill="var(--color-muted)">+ obtenerDetalleTecnico()</text>
+            </g>
+
+            <!-- Clase: GestorTemas -->
+            <g transform="translate(625, 225)">
+              <rect width="210" height="130" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <rect width="210" height="32" rx="6" fill="var(--color-secondary)"/>
+              <text x="105" y="21" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="#0f172a">GestorTemasUI</text>
+              <text x="12" y="50" font-family="monospace" font-size="11" fill="var(--color-text)">- colorPrimario: Hex</text>
+              <text x="12" y="66" font-family="monospace" font-size="11" fill="var(--color-text)">- modoOscuro: Boolean</text>
+              <line x1="0" y1="78" x2="210" y2="78" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="12" y="98" font-family="monospace" font-size="11" fill="var(--color-muted)">+ aplicarVariablesCSS()</text>
+              <text x="12" y="114" font-family="monospace" font-size="11" fill="var(--color-muted)">+ guardarLocalStorage()</text>
+            </g>
+
+            <!-- Relaciones UML -->
+            <line x1="215" y1="95" x2="310" y2="95" stroke="var(--color-text)" stroke-width="1.8" marker-end="url(#arrow-open)"/>
+            <text x="232" y="87" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="var(--color-text)">1 posee 1</text>
+
+            <line x1="525" y1="95" x2="625" y2="95" stroke="var(--color-text)" stroke-width="1.8" marker-end="url(#arrow-open)"/>
+            <text x="542" y="87" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="var(--color-text)">genera *</text>
+
+            <line x1="417" y1="165" x2="417" y2="225" stroke="var(--color-text)" stroke-width="1.8" marker-start="url(#diamond-white)"/>
+            <text x="426" y="200" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="var(--color-text)">1..*</text>
+
+            <line x1="310" y1="290" x2="235" y2="290" stroke="var(--color-text)" stroke-width="1.8" marker-end="url(#arrow-open)"/>
+            <text x="250" y="282" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="var(--color-text)">referencia 1</text>
+          </svg>
+        `
+      },
+      desarrollo: {
+        title: '2. Vista de Desarrollo (Diagrama de Componentes UML)',
+        subtitle: 'Ilustra el sistema desde la perspectiva del programador y se ocupa de la gestión de módulos y artefactos de software.',
+        audience: 'Desarrolladores, Arquitectos de Software y Líderes Técnicos.',
+        description: 'Muestra la organización estática del código fuente en módulos cohesivos y desacoplados. El frontend SPA de Sockbuster separa el enrutamiento de vistas, el motor de catálogo y filtros, el motor dinámico de variables CSS (Theme Engine) y la documentación UML.',
+        highlights: [
+          'Arquitectura modular basada en responsabilidades únicas (SPA Router, Catálogo, Theme Engine).',
+          'Comunicación mediante interfaces bien definidas y almacenamiento persistente en Web Storage API.',
+          'Renderizado vectorial SVG desacoplado de la lógica de estado.'
+        ],
+        svg: `
+          <svg viewBox="0 0 860 360" class="w-full min-w-[720px] h-auto" role="img" aria-label="Diagrama de Componentes UML de la Vista de Desarrollo">
+            <defs>
+              <marker id="dep-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="var(--color-text)" stroke-width="1.8"/>
+              </marker>
+            </defs>
+
+            <!-- Paquete Contenedor: Frontend SPA -->
+            <rect x="20" y="20" width="560" height="320" rx="12" fill="var(--color-surface-alt)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="6 4"/>
+            <rect x="20" y="20" width="215" height="28" rx="6" fill="var(--color-primary)"/>
+            <text x="127" y="39" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12" fill="var(--color-primary-contrast)">«Paquete» Frontend SPA</text>
+
+            <!-- Componente 1: Router & Vistas -->
+            <g transform="translate(45, 70)">
+              <rect width="210" height="75" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+              <rect x="175" y="10" width="22" height="16" rx="2" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.2"/>
+              <text x="20" y="30" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="var(--color-primary)">«component»</text>
+              <text x="20" y="48" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Router & Navegación</text>
+              <text x="20" y="64" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">Inicio | Catálogo | UML 4+1</text>
+            </g>
+
+            <!-- Componente 2: Módulo Catálogo -->
+            <g transform="translate(335, 70)">
+              <rect width="215" height="75" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+              <rect x="180" y="10" width="22" height="16" rx="2" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.2"/>
+              <text x="20" y="30" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="var(--color-primary)">«component»</text>
+              <text x="20" y="48" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Motor de Catálogo</text>
+              <text x="20" y="64" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">Filtros, Búsqueda, Detalle Modal</text>
+            </g>
+
+            <!-- Componente 3: Gestor de Temas -->
+            <g transform="translate(45, 215)">
+              <rect width="210" height="75" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+              <rect x="175" y="10" width="22" height="16" rx="2" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.2"/>
+              <text x="20" y="30" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="var(--color-primary)">«component»</text>
+              <text x="20" y="48" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Theme Customizer</text>
+              <text x="20" y="64" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">CSS Custom Properties & Paletas</text>
+            </g>
+
+            <!-- Componente 4: Gestor Carrito -->
+            <g transform="translate(335, 215)">
+              <rect width="215" height="75" rx="8" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+              <rect x="180" y="10" width="22" height="16" rx="2" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.2"/>
+              <text x="20" y="30" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="var(--color-primary)">«component»</text>
+              <text x="20" y="48" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Gestor de Carrito</text>
+              <text x="20" y="64" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">Estado de Orden y Tallas</text>
+            </g>
+
+            <!-- Paquete Externo: Persistencia & Assets -->
+            <g transform="translate(630, 70)">
+              <rect width="205" height="95" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="18" y="28" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="var(--color-primary)">«datastore»</text>
+              <text x="18" y="48" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Repositorio Productos</text>
+              <text x="18" y="66" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">JSON Catálogo + Vector SVG</text>
+            </g>
+
+            <g transform="translate(630, 205)">
+              <rect width="205" height="95" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="18" y="28" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="var(--color-primary)">«browser API»</text>
+              <text x="18" y="48" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">LocalStorage</text>
+              <text x="18" y="66" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">Persistencia de Tema Color</text>
+            </g>
+
+            <!-- Dependencias punteadas -->
+            <line x1="255" y1="108" x2="335" y2="108" stroke="var(--color-text)" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#dep-arrow)"/>
+            <line x1="150" y1="145" x2="150" y2="215" stroke="var(--color-text)" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#dep-arrow)"/>
+            <line x1="442" y1="145" x2="442" y2="215" stroke="var(--color-text)" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#dep-arrow)"/>
+            <line x1="550" y1="112" x2="630" y2="112" stroke="var(--color-text)" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#dep-arrow)"/>
+            <line x1="255" y1="255" x2="630" y2="255" stroke="var(--color-text)" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#dep-arrow)"/>
+          </svg>
+        `
+      },
+      procesos: {
+        title: '3. Vista de Procesos (Diagrama de Secuencia UML)',
+        subtitle: 'Describe los aspectos dinámicos del sistema, el flujo de ejecución en tiempo de ejecución, eventos y sincronización de estado.',
+        audience: 'Integradores de Sistemas, Desarrolladores Backend/Frontend y QA.',
+        description: 'Detalla la interacción cronológica entre los objetos del sistema cuando un usuario filtra el catálogo, inspecciona un modelo de calcetín y lo añade al carrito de compras, garantizando respuestas reactivas sin bloqueos de interfaz.',
+        highlights: [
+          'Flujo asíncrono no bloqueante en el hilo principal del navegador (Event Loop).',
+          'Sincronización inmediata entre el estado del carrito, el contador superior y las notificaciones Toast.',
+          'Actualización reactiva del DOM al aplicar filtros combinados (categoría + texto + orden).'
+        ],
+        svg: `
+          <svg viewBox="0 0 860 390" class="w-full min-w-[720px] h-auto" role="img" aria-label="Diagrama de Secuencia UML de la Vista de Procesos">
+            <defs>
+              <marker id="seq-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <polygon points="0,1 10,5 0,9" fill="var(--color-primary)"/>
+              </marker>
+              <marker id="seq-return" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="var(--color-muted)" stroke-width="1.8"/>
+              </marker>
+            </defs>
+
+            <!-- Cabeceras Lifelines -->
+            <g transform="translate(40, 20)">
+              <rect width="130" height="38" rx="8" fill="var(--color-secondary)" stroke="#0f172a" stroke-width="1.5"/>
+              <text x="65" y="24" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="#0f172a">:Usuario</text>
+              <line x1="65" y1="38" x2="65" y2="350" stroke="var(--color-border)" stroke-width="2" stroke-dasharray="6 5"/>
+            </g>
+
+            <g transform="translate(245, 20)">
+              <rect width="150" height="38" rx="8" fill="var(--color-primary)"/>
+              <text x="75" y="24" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-primary-contrast)">:InterfazCatalogo</text>
+              <line x1="75" y1="38" x2="75" y2="350" stroke="var(--color-border)" stroke-width="2" stroke-dasharray="6 5"/>
+            </g>
+
+            <g transform="translate(465, 20)">
+              <rect width="150" height="38" rx="8" fill="var(--color-primary)"/>
+              <text x="75" y="24" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-primary-contrast)">:ControladorEstado</text>
+              <line x1="75" y1="38" x2="75" y2="350" stroke="var(--color-border)" stroke-width="2" stroke-dasharray="6 5"/>
+            </g>
+
+            <g transform="translate(680, 20)">
+              <rect width="145" height="38" rx="8" fill="var(--color-primary)"/>
+              <text x="72" y="24" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-primary-contrast)">:Carrito & UI</text>
+              <line x1="72" y1="38" x2="72" y2="350" stroke="var(--color-border)" stroke-width="2" stroke-dasharray="6 5"/>
+            </g>
+
+            <!-- Cajas de Activación -->
+            <rect x="314" y="80" width="12" height="240" rx="3" fill="var(--color-primary)" fill-opacity="0.25" stroke="var(--color-primary)"/>
+            <rect x="534" y="100" width="12" height="195" rx="3" fill="var(--color-primary)" fill-opacity="0.25" stroke="var(--color-primary)"/>
+            <rect x="746" y="220" width="12" height="80" rx="3" fill="var(--color-secondary)" stroke="#0f172a"/>
+
+            <!-- Mensajes de Secuencia -->
+            <!-- 1 -->
+            <line x1="105" y1="90" x2="314" y2="90" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-arrow)"/>
+            <text x="120" y="83" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="var(--color-text)">1: filtrarCategoria("Sci-Fi")</text>
+
+            <!-- 2 -->
+            <line x1="326" y1="115" x2="534" y2="115" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-arrow)"/>
+            <text x="342" y="108" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="var(--color-text)">2: consultarProductos(filtro)</text>
+
+            <!-- 3 Return -->
+            <line x1="534" y1="145" x2="326" y2="145" stroke="var(--color-muted)" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#seq-return)"/>
+            <text x="345" y="138" font-family="Inter, sans-serif" font-size="11" fill="var(--color-muted)">3: listaFiltrada[]</text>
+
+            <!-- 4 -->
+            <line x1="105" y1="185" x2="314" y2="185" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-arrow)"/>
+            <text x="120" y="178" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="var(--color-text)">4: seleccionarCalcetin(id, talla)</text>
+
+            <!-- 5 -->
+            <line x1="326" y1="225" x2="746" y2="225" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-arrow)"/>
+            <text x="415" y="218" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="var(--color-text)">5: agregarAlCarrito(item, talla)</text>
+
+            <!-- 6 -->
+            <line x1="746" y1="265" x2="546" y2="265" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#seq-arrow)"/>
+            <text x="565" y="258" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="var(--color-text)">6: recalcularTotalCLP()</text>
+
+            <!-- 7 Return -->
+            <line x1="746" y1="295" x2="105" y2="295" stroke="var(--color-muted)" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#seq-return)"/>
+            <text x="270" y="312" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="var(--color-primary)">7: actualizarBadgeContador() + mostrarToast()</text>
+          </svg>
+        `
+      },
+      fisica: {
+        title: '4. Vista Física / Despliegue (Diagrama de Despliegue UML)',
+        subtitle: 'Mapea el software sobre el hardware y muestra la topología distribuida de nodos físicos y protocolos de comunicación.',
+        audience: 'Ingenieros DevOps, Administradores de Infraestructura y Arquitectos Cloud.',
+        description: 'Define cómo se despliega y ejecuta la aplicación web Sockbuster en un entorno productivo moderno: distribución global mediante CDN, ejecución del cliente SPA en el navegador web del usuario y consumo de servicios de catálogo y pagos vía HTTPS.',
+        highlights: [
+          'Entrega estática ultra rápida desde Edge CDN con caché distribuido.',
+          'Ejecución cliente-servidor desacoplada mediante protocolo seguro HTTPS / TLS 1.3.',
+          'Alta disponibilidad y escalabilidad horizontal sin estado en la capa web.'
+        ],
+        svg: `
+          <svg viewBox="0 0 860 350" class="w-full min-w-[720px] h-auto" role="img" aria-label="Diagrama de Despliegue UML de la Vista Física">
+            <!-- Nodo 1: Dispositivo Cliente -->
+            <g transform="translate(25, 65)">
+              <!-- Efecto caja 3D UML -->
+              <polygon points="0,12 14,0 244,0 230,12" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.5"/>
+              <polygon points="230,12 244,0 244,205 230,217" fill="var(--color-border)" stroke="var(--color-text)" stroke-width="1.5"/>
+              <rect x="0" y="12" width="230" height="205" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+              <text x="115" y="36" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="var(--color-primary)">«device»</text>
+              <text x="115" y="54" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Navegador Web Cliente</text>
+              
+              <!-- Artefacto interno -->
+              <rect x="20" y="75" width="190" height="55" rx="6" fill="var(--color-surface-alt)" stroke="var(--color-primary)" stroke-width="1.5"/>
+              <text x="115" y="98" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">«artifact» index.html</text>
+              <text x="115" y="115" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">DOM + Motor CSS + JS SPA</text>
+
+              <rect x="20" y="142" width="190" height="50" rx="6" fill="var(--color-surface-alt)" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="115" y="164" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">Web Storage</text>
+              <text x="115" y="180" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">Preferencias de Color</text>
+            </g>
+
+            <!-- Nodo 2: Servidor Web / CDN -->
+            <g transform="translate(335, 65)">
+              <polygon points="0,12 14,0 224,0 210,12" fill="var(--color-primary)" stroke="var(--color-text)" stroke-width="1.5"/>
+              <polygon points="210,12 224,0 224,205 210,217" fill="var(--color-border)" stroke="var(--color-text)" stroke-width="1.5"/>
+              <rect x="0" y="12" width="210" height="205" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+              <text x="105" y="36" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="var(--color-primary)">«executionEnvironment»</text>
+              <text x="105" y="54" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Edge CDN & Web Server</text>
+
+              <rect x="18" y="75" width="174" height="55" rx="6" fill="var(--color-surface-alt)" stroke="var(--color-primary)" stroke-width="1.5"/>
+              <text x="105" y="98" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">Bundle Sockbuster</text>
+              <text x="105" y="115" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">Distribución Estática Global</text>
+
+              <rect x="18" y="142" width="174" height="50" rx="6" fill="var(--color-surface-alt)" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="105" y="164" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">Certificado SSL/TLS</text>
+              <text x="105" y="180" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">Cifrado HTTPS</text>
+            </g>
+
+            <!-- Nodo 3: Cloud API & Base de Datos -->
+            <g transform="translate(625, 65)">
+              <polygon points="0,12 14,0 214,0 200,12" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="1.5"/>
+              <polygon points="200,12 214,0 214,205 200,217" fill="var(--color-border)" stroke="var(--color-text)" stroke-width="1.5"/>
+              <rect x="0" y="12" width="200" height="205" fill="var(--color-surface)" stroke="var(--color-text)" stroke-width="1.8"/>
+              <text x="100" y="36" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="var(--color-primary)">«cloudNode»</text>
+              <text x="100" y="54" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="var(--color-text)">Servicios & Catálogo</text>
+
+              <rect x="16" y="75" width="168" height="55" rx="6" fill="var(--color-surface-alt)" stroke="var(--color-primary)" stroke-width="1.5"/>
+              <text x="100" y="98" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">API Catálogo & Orden</text>
+              <text x="100" y="115" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">REST / JSON Endpoints</text>
+
+              <rect x="16" y="142" width="168" height="50" rx="6" fill="var(--color-surface-alt)" stroke="var(--color-border)" stroke-width="1.5"/>
+              <text x="100" y="164" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="var(--color-text)">BD Inventario</text>
+              <text x="100" y="180" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--color-muted)">Stock por Talla y SKU</text>
+            </g>
+
+            <!-- Conexiones de Red -->
+            <line x1="269" y1="165" x2="335" y2="165" stroke="var(--color-text)" stroke-width="2.2"/>
+            <text x="302" y="154" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">HTTPS</text>
+
+            <line x1="559" y1="165" x2="625" y2="165" stroke="var(--color-text)" stroke-width="2.2"/>
+            <text x="592" y="154" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="var(--color-primary)">REST</text>
+          </svg>
+        `
+      },
+      escenarios: {
+        title: '5. Escenarios — Casos de Uso (+1 Vista Central)',
+        subtitle: 'Es la vista unificadora ("+1") que valida e ilustra el funcionamiento conjunto de las otras 4 vistas mediante escenarios reales de uso.',
+        audience: 'Todos los Stakeholders (Clientes, Product Owners, Arquitectos y Evaluadores).',
+        description: 'Representa las interacciones fundamentales entre los actores externos (Cliente Comprador y Administrador de Catálogo) y el sistema Sockbuster. Cada caso de uso sirve como prueba de concepto arquitectónica que conecta la interfaz, la lógica de negocio y la infraestructura.',
+        highlights: [
+          'CU-01 & CU-02: Explorar y filtrar el catálogo interactivo por temática, precio o texto.',
+          'CU-03: Personalizar el esquema cromático de la plataforma en tiempo real.',
+          'CU-04 & CU-05: Gestionar carrito con selección de talla y consultar la documentación UML 4+1.'
+        ],
+        svg: `
+          <svg viewBox="0 0 860 390" class="w-full min-w-[720px] h-auto" role="img" aria-label="Diagrama de Casos de Uso UML de la Quinta Vista Escenarios">
+            <!-- Contenedor del Sistema Sockbuster -->
+            <rect x="215" y="20" width="430" height="350" rx="16" fill="var(--color-surface-alt)" stroke="var(--color-primary)" stroke-width="2.5"/>
+            <text x="430" y="48" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="800" font-size="15" fill="var(--color-primary)">Sistema Web Sockbuster</text>
+
+            <!-- Actor Izquierda: Cliente -->
+            <g transform="translate(75, 130)">
+              <circle cx="25" cy="18" r="14" fill="var(--color-secondary)" stroke="var(--color-text)" stroke-width="2.2"/>
+              <line x1="25" y1="32" x2="25" y2="75" stroke="var(--color-text)" stroke-width="2.5"/>
+              <line x1="0" y1="48" x2="50" y2="48" stroke="var(--color-text)" stroke-width="2.5"/>
+              <line x1="25" y1="75" x2="5" y2="108" stroke="var(--color-text)" stroke-width="2.5"/>
+              <line x1="25" y1="75" x2="45" y2="108" stroke="var(--color-text)" stroke-width="2.5"/>
+              <text x="25" y="130" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-text)">Cliente / Visitante</text>
+            </g>
+
+            <!-- Actor Derecha: Administrador / Arquitecto -->
+            <g transform="translate(735, 130)">
+              <circle cx="25" cy="18" r="14" fill="var(--color-primary)" stroke="var(--color-text)" stroke-width="2.2"/>
+              <line x1="25" y1="32" x2="25" y2="75" stroke="var(--color-text)" stroke-width="2.5"/>
+              <line x1="0" y1="48" x2="50" y2="48" stroke="var(--color-text)" stroke-width="2.5"/>
+              <line x1="25" y1="75" x2="5" y2="108" stroke="var(--color-text)" stroke-width="2.5"/>
+              <line x1="25" y1="75" x2="45" y2="108" stroke="var(--color-text)" stroke-width="2.5"/>
+              <text x="25" y="130" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--color-text)">Arquitecto / Admin</text>
+            </g>
+
+            <!-- Óvalos de Casos de Uso -->
+            <!-- CU1 -->
+            <ellipse cx="430" cy="88" rx="145" ry="24" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+            <text x="430" y="92" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="12" fill="var(--color-text)">CU-01: Explorar Catálogo Temático</text>
+
+            <!-- CU2 -->
+            <ellipse cx="430" cy="150" rx="145" ry="24" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+            <text x="430" y="154" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="12" fill="var(--color-text)">CU-02: Filtrar por Categoría y Precio</text>
+
+            <!-- CU3 -->
+            <ellipse cx="430" cy="212" rx="145" ry="24" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+            <text x="430" y="216" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="12" fill="var(--color-text)">CU-03: Personalizar Color de Interfaz</text>
+
+            <!-- CU4 -->
+            <ellipse cx="430" cy="274" rx="145" ry="24" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+            <text x="430" y="278" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="12" fill="var(--color-text)">CU-04: Gestionar Carrito y Compra</text>
+
+            <!-- CU5 -->
+            <ellipse cx="430" cy="334" rx="145" ry="24" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+            <text x="430" y="338" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="12" fill="var(--color-text)">CU-05: Consultar Estructura UML 4+1</text>
+
+            <!-- Líneas de Asociación Actor Cliente -->
+            <line x1="125" y1="165" x2="285" y2="88" stroke="var(--color-text)" stroke-width="1.6"/>
+            <line x1="125" y1="175" x2="285" y2="150" stroke="var(--color-text)" stroke-width="1.6"/>
+            <line x1="125" y1="185" x2="285" y2="212" stroke="var(--color-text)" stroke-width="1.6"/>
+            <line x1="125" y1="195" x2="285" y2="274" stroke="var(--color-text)" stroke-width="1.6"/>
+            <line x1="125" y1="205" x2="285" y2="334" stroke="var(--color-text)" stroke-width="1.6"/>
+
+            <!-- Líneas de Asociación Actor Admin -->
+            <line x1="735" y1="170" x2="575" y2="88" stroke="var(--color-text)" stroke-width="1.6"/>
+            <line x1="735" y1="195" x2="575" y2="334" stroke="var(--color-text)" stroke-width="1.6"/>
+          </svg>
+        `
+      }
+    };
+
+    function selectUmlView(viewKey) {
+      if (!UML_VIEWS[viewKey]) viewKey = 'logica';
+      state.currentUmlView = viewKey;
+
+      // Actualizar estilo de pestañas
+      Object.keys(UML_VIEWS).forEach(key => {
+        const tab = document.getElementById(`tab-uml-${key}`);
+        if (!tab) return;
+        if (key === viewKey) {
+          tab.style.backgroundColor = 'var(--color-primary)';
+          tab.style.color = 'var(--color-primary-contrast)';
+          tab.style.borderColor = 'var(--color-primary)';
+          tab.classList.add('shadow-md');
+        } else {
+          tab.style.backgroundColor = 'var(--color-surface)';
+          tab.style.color = 'var(--color-text)';
+          tab.style.borderColor = 'var(--color-border)';
+          tab.classList.remove('shadow-md');
+        }
+      });
+
+      const view = UML_VIEWS[viewKey];
+      const container = document.getElementById('uml-content-container');
+
+      container.innerHTML = `
+        <div class="space-y-6">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b" style="border-color: var(--color-border);">
+            <div>
+              <h2 class="font-display font-extrabold text-2xl sm:text-3xl">${view.title}</h2>
+              <p class="text-sm sm:text-base mt-1" style="color: var(--color-muted);">${view.subtitle}</p>
+            </div>
+            <div class="px-4 py-2 rounded-xl border text-xs font-semibold shrink-0" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+              <span class="block uppercase text-[10px]" style="color: var(--color-muted);">Interesados (Stakeholders)</span>
+              <span>${view.audience}</span>
+            </div>
+          </div>
+
+          <!-- Lienzo del Diagrama UML en SVG -->
+          <div class="p-4 sm:p-6 rounded-2xl border overflow-x-auto uml-scroll" style="background-color: var(--color-bg); border-color: var(--color-border);">
+            ${view.svg}
+          </div>
+
+          <!-- Explicación Técnica y Puntos Clave -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
+            <div class="lg:col-span-7 space-y-2">
+              <h3 class="font-display font-bold text-lg">Descripción Arquitectónica</h3>
+              <p class="text-sm sm:text-base leading-relaxed" style="color: var(--color-muted);">
+                ${view.description}
+              </p>
+            </div>
+            <div class="lg:col-span-5 p-5 rounded-2xl border" style="background-color: var(--color-surface-alt); border-color: var(--color-border);">
+              <h4 class="font-display font-bold text-sm uppercase tracking-wider mb-3" style="color: var(--color-primary);">
+                Aspectos Clave de la Vista
+              </h4>
+              <ul class="space-y-2 text-xs sm:text-sm">
+                ${view.highlights.map(item => `
+                  <li class="flex items-start gap-2">
+                    <span class="font-bold" style="color: var(--color-primary);">✓</span>
+                    <span>${item}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 7. PERSONALIZADOR DE COLORES DE LA PÁGINA (THEME ENGINE)
+    // =========================================================================
+    const PRESETS = {
+      blockbuster: { mode: 'light', primary: '#1d4ed8', secondary: '#facc15' },
+      cyberpunk:   { mode: 'dark',  primary: '#9333ea', secondary: '#22d3ee' },
+      cinema:      { mode: 'light', primary: '#dc2626', secondary: '#fbbf24' },
+      arcade:      { mode: 'dark',  primary: '#059669', secondary: '#a3e635' }
+    };
+
+    function getContrastColor(hexColor) {
+      const hex = hexColor.replace('#', '');
+      const r = parseInt(hex.substr(0, 2), 16);
+      const g = parseInt(hex.substr(2, 2), 16);
+      const b = parseInt(hex.substr(4, 2), 16);
+      const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+      return yiq >= 150 ? '#0f172a' : '#ffffff';
+    }
+
+    function applyThemeToDOM() {
+      const root = document.documentElement;
+      const { mode, primary, secondary } = state.theme;
+
+      root.style.setProperty('--color-primary', primary);
+      root.style.setProperty('--color-secondary', secondary);
+      root.style.setProperty('--color-primary-contrast', getContrastColor(primary));
+      root.style.setProperty('--color-secondary-contrast', getContrastColor(secondary));
+
+      if (mode === 'dark') {
+        root.style.setProperty('--color-bg', '#090d16');
+        root.style.setProperty('--color-surface', '#111827');
+        root.style.setProperty('--color-surface-alt', '#1e293b');
+        root.style.setProperty('--color-text', '#f8fafc');
+        root.style.setProperty('--color-muted', '#94a3b8');
+        root.style.setProperty('--color-border', '#334155');
+      } else {
+        root.style.setProperty('--color-bg', '#f8fafc');
+        root.style.setProperty('--color-surface', '#ffffff');
+        root.style.setProperty('--color-surface-alt', '#f1f5f9');
+        root.style.setProperty('--color-text', '#0f172a');
+        root.style.setProperty('--color-muted', '#475569');
+        root.style.setProperty('--color-border', '#cbd5e1');
+      }
+
+      // Sincronizar inputs y etiquetas del panel
+      const pPicker = document.getElementById('custom-primary-picker');
+      const sPicker = document.getElementById('custom-secondary-picker');
+      if (pPicker) pPicker.value = primary;
+      if (sPicker) sPicker.value = secondary;
+
+      const pLabel = document.getElementById('primary-hex-label');
+      const sLabel = document.getElementById('secondary-hex-label');
+      if (pLabel) pLabel.textContent = primary.toUpperCase();
+      if (sLabel) sLabel.textContent = secondary.toUpperCase();
+
+      // Estilos botones Modo Claro / Oscuro
+      const lightBtn = document.getElementById('mode-light-btn');
+      const darkBtn = document.getElementById('mode-dark-btn');
+      if (lightBtn && darkBtn) {
+        if (mode === 'light') {
+          lightBtn.style.backgroundColor = primary;
+          lightBtn.style.color = getContrastColor(primary);
+          darkBtn.style.backgroundColor = 'var(--color-surface-alt)';
+          darkBtn.style.color = 'var(--color-text)';
+        } else {
+          darkBtn.style.backgroundColor = primary;
+          darkBtn.style.color = getContrastColor(primary);
+          lightBtn.style.backgroundColor = 'var(--color-surface-alt)';
+          lightBtn.style.color = 'var(--color-text)';
+        }
+      }
+
+      try {
+        localStorage.setItem('sockbuster_theme', JSON.stringify(state.theme));
+      } catch (e) {
+        // Ignorar si localStorage está restringido
+      }
+    }
+
+    function setBaseMode(mode) {
+      state.theme.mode = mode;
+      applyThemeToDOM();
+    }
+
+    function applyPreset(presetName) {
+      if (!PRESETS[presetName]) return;
+      state.theme = { ...PRESETS[presetName] };
+      applyThemeToDOM();
+    }
+
+    function updateCustomColor(type, hexValue) {
+      if (type === 'primary') state.theme.primary = hexValue;
+      if (type === 'secondary') state.theme.secondary = hexValue;
+      applyThemeToDOM();
+    }
+
+    function resetTheme() {
+      applyPreset('blockbuster');
+      showToast('Colores originales restaurados', '🎨');
+    }
+
+    function toggleThemePanel() {
+      const panel = document.getElementById('theme-panel');
+      panel.classList.toggle('hidden');
+    }
+
+    // =========================================================================
+    // 8. INICIALIZACIÓN DE LA APLICACIÓN
+    // =========================================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      // Cargar tema guardado si existe
+      try {
+        const savedTheme = localStorage.getItem('sockbuster_theme');
+        if (savedTheme) {
+          state.theme = { ...state.theme, ...JSON.parse(savedTheme) };
+        }
+      } catch (e) {}
+
+      applyThemeToDOM();
+      updateCategoryButtonsUI();
+      renderCatalog();
+      selectUmlView('logica');
+      updateCartUI();
+
+      // Leer ruta inicial del hash (#inicio, #catalogo, #uml)
+      const initialHash = window.location.hash.replace('#', '');
+      navigateTo(initialHash || 'inicio');
+    });
+
+    // Cerrar modales al hacer clic fuera o presionar Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeProductModal();
+        document.getElementById('cart-drawer').classList.add('hidden');
+        document.getElementById('theme-panel').classList.add('hidden');
+      }
+    });
+
+    document.getElementById('product-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'product-modal') closeProductModal();
+    });
+
+    document.getElementById('cart-drawer').addEventListener('click', (e) => {
+      if (e.target.id === 'cart-drawer') toggleCartDrawer();
+    });
+  </script>
+</body>
+</html>
